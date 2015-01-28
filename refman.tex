@@ -225,8 +225,8 @@ An example, showing the available anchors:
 \composite[ni=2, no=3, inner sep=25pt] {cp1} {(bb)} {CP1};
 \composite[ni=2, no=3, reverse] {cp2} {(dm1)(dm2)} {CP2};
 
-\node[anch] (a) at (bb.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{di.i1}};
-\node[anch] (a) at (bb.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{di.o1}};
+\node[anch] (a) at (bb.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{bb.i1}};
+\node[anch] (a) at (bb.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{bb.o1}};
 
 \node[anch] (a) at (cp1.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp1.i1}};
 \node[anch] (a) at (cp1.i2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp1.i2}};
@@ -311,6 +311,50 @@ An example, showing the available anchors:
 \subsubsection{Parallel communication processes}
 
 Parallel communication processes infer replication and specific interconnection between processes. They are mainly rearranging the data contained by vectors of signals and/or signals of vectors.
+
+\begin{verbatim}
+	\parcomm[options]{id}{position}
+	\parcommfunc[options]{id}{position}{index function}
+\end{verbatim}
+
+The \texttt{options} are:
+\begin{itemize}
+\item \texttt{inner type=} The inner shape. Default is \texttt{noinner}. For a list of available shapes check \autoref{appendix_shapes}.
+\item \texttt{outer type=} The outer shape. Default is \texttt{v2vbase}. For a list of available shapes check \autoref{appendix_shapes}.
+\item \texttt{ni=[0..7]} the number of input ports. Default is 1.
+\item \texttt{no=[0..7]} the number of output ports. Default is 1.
+\item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
+\end{itemize}
+
+An example, showing the available anchors:
+\begin{verbatim}
+\parcomm[outer type=s2vbase] {a}{0,0};
+\parcommfunc[no=2] {b}{3,0}{$f(i)$};
+\parcomm[inner type=standardskeletonbox] {c}{6,0};
+\parcomm[inner type=standardskeletonbox, outer type=v2gvbase, 
+reverse] {d}{9,0};
+\end{verbatim}
+
+\begin{figure}[htb!]\centering
+\begin{tikzpicture}[]
+\parcomm[outer type=s2vbase] {a}{0,0};
+\parcommfunc[no=2] {b}{3,0}{$f(i)$};
+\parcomm[inner type=standardskeletonbox] {c}{6,0};
+\parcomm[inner type=standardskeletonbox, outer type=v2gvbase, reverse] {d}{9,0};
+
+\node[anch] (x) at (a.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{a.i1}};
+\node[anch] (x) at (a.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{a.o1}};
+\node[anch] (x) at (b.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{b.i1}};
+\node[anch] (x) at (b.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o1}};
+\node[anch] (x) at (b.o2) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o2}};
+\foreach \i in {0,1,...,7} {
+	\node[anch] (x) at (vc.vi\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vc.vi\i}};
+	\node[anch] (x) at (vd.vo\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vd.vo\i}};
+	\node[anch] (x) at (vc.vo\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vc.vo\i}};
+	\node[anch] (x) at (vd.vi\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vd.vi\i}};
+}
+\end{tikzpicture}
+\end{figure}
 
 \newpage
 \appendix

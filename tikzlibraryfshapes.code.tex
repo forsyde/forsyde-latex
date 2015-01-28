@@ -33,7 +33,7 @@
 \gdef\portlist{}
 \newcommand\makeioanchors[2]{
 	\anchorsfromrectangle
-	\xdef\portlist{} \foreach \i in {1,...,#1} {\pgfmathparse{1-\i*(1/(#1+1))} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+	\xdef\portlist{} \foreach \i in {1,...,#1} {\pgfmathparse{1-\i*(1/(#1+.0003))+.5/(#1+.0003)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{
 			\noexpand\anchor{i\i}{
@@ -43,7 +43,7 @@
 			}
 		}\doanchor
 	}
-	\xdef\portlist{} \foreach \i in {1,...,#2} {\pgfmathparse{1-\i*(1/(#2+1))} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+	\xdef\portlist{} \foreach \i in {1,...,#2} {\pgfmathparse{1-\i*(1/(#2+.0003))+.5/(#2+.0003)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{
 			\noexpand\anchor{o\i}{
@@ -652,9 +652,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pgfdeclareshape{standardskeletonbox}{%
 	\anchorsfromrectangle
-	\savedanchor\northeast{\pgf@x=2pt\pgf@y=15pt}
+	\savedanchor\northeast{\pgf@x=7pt\pgf@y=20pt}
 	\savedanchor\centerpoint{\pgf@x=0pt\pgf@y=0pt}
-	\savedanchor\southwest{\pgf@x=0pt\pgf@y=-15pt}
+	\savedanchor\southwest{\pgf@x=-7pt\pgf@y=-20pt}
 	\xdef\portlist{}
 	\foreach \i in {0,...,7} {
 		\pgfmathparse{1-\i*(2/7)}
@@ -665,7 +665,7 @@
 			\noexpand\anchor{vi\i}{
 				\noexpand\pgfmathsetlength{\foo}{\n*20pt}
 				\noexpand\pgf@y=\noexpand\foo
-				\noexpand\pgf@x=-4pt
+				\noexpand\pgf@x=-5pt
 			}
 		} \doanchor
 	}
@@ -674,7 +674,7 @@
 			\noexpand\anchor{vo\i}{
 				\noexpand\pgfmathsetlength{\foo}{\n*20pt}
 				\noexpand\pgf@y=\noexpand\foo
-				\noexpand\pgf@x=7pt
+				\noexpand\pgf@x=5pt
 			}
 		} \doanchor
 	}
@@ -683,11 +683,13 @@
 		\foreach \i in {1,...,8} {
 			\pgfmathparse{1-\i*(1/7)+(1/7)}
 			\pgfmathsetlength{\baz}{20pt-(\pgfmathresult*40pt)}
-			\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x
+			\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \advance\pgf@xb by2pt
 			\pgf@ya = \baz \pgf@yb = \baz
-			\advance\pgf@xb by3pt
 			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
 			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+			\northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \advance\pgf@xb by-2pt	
+			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}	
 			\pgfusepath{stroke}
 		}
 	}

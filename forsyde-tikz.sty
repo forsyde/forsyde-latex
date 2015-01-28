@@ -288,3 +288,50 @@
 		};
 	}
 }
+
+% Parallel communication
+\pgfkeys{%
+	/parcomm/.is family, /parcomm,
+	default/.style = {reverse = false, inner type=noinner, outer type=v2vbase , ni=1, no=1, },
+ 	inner type/.estore in = \pInnerType,
+ 	outer type/.estore in = \pOuterType,
+	ni/.estore in = \pNIn,
+	no/.estore in = \pNOut,
+	reverse/.is toggle,
+}
+\tikzset{% 
+    noinner/.style={draw=none, inner sep=0pt, minimum height=30pt},
+    funcbox/.style={draw=none, fill=\defaultfillcolor, rotate=90, minimum width=30pt, minimum height=10pt},
+}
+% Generic visually represented parallel communication process
+% #1 = environment keys
+% #2 = node name
+% #3 = node position
+\newcommand\parcomm[3][]{
+	\pgfkeys{/parcomm, default, #1}%
+	\iftoggle{/parcomm/reverse}{
+		\node[\pInnerType, rotate=180] (v#2) at (#3) {};
+		\node[\pOuterType, draw, inner sep=0pt, fit=(v#2), rotate=180,] (#2_outershape) {};
+		\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_outershape),] (#2) {};
+	}{
+		\node[\pInnerType] (v#2) at (#3) {};
+		\node[\pOuterType, draw, inner sep=0pt, fit=(v#2),] (#2_outershape) {};
+		\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_outershape),] (#2) {};
+	}
+}
+% Generic function-based parallel communication process
+% #1 = environment keys
+% #2 = node name
+% #3 = node position
+% #4 = function
+\newcommand\parcommfunc[4][]{
+	\pgfkeys{/parcomm, default, #1}%
+	\node[funcbox] (v#2) at (#3) {#4};
+	\iftoggle{/parcomm/reverse}{
+		\node[\pOuterType, draw, inner sep=1pt, fit=(v#2), rotate=180,] (#2_outershape) {};
+		\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_outershape),] (#2) {};
+	}{
+		\node[\pOuterType, draw, inner sep=1pt, fit=(v#2),] (#2_outershape) {};
+		\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_outershape),] (#2) {};
+	}
+}
