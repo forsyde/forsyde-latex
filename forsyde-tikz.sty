@@ -104,7 +104,12 @@
 	/tikz/mocin = none,
 	/tikz/mocout/.store in = \MoCout,
 	/tikz/mocout = none,
+	/tikz/token pos/.store in = \tokPos,
+	/tikz/token pos = 0.5,
+	/tikz/deviate/.store in = \pDeviate,
+	/tikz/deviate = 10pt,
 }
+
 \newcommand{\getmoclabel}[1]{\ifthenelse{\equal{#1}{sy}}{SY}{\ifthenelse{\equal{#1}{de}}{DE}{\ifthenelse{\equal{#1}{ct}}{CT}{\ifthenelse{\equal{#1}{sdf}}{SDF}{}}}}}
 
 %%%%%%%%%%%%%%%%%

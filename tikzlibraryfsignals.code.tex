@@ -132,7 +132,7 @@
 \newlength{\xTemp}
 \newlength{\inTemp}
 \ExplSyntaxOn
-\NewDocumentCommand{\tokens}{ >{ \SplitList {,} } m }
+\NewDocumentCommand{\tokens}{ >{ \SplitList { - } } m }
  {
   \setlength{\xTemp}{0pt}
   \setlength{\inTemp}{\halftokensize}
@@ -141,6 +141,7 @@
 \cs_new_protected:Nn \davs__tokens_rec:n
  {
   \davs__tokens_do:n { #1 } 
+  
   \pgfmathsetlength{\xTemp}{\xTemp+\tokensize+\tokensize}
  }
 \cs_new_protected:Nn \davs__tokens_do:n
@@ -154,7 +155,7 @@
   	\ifthenelse{ \equal{#1}{function}}{
 		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,-\tokensize) rectangle (\xTemp+\tokensize,\tokensize);
 	}{
-  	\ifthenelse{ \equal{#1}{scalarAbstExt}}{
+  	\ifthenelse{ \equal{#1}{scalarAE}}{
 		\draw[fill=\defaultfillcolor, thin] (\xTemp,0) circle [radius=\tokensize];
 		\pgfsetlinewidth{.5pt} 
 		\pgfpathmoveto{\pgfpoint{\xTemp}{-.75\inTemp}}
@@ -164,7 +165,7 @@
 		\pgfpathlineto{\pgfpoint{\xTemp+\inTemp}{-.75\inTemp}}
 		\pgfusepathqstroke
 	}{
-	\ifthenelse{ \equal{#1}{vectorAbstExt}}{
+	\ifthenelse{ \equal{#1}{vectorAE}}{
 		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,0) -- (\xTemp,-\tokensize) -- (\xTemp+\tokensize,0) -- (\xTemp,\tokensize) -- cycle;
 		\pgfsetlinewidth{.5pt} 
 		\pgfpathmoveto{\pgfpoint{\xTemp}{-.75\inTemp}}
@@ -174,7 +175,7 @@
 		\pgfpathlineto{\pgfpoint{\xTemp+.75\inTemp}{-.75\inTemp}}
 		\pgfusepathqstroke
 	}{
-  	\ifthenelse{ \equal{#1}{functionAbstExt}}{
+  	\ifthenelse{ \equal{#1}{functionAE}}{
 		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,-\tokensize) rectangle (\xTemp+\tokensize,\tokensize);
 		\pgfsetlinewidth{.5pt} 
 		\pgfpathmoveto{\pgfpoint{\xTemp}{-\inTemp}}
@@ -193,14 +194,7 @@
 % Path splines syntax
 %
 \tikzset{
-  tok/.style 2 args={
-  	decoration={
-  		name=markings,
-		post length=1pt,
-		pre length=1pt,
-    	mark=at position #1 with {\tokens{#2}
-    	}
-  	}, postaction=decorate },
+  token/.style={decoration={name=markings, post length=1pt, pre length=1pt, mark=at position \tokPos with {\tokens{#1}}}, postaction=decorate },
   -|-/.style={ to path={ (\tikztostart) 
 	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
 	|- (\tikztotarget) 
@@ -213,29 +207,40 @@
     \tikztonodes }
   },
   |-|/.default=0.5,
-  -|-|/.style args = {#1:#2}{ to path={ (\tikztostart) 
+  -|-|/.style args = {#1}{ to path={ (\tikztostart) 
 	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
-	|- ([yshift=#2]\tikztotarget) 
+	|- ([yshift=\pDeviate]\tikztotarget) 
 	-| (\tikztotarget) 
 	\tikztonodes }
   },
-  -|-|/.default=0.5:10pt,
-  -|-|-/.style args = {#1:#2:#3}{ to path={ (\tikztostart) 
+  -|-|/.default=0.5,
+  -|-|-/.style args = {#1:#2}{ to path={ (\tikztostart) 
 	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
-	|- ([yshift=#3]$(\tikztostart)!#2!(\tikztotarget)$) 
-	-| ([yshift=#3]$(\tikztostart)!#2!(\tikztotarget)$)
+	|- ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
+	-| ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
 	|- (\tikztotarget) 
 	\tikztonodes }
   },
-  -|-|-/.default=0.3:0.7:20pt,
-  |-|-|/.style args = {#1:#2:#3}{ to path={ (\tikztostart) 
+  -|-|-/.default=0.3:0.7,
+  |-|-|/.style args = {#1:#2}{ to path={ (\tikztostart) 
 	|- ($(\tikztostart)!#1!(\tikztotarget)$) 
-	-| ([xshift=#3]$(\tikztostart)!#2!(\tikztotarget)$) 
-	|- ([xshift=#3]$(\tikztostart)!#2!(\tikztotarget)$)
+	-| ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
+	|- ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
 	-| (\tikztotarget) 
 	\tikztonodes }
   },
-  |-|-|/.default=0.3:0.7:20pt,
+  |-|-|/.default=0.3:0.7,
+}
+
+% Finally, edge drawing helpers
+\def\signal[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, s=\MoC,] (#4);
+}
+\def\vector[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, v=\MoC,] (#4);
+}
+\def\function[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, f,] (#4);
 }
 
 

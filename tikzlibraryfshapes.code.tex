@@ -33,7 +33,10 @@
 \gdef\portlist{}
 \newcommand\makeioanchors[2]{
 	\anchorsfromrectangle
-	\xdef\portlist{} \foreach \i in {1,...,#1} {\pgfmathparse{1-\i*(1/(#1+.0003))+.5/(#1+.0003)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+        \xdef\portlist{}
+	\ifnum #1=0 \xdef\portlist{1/0}
+        \else \foreach \i in {1,...,#1} {\pgfmathparse{1-\i*(1/#1)+.5/(#1)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+        \fi
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{
 			\noexpand\anchor{i\i}{
@@ -43,7 +46,9 @@
 			}
 		}\doanchor
 	}
-	\xdef\portlist{} \foreach \i in {1,...,#2} {\pgfmathparse{1-\i*(1/(#2+.0003))+.5/(#2+.0003)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+	\ifnum #2=0 \xdef\portlist{1/0}
+        \else \foreach \i in {1,...,#2} {\pgfmathparse{1-\i*(1/#2)+.5/(#2)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+        \fi
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{
 			\noexpand\anchor{o\i}{
