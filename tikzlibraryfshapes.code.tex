@@ -47,7 +47,7 @@
 		}\doanchor
 	}
 	\ifnum #2=0 \xdef\portlist{1/0}
-        \else \foreach \i in {1,...,#2} {\pgfmathparse{1-\i*(1/#2)+.5/(#2)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+        \else \foreach \i in {1,...,#2} {\pgfmathparse{\i*(1/#2)-.5/(#2)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
         \fi
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{

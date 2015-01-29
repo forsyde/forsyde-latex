@@ -23,14 +23,14 @@
 \maketitle
 
 \begin{abstract}
-This document is the reference manual for the \textsc{ForSyDe-TikZ} and \textsc{ForSyDe-ProcCons} packages. A new feature in the library should be reflected and documented in this manual.
+This document is the reference manual for the \textsc{ForSyDe-TikZ} and \textsc{ForSyDe-PC} packages. A new feature in the library should be reflected and documented in this manual.
 \end{abstract}
 
 \section{Introduction}
 
 \textsc{ForSyDe-TikZ} is a collection \textsc{TikZ} \& \textsc{PGF} shapes and environments for the \textsc{ForSyDe} methodology. (...)
 
-\textsc{ForSyDe-ProcCons} is a library of helpers for \textsc{ForSyDe} process constructors.
+\textsc{ForSyDe-PC} is a library of helpers for \textsc{ForSyDe} process constructors.
 
 \section{Installation}
 
@@ -48,70 +48,6 @@ The \textsc{ForSYDe-TikZ} package is included with
 \subsection{Environments \& process networks}
 
 ...
-
-\subsection{Paths}
-
-\subsubsection{Signals}
-
-\begin{verbatim}
-	\signal[options] (from) shape (to);	
-\end{verbatim}
-
-\begin{verbatim}
-	\signal[] (0,0) -> (1.5,0); 
-	\signal[moc=ct, token=vectorAE-functionAE] (2,0) <- (3.5,0);
-	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,0) p->p (5.5,0);
-	\signal[token=scalarAE, -|-] (6,-.3) ->p (7.5,.3);
-	\signal[token pos=0.4, token=scalar-vector] (8,0) -> (9.5,0);
-\end{verbatim}
-\begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-	\signal[] (0,2) -> (1.5,2); 
-	\signal[moc=ct, token=vectorAE-functionAE] (2,2) <- (3.5,2);
-	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2) p->p (5.5,2);
-	\signal[token=scalarAE, -|-] (6,1.7) ->p (7.5,2.3);
-	\signal[token pos=0.4, token=scalar-vector] (8,2) -> (9.5,2);
-\end{tikzpicture}
-\end{figure}
-
-\subsubsection{Vectors}
-
-\begin{verbatim}
-	\vector[options] (from) shape (to);	
-\end{verbatim}
-
-\begin{verbatim}
-	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,0) p->p (2,0);	
-	\vector[moc=sdf] (3,0) p->p (5,0);
-	\vector[token=vectorAE] (6,0) p->p (8,0);
-\end{verbatim}
-\begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,1) p->p (2,1);	
-	\vector[moc=sdf] (3,1) p->p (5,1);
-	\vector[token=vectorAE] (6,1) p->p (8,1);
-\end{tikzpicture}
-\end{figure}
-
-\subsubsection{Function paths}
-
-\begin{verbatim}
-	\function[options] (from) shape (to);	
-\end{verbatim}
-
-\begin{verbatim}
-	\function[] (0,0) -> (2,0);
-	\function[|-|=.6] (3,.5) fi-> (4,-.5);
-	\function[|-|-|] (5,.5) <- (5,-.5);
-\end{verbatim}
-
-\begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-	\function[] (0,0) -> (2,0);
-	\function[|-|=.6] (3,.5) fi-> (4,-.5);
-	\function[|-|-|] (5,.5) <- (5,-.5);
-\end{tikzpicture}
-\end{figure}
 
 \subsection{Leaf processes}
 
@@ -272,16 +208,16 @@ An example, showing the available anchors:
 \begin{verbatim}
 \compositebbox[ni=1, no=1] {bb} {0,0} {BlackBox};
 \primitivebox[] {dm1} {6,-0.5} {Dummy1};
-\primitivebox[] {dm2} {6,0.5} {Dummy2};
+\primitivebox {dm2} {6,0.5} {Dummy2};
 \composite[ni=2, no=3, inner sep=25pt] {cp1} {(bb)} {CP1};
 \composite[ni=2, no=3, reverse] {cp2} {(dm1)(dm2)} {CP2};
 
 \end{verbatim}
 \begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
+\begin{tikzpicture}
 \compositebbox[ni=1, no=1] {bb} {0,0} {BlackBox};
-\primitivebox[] {dm1} {6,-0.5} {Dummy1};
-\primitivebox[] {dm2} {6,0.5} {Dummy2};
+\primitivebox {dm1} {6,-0.5} {Dummy1};
+\primitivebox {dm2} {6,0.5} {Dummy2};
 \composite[ni=2, no=3, inner sep=25pt] {cp1} {(bb)} {CP1};
 \composite[ni=2, no=3, reverse] {cp2} {(dm1)(dm2)} {CP2};
 
@@ -332,18 +268,18 @@ The \texttt{options} are:
 
 An example, showing the available anchors:
 \begin{verbatim}
-\primitivebox[] {dm1} {0,-0.5} {Dummy 1};
-\primitivebox[] {dm2} {0,0.5} {Dummy 2};
-\primitivebox[] {dm3} {6,0} {Dummy 3};
+\primitivebox {dm1} {0,-0.5} {Dummy 1};
+\primitivebox {dm2} {0,0.5} {Dummy 2};
+\primitivebox {dm3} {6,0} {Dummy 3};
 \parcomp[ni=2, no=2, nf=2, type=datapar] {dp} {(dm1)(dm2)} {Farm1};
 \parcomp[ni=1, no=2, nf=3, f3=scanld (+), type=pipe, reverse] {pr} {(dm3)} {PipeRev1};
 \end{verbatim}
 
 \begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-\primitivebox[] {dm1} {0,-0.5} {Dummy 1};
-\primitivebox[] {dm2} {0,0.5} {Dummy 2};
-\primitivebox[] {dm3} {6,0} {Dummy 3};
+\begin{tikzpicture}
+\primitivebox {dm1} {0,-0.5} {Dummy 1};
+\primitivebox {dm2} {0,0.5} {Dummy 2};
+\primitivebox {dm3} {6,0} {Dummy 3};
 \parcomp[ni=2, no=2, nf=2, type=datapar] {dp} {(dm1)(dm2)} {Farm1};
 \parcomp[ni=1, no=2, nf=3, f3=scanld (+), type=pipe, reverse] {pr} {(dm3)} {PipeRev1};
 
@@ -396,7 +332,7 @@ reverse] {d}{9,0};
 \end{verbatim}
 
 \begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
+\begin{tikzpicture}
 \parcomm[outer type=s2vbase] {a}{0,0};
 \parcommfunc[no=2] {b}{3,0}{$f(i)$};
 \parcomm[inner type=standardskeletonbox] {c}{6,0};
@@ -415,6 +351,224 @@ reverse] {d}{9,0};
 }
 \end{tikzpicture}
 \end{figure}
+
+\subsection{Paths}
+
+Data flow in ForSyDe is represented with paths. \textsc{ForSyDe-TikZ} provides three macros for drawing signals (\texttt{\string\signal}), vectors (\texttt{\string\vector}) or function interfaces (\texttt{\string\function}) between process anchors. 
+
+All three macros have an \texttt{options} field which accepts the following keys:
+\begin{itemize}
+\item \texttt{moc=[none,ct,de,sy,sdf]} the model of computation. Defaut is \texttt{none}.
+\item \texttt{token=[scalar,vector,function,scalarAE,vectorAE,functionAE]} draws symbols for depicting the token structure of ForSyDe signals or vectors. Function paths will ignore this key. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar, absent extended vector and function can be drawn with \texttt{token=scalar-vectorAE-function}.
+\item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor where the token begins to be drawn.
+\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{deviation=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
+\end{itemize}
+
+\subsubsection{Signals}
+
+Signals are the only means of transporting data in ForSyDe process networks. For a theoretical background check \texttt{[forsyde:doc]}. 
+
+\begin{verbatim}
+	\signal[options] (from) shape (to);	
+\end{verbatim}
+
+\textbf{IMPORTANT:} this is a \texttt{\string\def} macro, thus the format has to be strictly respected (spaces, parentheses and semicolon).
+
+An example, showing the available anchors:
+\begin{verbatim}
+	\signal[] (0,0) -> (1.5,0); 
+	\signal[moc=ct, token=vectorAE-functionAE] (2,0) <- (3.5,0);
+	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,0) p->p (5.5,0);
+	\signal[token=scalarAE, -|-] (6,-.3) ->p (7.5,.3);
+	\signal[token pos=0.4, token=scalar-vector] (8,0) -> (9.5,0);
+\end{verbatim}
+\begin{figure}[htb!]\centering
+\begin{tikzpicture}[]
+	\signal[] (0,2) -> (1.5,2); 
+	\signal[moc=ct, token=vectorAE-functionAE] (2,2) <- (3.5,2);
+	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2) p->p (5.5,2);
+	\signal[token=scalarAE, -|-] (6,1.7) ->p (7.5,2.3);
+	\signal[token pos=0.4, token=scalar-vector] (8,2) -> (9.5,2);
+\end{tikzpicture}
+\end{figure}
+
+\subsubsection{Vectors}
+
+Vectors can be regarded as homogeneous bundles of signals. The token symbols can depict the structure of the signals composing a vector. For a theoretical background check \texttt{[forsyde:doc]}. 
+
+\begin{verbatim}
+	\vector[options] (from) shape (to);	
+\end{verbatim}
+
+\textbf{IMPORTANT:} this is a \texttt{\string\def} macro, thus the format has to be strictly respected (spaces, parentheses and semicolon).
+
+An example, showing the available anchors:
+\begin{verbatim}
+	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,0) p->p (2,0);	
+	\vector[moc=sdf] (3,0) p->p (5,0);
+	\vector[token=vectorAE] (6,0) p->p (8,0);
+\end{verbatim}
+\begin{figure}[htb!]\centering
+\begin{tikzpicture}[]
+	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,1) p->p (2,1);	
+	\vector[moc=sdf] (3,1) p->p (5,1);
+	\vector[token=vectorAE] (6,1) p->p (8,1);
+\end{tikzpicture}
+\end{figure}
+
+\subsubsection{Function paths}
+
+The function path may depict relations between functions and processes. For a theoretical background check \texttt{[forsyde:doc]}. 
+
+\begin{verbatim}
+	\function[options] (from) shape (to);	
+\end{verbatim}
+
+\textbf{IMPORTANT:} this is a \texttt{\string\def} macro, thus the format has to be strictly respected (spaces, parentheses and semicolon).
+
+An example, showing the available anchors:
+\begin{verbatim}
+	\function[] (0,0) -> (2,0);
+	\function[|-|=.6] (3,.5) fi-> (4,-.5);
+	\function[|-|-|] (5,.5) <- (5,-.5);
+\end{verbatim}
+\begin{figure}[htb!]\centering
+\begin{tikzpicture}[]
+	\function[] (0,0) -> (2,0);
+	\function[|-|=.6] (3,.5) fi-> (4,-.5);
+	\function[|-|-|] (5,.5) <- (5,-.5);
+\end{tikzpicture}
+\end{figure}
+
+\subsection{Miscellaneous functions}
+
+Following is a list of miscellaneous functions and environments provided for user convenience:
+
+\begin{itemize}
+\item \texttt{\string\textleftof\{node\}\{text\}}
+\item \texttt{\string\textrightof\{node\}\{text\}}
+\item \texttt{\string\textaboveof\{node\}\{text\}}
+\item \texttt{\string\textbelowof\{node\}\{text\}}
+\end{itemize}
+
+\subsection{Further customizing the environment}
+
+The following commands can be used in the document preamble for changing environment variables.
+\begin{verbatim}
+% Colors
+\renewcommand{\defaultdrawcolor}{[color]}
+\renewcommand{\defaultfillcolor}{[color]}
+\definecolor{sycolor}{[coord sys]}{[color coord]}
+\definecolor{ctcolor}{[coord sys]}{[color coord]}
+\definecolor{decolor}{[coord sys]}{[color coord]}
+\definecolor{sdfcolor}{[coord sys]}{[color coord]}
+\definecolor{blackboxcolor}{[coord sys]}{[color coord]}}
+% line widths
+\pgfmathsetlength{\sepq}{[size]}           % small inter-node separation 
+\renewcommand{\compositelinewidth}{[size]}
+\renewcommand{\skeletonlinewidth}{[size]}  % parallel processes line width
+\renewcommand{\signalpathlinewidth}{[size]}
+\renewcommand{\functionpathlinewidth}{[size]}
+\renewcommand{\vectorpathlinewidth}{[size]}
+% sizes, etc.
+\renewcommand{\tokensize}{[size]}
+\renewcommand{\halftokensize}{[size]}
+\renewcommand{\vectorportsize}{[size]}
+\renewcommand{\signalportsize}{[size]}
+\end{verbatim}
+
+\section{The ForSyDe-PC package}
+
+The \textsc{ForSyDe-PC} package includes ForSyDe process constructors, written as macros. For a detailed theoretical background in process constructors check \texttt{[forsyde:doc]}. It is included with: 
+
+\begin{verbatim}
+	\usepackage{forsyde-pc}
+\end{verbatim}
+
+Following is a list with all process constructors including valid option keys:
+
+\begin{verbatim}
+\delay    [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\delayn   [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\map      [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\comb     [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\combII   [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\combIII  [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\combIV   [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\scanl    [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\scanlII  [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\scanlIII [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\scanld   [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\scanldII [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\scanldIII[moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\moore    [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\mooreII  [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\mooreIII [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\mealy    [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\mealyII  [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\mealyIII [moc=,f1=,f2=,f3=,line sep=,reverse]{id}{pos}{label}
+\source   [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\filter   [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+\hold     [moc=,f1=,line sep=,reverse]        {id}{pos}{label}
+\fillS    [moc=,f1=,f2=,line sep=,reverse]    {id}{pos}{label}
+
+\zip     [moc=,reverse]{id}{pos}
+\zipIII  [moc=,reverse]{id}{pos}
+\zipIV   [moc=,reverse]{id}{pos}
+\zipV    [moc=,reverse]{id}{pos}
+\zipVI   [moc=,reverse]{id}{pos}
+\unzip   [moc=,reverse]{id}{pos}
+\unzipIII[moc=,reverse]{id}{pos}
+\unzipIV [moc=,reverse]{id}{pos}
+\unzipV  [moc=,reverse]{id}{pos}
+\unzipVI [moc=,reverse]{id}{pos}
+
+\dataparallel[ni=,no=,inner sep=,reverse]    {id}{included}{label}
+\farm        [ni=,no=,f1=,inner sep=,reverse]{id}{included}{label}
+\pipe        [ni=,no=,inner sep=,reverse]    {id}{included}{label}
+\reduce      [ni=,no=,inner sep=,reverse]    {id}{included}{label}
+
+\unzipx  [reverse]{id}{pos}
+\zipx    [reverse]{id}{pos}
+\oddsV   [reverse]{id}{pos}
+\evensV  [reverse]{id}{pos}
+\reverseV[reverse]{id}{pos}
+\groupV  [reverse]{id}{pos}
+\concatV [reverse]{id}{pos}
+
+\end{verbatim}
+
+%\newcommand\evensV[2][]{%
+%	\parcomm[#1, outer type=v2vbase]{#2}{#3};
+%	\foreach \i in {1,3,...,7} {
+%		\draw[line width=.3pt] (v#2.vi\i) -- (v#2.vo\i);
+%	}
+%}
+%\newcommand\reverseV[2][]{%
+%	\parcomm[#1, outer type=v2vbase]{#2}{#3};
+%	\foreach \i in {0,1,...,7} {
+%		\pgfmathtruncatemacro\result{7-\i}
+%		\draw[line width=.3pt] (v#2.vi\i) -- (v#2.vo\result);
+%	}
+%}
+%\newcommand\groupV[2][]{%
+%	\parcomm[#1, outer type=v2gbase]{#2}{#3};
+%	\foreach \i in {0,1,...,7} {
+%		\draw[line width=.3pt] (v#2.vi\i) -- (v#2.vo\i);
+%	}
+%}
+%\newcommand\concatV[2][]{%
+%	\parcomm[#1, outer type=v2gbase]{#2}{#3};
+%	\foreach \i in {0,1,...,7} {
+%		\draw[line width=.3pt] (v#2.vi\i) -- (v#2.vo\i);
+%	}
+%}
 
 \newpage
 \appendix
