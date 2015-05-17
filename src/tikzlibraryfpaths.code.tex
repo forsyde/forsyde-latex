@@ -2,44 +2,56 @@
 % for ForSyDe signals
 %
 % Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
-% Version: 0.1
-% Date: 2014/11/20
+% Version: 0.3
+% Date: 2015/05/17
 
+%
+% Extended general shape options, cf. tikz.code.tex
+%
+% #1 = source node
+% Remark: The node distance is used
+%         for the distance between the borders of two nodes
+\tikzoption{below from}{\tikz@from{#1}{1}{-90}{south}{north}}%
+\tikzoption{right from}{\tikz@from{#1}{1}{0}{east}{west}}%
+\tikzoption{above from}{\tikz@from{#1}{1}{90}{north}{south}}%
+\tikzoption{left from}{\tikz@from{#1}{1}{180}{west}{east}}%
+\tikzoption{below left from}{\tikz@from{#1}{1.414214}{-135}{south west}{north east}}%
+\tikzoption{below right from}{\tikz@from{#1}{1.414214}{-45}{south east}{north west}}%
+\tikzoption{above right from}{\tikz@from{#1}{1.414214}{45}{north east}{south west}}%
+\tikzoption{above left from}{\tikz@from{#1}{1.414214}{135}{north west}{south east}}%
+\def\tikz@from#1#2#3#4#5{%
+  \def\tikz@anchor{#5}%
+  \let\tikz@do@auto@anchor=\relax%
+  \tikz@addtransform{\pgftransformshift{\pgfpointscale{#2}{\pgfpointpolar{#3}{\tikz@node@distance}}}}%
+  \def\tikz@node@at{\pgfpointanchor{#1}{#4}}}
 
 
 % Styles for signal, vector and function tips.
 \newcommand{\pgfarrowsextend}[1]{%
-  \ifdim \pgflinewidth>2pt 
-	\@tempdima=\vectorportsize 
-  \else 
-	\@tempdima=\signalportsize 
+  \ifdim \pgflinewidth>2pt \@tempdima=\vectorportsize 
+  \else                    \@tempdima=\signalportsize 
   \fi
   \pgfarrowsleftextend{-#1\@tempdima}
   \pgfarrowsrightextend{#1\@tempdima}
 }
-\newcommand{\pgfarrowsarrowtip}[1]{%
-  \ifdim \pgflinewidth>2pt 
-	\@tempdima=\vectorportsize 
-  \else 
-	\@tempdima=\signalportsize 
+\newcommand{\pgfarrowsatip}[1]{% dimension, proportion1, proportion2
+  \ifdim \pgflinewidth>2pt \@tempdima=\vectorportsize 
+  \else                    \@tempdima=\signalportsize 
   \fi
   \pgfpathmoveto{\pgfpoint{2\@tempdima}{0pt}}
-  \pgfpathlineto{\pgfpoint{-\@tempdima}{\@tempdima}}
+  \pgfpathlineto{\pgfpoint{0}{\@tempdima}}
   \pgfpathlineto{\pgfpointorigin}
-  \pgfpathlineto{\pgfpoint{-\@tempdima}{-\@tempdima}}
+  \pgfpathlineto{\pgfpoint{0}{-\@tempdima}}
   \pgfusepathqfill
 }
-
-\newcommand{\pgfarrowsarrowsquaretip}[1]{%
-  \ifdim \pgflinewidth>2pt 
-	\@tempdima=\vectorportsize 
-  \else 
-	\@tempdima=\signalportsize 
+\newcommand{\pgfarrowsatipsq}[1]{%
+  \ifdim \pgflinewidth>2pt \@tempdima=\vectorportsize 
+  \else                    \@tempdima=\signalportsize 
   \fi
   \pgfpathmoveto{\pgfpoint{2\@tempdima}{0pt}}
-  \pgfpathlineto{\pgfpoint{-\@tempdima}{\@tempdima}}
+  \pgfpathlineto{\pgfpoint{0}{\@tempdima}}
   \pgfpathlineto{\pgfpointorigin}
-  \pgfpathlineto{\pgfpoint{-\@tempdima}{-\@tempdima}}
+  \pgfpathlineto{\pgfpoint{0}{-\@tempdima}}
   \pgfusepathqfill
   \pgfpathmoveto{\pgfpoint{4\@tempdima}{-\@tempdima}}
   \pgfpathlineto{\pgfpoint{4\@tempdima}{\@tempdima}}
@@ -49,12 +61,9 @@
   \pgfsetfillcolor{\defaultdrawcolor}
   \pgfusepathqfill
 }
-
-\newcommand{\pgfarrowsfullsquaretip}[1]{%
-  \ifdim \pgflinewidth>2pt 
-	\@tempdima=\vectorportsize 
-  \else 
-	\@tempdima=\signalportsize 
+\newcommand{\pgfarrowsasq}[1]{%
+  \ifdim \pgflinewidth>2pt \@tempdima=\vectorportsize 
+  \else                    \@tempdima=\signalportsize 
   \fi
   \pgfpathmoveto{\pgfpoint{\@tempdima}{-\@tempdima}}
   \pgfpathlineto{\pgfpoint{\@tempdima}{\@tempdima}}
@@ -64,8 +73,7 @@
   \pgfsetfillcolor{\defaultdrawcolor}
   \pgfusepathqfill
 }
-
-\newcommand{\pgfarrowsemptysquaretip}[1]{%
+\newcommand{\pgfarrowsbtipsq}[1]{%
   \pgfsetdash{{1cm}}{0cm} 
   \pgfsetcolor{\defaultdrawcolor}%
   \@tempdima=#1\pgflinewidth%
@@ -84,8 +92,7 @@
   \pgfsetstrokecolor{\defaultdrawcolor}
   \pgfusepathqstroke
 }
-
-\newcommand{\pgfarrowsemptyarrowtip}[1]{%
+\newcommand{\pgfarrowsbsq}[1]{%
   \pgfsetdash{{1cm}}{0cm} 
   \pgfsetcolor{\defaultdrawcolor}%
   \@tempdima=#1\pgflinewidth%
@@ -98,12 +105,12 @@
   \pgfusepathqstroke
 }
 
-\pgfarrowsdeclare{signal tip}{signal tip}{\pgfarrowsextend{2}}{\pgfarrowsarrowtip{2}}
-\pgfarrowsdeclare{>p}{>p}{\pgfarrowsextend{3}}{\pgfarrowsarrowsquaretip{2}}
-\pgfarrowsdeclare{p<}{p<}{\pgfarrowsextend{3}}{\pgfarrowsarrowsquaretip{2}}
-\pgfarrowsdeclare{p}{p}{\pgfarrowsextend{0}}{\pgfarrowsfullsquaretip{2}}
-\pgfarrowsdeclare{function tip}{function tip}{\pgfarrowsextend{1}}{\pgfarrowsemptyarrowtip{3}}
-\pgfarrowsdeclare{fi}{fi}{\pgfarrowsextend{-1.5}}{\pgfarrowsemptysquaretip{3}}
+\pgfarrowsdeclare{stip}{stip}{\pgfarrowsextend{2}}{\pgfarrowsatip{2}}
+\pgfarrowsdeclare{>p}{>p}    {\pgfarrowsextend{3}}{\pgfarrowsatipsq{2}}
+\pgfarrowsdeclare{p<}{p<}    {\pgfarrowsextend{3}}{\pgfarrowsatipsq{2}}
+\pgfarrowsdeclare{p}{p}      {\pgfarrowsextend{0}}{\pgfarrowsasq{2}}
+\pgfarrowsdeclare{ftip}{ftip}{\pgfarrowsextend{1}}{\pgfarrowsbtipsq{3}}
+\pgfarrowsdeclare{fi}{fi}    {\pgfarrowsextend{-1.5}}{\pgfarrowsbsq{3}}
 
 
 %
@@ -121,9 +128,9 @@
 	  	}}}
     \fi
   },
-  s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= signal tip, draw},
-  v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= signal tip, draw},
-  f/.style       = {line width=\functionpathlinewidth, >= function tip, dotted, shorten >= 1mm, shorten <= 1mm, draw},
+  s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, draw},
+  v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, draw},
+  f/.style       = {line width=\functionpathlinewidth, >= ftip, dotted, shorten >= 1mm, shorten <= 1mm, draw},
 }
 
 %
@@ -132,10 +139,22 @@
 \newlength{\xTemp}
 \newlength{\inTemp}
 \ExplSyntaxOn
-\NewDocumentCommand{\tokens}{ >{ \SplitList { - } } m }
- {
-  \setlength{\xTemp}{0pt}
+
+\NewDocumentCommand{\tokens}{m}
+ {% #1 = character, #2 = string
+  \youra_count_char:nn { - } { #1 }
+  \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
   \setlength{\inTemp}{\halftokensize}
+  \drawtokens{ #1 }
+ }
+\int_new:N \l_youra_count_char_int
+\cs_new_protected:Npn \youra_count_char:nn #1 #2
+ {
+  \regex_count:nnN { #1 } { #2 } \l_youra_count_char_int
+ }
+ 
+\NewDocumentCommand{\drawtokens}{ >{ \SplitList { - } } m }
+ {
   \ProcessList { #1 } { \davs__tokens_rec:n }
  }
 \cs_new_protected:Nn \davs__tokens_rec:n
@@ -196,40 +215,35 @@
 \tikzset{
   token/.style={decoration={name=markings, post length=1pt, pre length=1pt, mark=at position \tokPos with {\tokens{#1}}}, postaction=decorate },
   -|-/.style={ to path={ (\tikztostart) 
-	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
+	-| ([xshift=\pDeviate]$(\tikztostart)!#1!(\tikztotarget)$) 
 	|- (\tikztotarget) 
 	\tikztonodes }
-  },
-  -|-/.default=0.5,
+  }, -|-/.default=0.5,
   |-|/.style={to path={ (\tikztostart) 
 	|- ($(\tikztostart)!#1!(\tikztotarget)$) 
 	-| (\tikztotarget)
     \tikztonodes }
-  },
-  |-|/.default=0.5,
+  }, |-|/.default=0.5,
   -|-|/.style args = {#1}{ to path={ (\tikztostart) 
 	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
 	|- ([yshift=\pDeviate]\tikztotarget) 
 	-| (\tikztotarget) 
 	\tikztonodes }
-  },
-  -|-|/.default=0.5,
+  }, -|-|/.default=0.5,
   -|-|-/.style args = {#1:#2}{ to path={ (\tikztostart) 
 	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
 	|- ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
 	-| ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
 	|- (\tikztotarget) 
 	\tikztonodes }
-  },
-  -|-|-/.default=0.3:0.7,
+  }, -|-|-/.default=0.3:0.7,
   |-|-|/.style args = {#1:#2}{ to path={ (\tikztostart) 
 	|- ($(\tikztostart)!#1!(\tikztotarget)$) 
 	-| ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
 	|- ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
 	-| (\tikztotarget) 
 	\tikztonodes }
-  },
-  |-|-|/.default=0.3:0.7,
+  }, |-|-|/.default=0.3:0.7,
 }
 
 % Finally, edge drawing helpers
@@ -242,7 +256,5 @@
 \def\function[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, f,] (#4);
 }
-
-
 
 \endinput
