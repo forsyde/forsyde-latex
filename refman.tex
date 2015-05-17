@@ -331,26 +331,26 @@ An example, showing the available anchors:
 reverse] {d}{9,0};
 \end{verbatim}
 
-%\begin{figure}[htb!]\centering
-%\begin{tikzpicture}
-%%\parcomm[outer type=s2vbase] {a}{0,0};
-%%\parcommfunc[no=2] {b}{3,0}{$f(i)$};
-%%\parcomm[inner type=standardskeletonbox] {c}{6,0};
-%%\parcomm[inner type=standardskeletonbox, outer type=v2gvbase, reverse] {d}{9,0};
-%
-%\node[anch] (x) at (a.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{a.i1}};
-%\node[anch] (x) at (a.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{a.o1}};
-%\node[anch] (x) at (b.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{b.i1}};
-%\node[anch] (x) at (b.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o1}};
-%\node[anch] (x) at (b.o2) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o2}};
-%\foreach \i in {0,1,...,7} {
-%	\node[anch] (x) at (vc.vi\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vc.vi\i}};
-%	\node[anch] (x) at (vd.vo\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vd.vo\i}};
-%	\node[anch] (x) at (vc.vo\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vc.vo\i}};
-%	\node[anch] (x) at (vd.vi\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vd.vi\i}};
-%}
-%\end{tikzpicture}
-%\end{figure}
+\begin{figure}[htb!]\centering
+\begin{tikzpicture}
+\parcomm[outer type=s2vbase] {a}{0,0};
+\parcommfunc[no=2] {b}{3,0}{$f(i)$};
+\parcomm[inner type=standardskeletonbox] {c}{6,0};
+\parcomm[inner type=standardskeletonbox, outer type=v2gvbase, reverse] {d}{9,0};
+
+\node[anch] (x) at (a.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{a.i1}};
+\node[anch] (x) at (a.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{a.o1}};
+\node[anch] (x) at (b.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{b.i1}};
+\node[anch] (x) at (b.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o1}};
+\node[anch] (x) at (b.o2) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o2}};
+\foreach \i in {0,1,...,7} {
+	\node[anch] (x) at (vc.vi\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vc.vi\i}};
+	\node[anch] (x) at (vd.vo\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{vd.vo\i}};
+	\node[anch] (x) at (vc.vo\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vc.vo\i}};
+	\node[anch] (x) at (vd.vi\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{vd.vi\i}};
+}
+\end{tikzpicture}
+\end{figure}
 
 \subsection{Paths}
 
@@ -378,21 +378,23 @@ Signals are the only means of transporting data in ForSyDe process networks. For
 	\signal[options] (from) shape (to);	
 \end{verbatim}
 
+\textbf{IMPORTANT:} this is a \texttt{\string\def} macro, thus the format has to be strictly respected (spaces, parentheses and semicolon).
+
 An example, showing the available anchors:
 \begin{verbatim}
-	\signal[]                                     (0,2)  ->  (1.5,2); 
-	\signal[moc=ct, token=vectorAE-functionAE]    (2,2)  <-  (3.5,2);
-	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2)  p->p (5.5,2);
-	\signal[token=scalarAE, -|-]                  (6,1.7) ->p (7.5,2.3);
-	\signal[token pos=0.2, token=scalar-vector]   (8,2)  ->  (9.5,2);
+	\signal[] (0,0) -> (1.5,0); 
+	\signal[moc=ct, token=vectorAE-functionAE] (2,0) <- (3.5,0);
+	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,0) p->p (5.5,0);
+	\signal[token=scalarAE, -|-] (6,-.3) ->p (7.5,.3);
+	\signal[token pos=0.4, token=scalar-vector] (8,0) -> (9.5,0);
 \end{verbatim}
 \begin{figure}[htb!]\centering
 \begin{tikzpicture}[]
-	\signal[]                                     (0,2)  ->  (1.5,2); 
-	\signal[moc=ct, token=vectorAE-functionAE]    (2,2)  <-  (3.5,2);
-	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2)  p->p (5.5,2);
-	\signal[token=scalarAE, -|-]                  (6,1.7) ->p (7.5,2.3);
-	\signal[token pos=0.2, token=scalar-vector]   (8,2)  ->  (9.5,2);
+	\signal[] (0,2) -> (1.5,2); 
+	\signal[moc=ct, token=vectorAE-functionAE] (2,2) <- (3.5,2);
+	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2) p->p (5.5,2);
+	\signal[token=scalarAE, -|-] (6,1.7) ->p (7.5,2.3);
+	\signal[token pos=0.4, token=scalar-vector] (8,2) -> (9.5,2);
 \end{tikzpicture}
 \end{figure}
 
@@ -404,17 +406,19 @@ Vectors can be regarded as homogeneous bundles of signals. The token symbols can
 	\vector[options] (from) shape (to);	
 \end{verbatim}
 
+\textbf{IMPORTANT:} this is a \texttt{\string\def} macro, thus the format has to be strictly respected (spaces, parentheses and semicolon).
+
 An example, showing the available anchors:
 \begin{verbatim}
-	\vector[token=scalar-scalar-scalar-scalar] (0,1) p->p (2,1);	
-	\vector[moc=sdf]                           (3,1) p->p (5,1);
-	\vector[token=vectorAE, token pos=0.35]    (6,1) p->p (8,1);
+	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,0) p->p (2,0);	
+	\vector[moc=sdf] (3,0) p->p (5,0);
+	\vector[token=vectorAE] (6,0) p->p (8,0);
 \end{verbatim}
 \begin{figure}[htb!]\centering
 \begin{tikzpicture}[]
-	\vector[token=scalar-scalar-scalar-scalar] (0,1) p->p (2,1);	
-	\vector[moc=sdf]                           (3,1) p->p (5,1);
-	\vector[token=vectorAE, token pos=0.35]    (6,1) p->p (8,1);
+	\vector[token=scalar-scalar-scalar, token pos=0.35] (0,1) p->p (2,1);	
+	\vector[moc=sdf] (3,1) p->p (5,1);
+	\vector[token=vectorAE] (6,1) p->p (8,1);
 \end{tikzpicture}
 \end{figure}
 

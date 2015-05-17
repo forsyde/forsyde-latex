@@ -141,7 +141,7 @@
 \def\advancemaxht{
 	\pgfmathsetlength{\tht}{max(\ht\pgfnodepartfabox, \ht\pgfnodepartfbbox, \ht\pgfnodepartfcbox, \ht\pgfnodepartfdbox)}
 	\advance\pgf@y by \tht
-    \advance\pgf@y by 2\sepq
+    \advance\pgf@y by 5pt
 }
 
 % set the common anchors first
@@ -166,7 +166,7 @@
 \newcommand\makefaanchors[1]{
 	\savedanchor\faanchor{%	
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advance\pgf@y by 2.5pt
 		\pgf@x=0pt \advance\pgf@x by\twd
 	}
 	\savedanchor\faif{%	
@@ -187,7 +187,7 @@
 \newcommand\makefbanchors[1]{
 	\savedanchor\fbanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advance\pgf@y by 2.5pt
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 3\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox	
 	}
@@ -209,7 +209,7 @@
 \newcommand\makefcanchors[1]{
 	\savedanchor\fcanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advance\pgf@y by 2.5pt
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 6\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox	
 	}
@@ -233,7 +233,7 @@
 \newcommand\makefdanchors[1]{
 	\savedanchor\fdanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advance\pgf@y by 2.5pt
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 9\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox	\advance\pgf@x by\wd\pgfnodepartfcbox	
 	}
@@ -655,10 +655,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % COMMUNICATION SKELETONS SHAPES %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\makecomminnerbox}[2]{
+\pgfdeclareshape{standardskeletonbox}{%
+	\anchorsfromrectangle
+	\savedanchor\northeast{\pgf@x=7pt\pgf@y=20pt}
+	\savedanchor\centerpoint{\pgf@x=0pt\pgf@y=0pt}
+	\savedanchor\southwest{\pgf@x=-7pt\pgf@y=-20pt}
 	\xdef\portlist{}
-	\foreach \i in {0,...,#1} {
-		\pgfmathparse{1-\i*(2/#1)}
+	\foreach \i in {0,...,7} {
+		\pgfmathparse{1-\i*(2/7)}
 		\xdef\portlist{\portlist \i/\pgfmathresult,}
 	}
 	\foreach \i/\n in \portlist {
@@ -669,11 +673,6 @@
 				\noexpand\pgf@x=-5pt
 			}
 		} \doanchor
-	}
-	\xdef\portlist{}
-	\foreach \i in {0,...,#2} {
-		\pgfmathparse{1-\i*(2/#2)}
-		\xdef\portlist{\portlist \i/\pgfmathresult,}
 	}
 	\foreach \i/\n in \portlist {
 		\xdef\doanchor{
@@ -686,66 +685,19 @@
 	}
 	\backgroundpath{%
 		\pgfsetlinewidth{.3pt} 
-		\pgfmathtruncatemacro{\nLines}{#1+1}
-		\foreach \i in {1,...,\nLines} {
-			\pgfmathparse{1-\i*(1/#1)+(1/#1)}
+		\foreach \i in {1,...,8} {
+			\pgfmathparse{1-\i*(1/7)+(1/7)}
 			\pgfmathsetlength{\baz}{20pt-(\pgfmathresult*40pt)}
 			\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \advance\pgf@xb by2pt
 			\pgf@ya = \baz \pgf@yb = \baz
 			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
 			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-			\pgfusepath{stroke}
-		}
-		\pgfmathtruncatemacro{\nLines}{#2+1}
-		\foreach \i in {1,...,\nLines} {
-			\pgfmathparse{1-\i*(1/#2)+(1/#2)}
-			\pgfmathsetlength{\baz}{20pt-(\pgfmathresult*40pt)}
-			\southwest \pgf@ya = \baz \pgf@yb = \baz
 			\northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \advance\pgf@xb by-2pt	
 			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
 			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}	
 			\pgfusepath{stroke}
 		}
 	}
-}
-\pgfdeclareshape{stdcomm88box}{%
-	\anchorsfromrectangle
-	\savedanchor\northeast{\pgf@x=7pt\pgf@y=20pt}
-	\savedanchor\centerpoint{\pgf@x=0pt\pgf@y=0pt}
-	\savedanchor\southwest{\pgf@x=-7pt\pgf@y=-20pt}
-	\makecomminnerbox{7}{7}
-}
-\pgfdeclareshape{stdcomm48box}{%
-	\anchorsfromrectangle
-	\savedanchor\northeast{\pgf@x=7pt\pgf@y=20pt}
-	\savedanchor\centerpoint{\pgf@x=0pt\pgf@y=0pt}
-	\savedanchor\southwest{\pgf@x=-7pt\pgf@y=-20pt}
-	\makecomminnerbox{3}{7}
-}
-\pgfdeclareshape{stdcomm66box}{%
-	\anchorsfromrectangle
-	\savedanchor\northeast{\pgf@x=7pt\pgf@y=20pt}
-	\savedanchor\centerpoint{\pgf@x=0pt\pgf@y=0pt}
-	\savedanchor\southwest{\pgf@x=-7pt\pgf@y=-20pt}
-	\makecomminnerbox{5}{5}
-}
-
-\pgfdeclareshape{vvbase}{%
-	\anchorsfromrectangle
-	\backgroundpath{%
-		\pgfsetlinewidth{1.5pt} 
-		\northeast \pgf@ya=\pgf@y
-		\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfusepath{stroke}
-  
-		\southwest \pgf@ya=\pgf@y
-		\northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfusepath{stroke}
-	}        
 }
 \pgfdeclareshape{v2vbase}{%
 	\anchorsfromrectangle
@@ -760,20 +712,18 @@
 		\southwest \pgf@ya=\pgf@y
 		\northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
 		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{-\sepq}}
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\sepq}}
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 		\pgfusepath{stroke}
 	}        
 }
-\pgfdeclareshape{svbase}{%
+\pgfdeclareshape{s2vbase}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetlinewidth{.5pt} 
 		\northeast \pgf@ya=\pgf@y
 		\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
 		\pgfsnakesegmentamplitude=3pt
-		\advance\pgf@xa by3pt	\advance\pgf@xb by3pt
+		\advance\pgf@xa by1pt	\advance\pgf@xb by1pt
 		\pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 		\pgfpathsnaketo{brace}{\pgfpoint{\pgf@xa}{\pgf@ya}} 
 		\pgfusepath{stroke}
@@ -786,7 +736,7 @@
 		\pgfusepath{stroke}  
 	}        
 }
-\pgfdeclareshape{vgvbase}{%
+\pgfdeclareshape{v2gvbase}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetlinewidth{1.5pt} 
