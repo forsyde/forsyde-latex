@@ -92,7 +92,7 @@
   \pgfsetstrokecolor{\defaultdrawcolor}
   \pgfusepathqstroke
 }
-\newcommand{\pgfarrowsbsq}[1]{%
+\newcommand{\pgfarrowsbtip}[1]{%
   \pgfsetdash{{1cm}}{0cm} 
   \pgfsetcolor{\defaultdrawcolor}%
   \@tempdima=#1\pgflinewidth%
@@ -109,8 +109,8 @@
 \pgfarrowsdeclare{>p}{>p}    {\pgfarrowsextend{3}}{\pgfarrowsatipsq{2}}
 \pgfarrowsdeclare{p<}{p<}    {\pgfarrowsextend{3}}{\pgfarrowsatipsq{2}}
 \pgfarrowsdeclare{p}{p}      {\pgfarrowsextend{0}}{\pgfarrowsasq{2}}
-\pgfarrowsdeclare{ftip}{ftip}{\pgfarrowsextend{1}}{\pgfarrowsbtipsq{3}}
-\pgfarrowsdeclare{fi}{fi}    {\pgfarrowsextend{-1.5}}{\pgfarrowsbsq{3}}
+\pgfarrowsdeclare{ftip}{ftip}{\pgfarrowsextend{1}}{\pgfarrowsbtip{3}}
+\pgfarrowsdeclare{fi}{fi}    {\pgfarrowsextend{-1.5}}{\pgfarrowsbtipsq{3}}
 
 
 %

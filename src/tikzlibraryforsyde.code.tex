@@ -25,15 +25,21 @@
 }
 
 \newcommand{\getmoclabel}[1]{\ifthenelse{\equal{#1}{sy}}{SY}{\ifthenelse{\equal{#1}{de}}{DE}{\ifthenelse{\equal{#1}{ct}}{CT}{\ifthenelse{\equal{#1}{sdf}}{SDF}{}}}}}
+\newcommand{\functionlabels}[5]{ %#1=nf, #2... = functions
+	\ifnum #1>0 \nodepart{fa} #2\else\fi
+	\ifnum #1>1 \nodepart{fb} #3\else\fi
+	\ifnum #1>2 \nodepart{fc} #4\else\fi
+	\ifnum #1>3 \nodepart{fd} #5\else\fi
+}
 
-%%%%%%%%%%%%%%%%%
-% GENERIC NODES %
-%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+% LEAF PROCESSES %
+%%%%%%%%%%%%%%%%%%
 
 % Applicative
 \pgfkeys{
-	/applicative/.is family, /applicative,
-	default/.style = {moc=none, reverse = false, type= , ni=1, no=1, nf=0, f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $, line sep=0pt},
+	/leaf/.is family, /leaf,
+	default/.style = {moc=none, reverse = false, reverse shape = false, type= , ni=1, no=1, nf=0, f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $, inner sep=10pt},
  	moc/.estore in = \pMoc,
  	type/.estore in = \pType,
 	ni/.estore in = \pNIn,
@@ -43,64 +49,45 @@
 	f2/.estore in = \pFuncB,
 	f3/.estore in = \pFuncC,
 	f4/.estore in = \pFuncD,
-	line sep/.estore in = \pLineSep,
+	inner sep/.estore in = \pInnerSep,
 	reverse/.is toggle,
+	reverse shape/.is toggle,
 }
-% Generic applicative leaf process
-% #1 = environment keys
-% #2 = node name
-% #3 = node position
-% #4 = node label
-\newcommand{\applicative}[4][]{
-	\pgfkeys{/applicative, default, #1}%
-	\node[inner sep=0pt] (#2_label) at (#3) {\labelStyle{#4}};
-	\node[func\pNFunc, font=\funcStyle, yshift=\sepq+\pLineSep, anchor=south] (f#2) at (#2_label.north) {
-		\ifnum \pNFunc>0 \nodepart{fa} \pFuncA\else\fi
-		\ifnum \pNFunc>1 \nodepart{fb} \pFuncB\else\fi
-		\ifnum \pNFunc>2 \nodepart{fc} \pFuncC\else\fi
-		\ifnum \pNFunc>3 \nodepart{fd} \pFuncD\else\fi
-	};
-	\node[anchor=north, yshift=-\sepq-\pLineSep, inner sep=\sepq] (#2_type) at (#2_label.south) {\typeStyle{\pType\ifnolabel\else\getmoclabel{\pMoc}\fi}};
-	\iftoggle{/applicative/reverse}
-		{\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(f#2)(#2_label)(#2_type),] (#2) {};}
-		{\node[i\pNIn o\pNOut, inner sep=0pt, fit=(f#2)(#2_label)(#2_type),] (#2) {};}
-	\begin{pgfonlayer}{background}
-		\node[applshape, draw, moc=\pMoc, inner sep=0pt, fit=(f#2)(#2_label)(#2_type)] {};
-	\end{pgfonlayer}
+% Standard leaf process primitive
+% #1 = keys
+% #2 = name
+% #3 = position
+% #4 = label
+\newcommand{\leafstd}[4][]{
+	\pgfkeys{/leaf, default, #1}%
+	\pgfmathtruncatemacro\rot{\iftoggle{/leaf/reverse}{180}{0}}
+	\begin{scope}[local bounding box= #2, shift={(#3)}]
+		\node[] 
+			(#2-labl) at (0,0)           {\labelStyle{#4}};
+		\node[func\pNFunc, font=\funcStyle, yshift=\pInnerSep, anchor=north] 
+			(#2-f)    at (#2-labl.north)  {\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
+		\node[anchor=south, yshift=-\pInnerSep, inner sep=2pt] 
+			(#2-type) at (#2-labl.south) {\typeStyle{\pType\ifnolabel\else\getmoclabel{\pMoc}\fi}};
+		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-f)(#2-labl)(#2-type),] (#2-p) {};
+		\begin{pgfonlayer}{background}
+			\node[std leaf shape, draw, moc=\pMoc, inner sep=0pt, fit=(#2-f)(#2-labl)(#2-type)] {};
+		\end{pgfonlayer}
+	\end{scope}
 }
 
-% Primitive 
-\pgfkeys{
-	/primitive/.is family, /primitive,
-	default/.style = {moc=none, reverse = false, type= , ni=1, no=1,},
- 	moc/.estore in = \pMoc,
- 	type/.estore in = \pType,
-	ni/.estore in = \pNIn,
-	no/.estore in = \pNOut,
-	reverse shape/.is toggle,
-	reverse/.is toggle,
-}
-% Generic primite box-shaped leaf process
-% #1 = environment keys
-% #2 = node name
-% #3 = node position
-% #4 = node label
-\newcommand{\primitivebox}[4][]{
-	\applicative[#1, nf=0, line sep=-2pt]{#2}{#3}{#4}
-}
-% Generic primite special-shaped leaf process
-% #1 = environment keys
-% #2 = node name
-% #3 = node position
-\newcommand{\primitivespecial}[3][]{
-	\pgfkeys{/primitive, default, #1}%
+% Custom leaf process primitive
+% #1 = keys
+% #2 = name
+% #3 = position
+\newcommand{\leafcustom}[3][]{
+	\pgfkeys{/leaf, default, #1}%
 	\pgfmathsetlength{\foo}{max(\pNIn,\pNOut)*5pt}
-	\iftoggle{/primitive/reverse shape}
-		{\node[\pType, draw, moc=\pMoc, inner sep=\foo, rotate=180,] (#2_shape) at (#3) {};}	
-		{\node[\pType, draw, moc=\pMoc, inner sep=\foo,] (#2_shape) at (#3) {};}	
-	\iftoggle{/primitive/reverse}
-		{\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_shape),] (#2) {};}
-		{\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_shape),] (#2) {};}
+	\pgfmathtruncatemacro\rotports{\iftoggle{/leaf/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rotshape{\iftoggle{/leaf/reverse shape}{180}{0}}
+	\begin{scope}[local bounding box= #2, shift={(#3)}]
+		\node[\pType, draw, moc=\pMoc, inner sep=\foo, rotate=\rotshape,] (#2-shape) at (0,0) {};
+		\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
+	\end{scope}
 }
 
 % Interface
@@ -113,104 +100,104 @@
 }
 \newcommand{\interface}[3][]{
 	\pgfkeys{/interface, default, #1}%
-	\iftoggle{/interface/reverse}{
-		\node[domaininterfacerev, mocin=\pMocIn, mocout=\pMocOut, minimum width=30pt, minimum height=30pt, draw] (#2_shape) at (#3) {
+	\pgfmathtruncatemacro\rot{\iftoggle{/interface/reverse}{180}{0}}	
+	\begin{scope}[local bounding box= #2, shift={(#3)}]
+		\node[interface shape \rot, mocin=\pMocIn, mocout=\pMocOut, minimum width=30pt, minimum height=30pt, draw] (#2-shape) at (0,0) {
 			\nodepart{mocin} \typeStyle{\ifnolabel\else\getmoclabel{\pMocIn}\fi}
 			\nodepart{mocout} \typeStyle{\ifnolabel\else\getmoclabel{\pMocOut}\fi} 
 		};
-		\node[i1o1, rotate=180, inner sep=0pt, fit=(#2_shape),] (#2) {};
-	}{
-		\node[domaininterface, mocin=\pMocIn, mocout=\pMocOut, minimum width=30pt, minimum height=30pt, draw] (#2_shape) at (#3) {
-			\nodepart{mocin} \typeStyle{\ifnolabel\else\getmoclabel{\pMocIn}\fi}
-			\nodepart{mocout} \typeStyle{\ifnolabel\else\getmoclabel{\pMocOut}\fi} 
-		};
-		\node[i1o1, inner sep=0pt, fit=(#2_shape),] (#2) {};
-	}	
+		\node[ports i1o1, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
+	\end{scope}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% COMPOSITE PROCESSES %
+%%%%%%%%%%%%%%%%%%%%%%%
 
 %Composite
 \pgfkeys{
 	/composite/.is family, /composite,
-	default/.style = {ni=0, no=0 ,inner sep = 15pt},
- 	inner sep/.estore in = \innerSep,
+	default/.style = {ni=0, no=0 ,inner xsep = 15pt, inner ysep = 15pt, reverse=false},
+ 	inner xsep/.estore in = \innerXSep,
+ 	inner ysep/.estore in = \innerYSep,
 	ni/.estore in = \pNIn,
 	no/.estore in = \pNOut,
 	reverse/.is toggle,
 }
 % Generic composite process
-% #1 = environment keys
-% #2 = node name
+% #1 = keys
+% #2 = name
 % #3 = list of nodes clustered
-% #4 = node label
+% #4 = label
 \newcommand\composite[4][]{
 	\pgfkeys{/composite, default, #1}%
-	\node[composite, inner sep=\innerSep, fit=#3 , draw] (#2_shape) {};
-	\node[anchor=south east] (#2_label) at (#2_shape.south east) {\footnotesize\labelStyle{#4}}; 
-	\iftoggle{/composite/reverse}
-		{\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_shape),] (#2) {};}
-		{\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_shape),] (#2) {};}
+	\pgfmathtruncatemacro\rot{\iftoggle{/composite/reverse}{180}{0}}
+	\begin{scope}[local bounding box= #2]
+		\node[composite shape, inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3 , draw] (#2-shape) {};
+		\node[anchor=south east] (#2-label) at (#2-shape.south east) {\footnotesize\labelStyle{#4}}; 
+		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
+	\end{scope}
 }
 % Generic black-box composite process
-% #1 = environment keys
-% #2 = node name
-% #3 = node position
-% #4 = node label
+% #1 = keys
+% #2 = name
+% #3 = position
+% #4 = label
 \newcommand\compositebbox[4][]{
 	\pgfkeys{/composite, default, #1}%
-	\node[rectangle, rounded corners = 3pt, minimum width=30pt, minimum height=30pt, inner sep=\innerSep,
-		draw=\defaultdrawcolor, fill=blackboxcolor] (#2_shape) at (#3) {\labelStyle{#4}};
-	\iftoggle{/composite/reverse}
-		{\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_shape),] (#2) {};}
-		{\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_shape),] (#2) {};}
+	\pgfmathtruncatemacro\rot{\iftoggle{/composite/reverse}{180}{0}}
+	\begin{scope}[local bounding box= #2]
+		\node[rectangle, rounded corners = 3pt, minimum width=30pt, minimum height=30pt, inner sep=\innerSep,
+			draw=\defaultdrawcolor, fill=blackboxcolor] (#2-shape) at (#3) {\labelStyle{#4}};
+		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
+	\end{scope}
 }
 
-%Parallel computation
+
+%%%%%%%%%%%%
+% PATTERNS %
+%%%%%%%%%%%%
 \pgfkeys{%
-	/parcomp/.is family, /parcomp,
-	default/.style = {reverse = false, reverse shape=false, type=genericpar , ni=1, no=1, nf=0, f1=$ \langle f_1\rangle $, f2=$ \langle f_2\rangle $, f3=$ \langle f_3\rangle $, f4=$ \langle f_4\rangle $, inner sep=18pt},
+	/patterns/.is family, /patterns,
+	default/.style = {reverse = false, reverse shape=false, type=horizontal par shape , ni=1, no=1, nf=0, f1=$ \langle f_1\rangle $, f2=$ \langle f_2\rangle $, f3=$ \langle f_3\rangle $, f4=$ \langle f_4\rangle $, inner ysep=18pt, inner xsep=15pt},
  	type/.estore in = \pType,
+ 	shape/.estore in = \pShape,
 	ni/.estore in = \pNIn,
 	no/.estore in = \pNOut,
+	conduit ni/.estore in = \pNCondIn,
+	conduit no/.estore in = \pNCondOut,
 	nf/.estore in = \pNFunc,
 	f1/.estore in = \pFuncA,
 	f2/.estore in = \pFuncB,
 	f3/.estore in = \pFuncC,
 	f4/.estore in = \pFuncD,
-	inner sep/.estore in = \innerSep,
+	inner xsep/.estore in = \innerXSep,
+	inner ysep/.estore in = \innerYSep,
 	reverse/.is toggle,
 	reverse shape/.is toggle,
 }
-% #1 = environment keys
-% #2 = node name
+
+% Applicative pattern
+% #1 = keys
+% #2 = name
 % #3 = list of nodes clustered
-% #4 = node label
-\newcommand\parcomp[4][]{
-	\pgfkeys{/parcomp, default, #1}%
-	\iftoggle{/parcomp/reverse}{
-		\iftoggle{/parcomp/reverse shape}
-		 {\node[\pType, draw, inner sep=\innerSep, fit=#3,] (#2_shape) {};}
-		 {\node[\pType, draw, inner sep=\innerSep, fit=#3, rotate=180] (#2_shape) {};}
-		\node[i\pNIn o\pNOut, rotate=180, inner sep=0pt, fit=(#2_shape),] (#2) {};
-		\node[anchor=south east] (#2_label) at (#2_shape.north west) {\footnotesize\labelStyle{#4}}; 
-		\node[func\pNFunc, font=\funcStyle, anchor=south west] (f#2) at (#2_shape.south east) {
-			\ifnum \pNFunc>0 \nodepart{fa} \pFuncA\else\fi
-			\ifnum \pNFunc>1 \nodepart{fb} \pFuncB\else\fi
-			\ifnum \pNFunc>2 \nodepart{fc} \pFuncC\else\fi
-			\ifnum \pNFunc>3 \nodepart{fd} \pFuncD\else\fi
-		};
-	}{
-		\iftoggle{/parcomp/reverse shape}
-		 {\node[\pType, draw, inner sep=\innerSep, fit=#3,rotate=180] (#2_shape) {};}
-		 {\node[\pType, draw, inner sep=\innerSep, fit=#3] (#2_shape) {};}
-		\node[i\pNIn o\pNOut, inner sep=0pt, fit=(#2_shape),] (#2) {};
-		\node[anchor=south east] (#2_label) at (#2_shape.south east) {\footnotesize\labelStyle{#4}}; 
-		\node[func\pNFunc, font=\funcStyle, anchor=south west] (f#2) at (#2_shape.north west) {
-			\ifnum \pNFunc>0 \nodepart{fa} \pFuncA\else\fi
-			\ifnum \pNFunc>1 \nodepart{fb} \pFuncB\else\fi
-			\ifnum \pNFunc>2 \nodepart{fc} \pFuncC\else\fi
-			\ifnum \pNFunc>3 \nodepart{fd} \pFuncD\else\fi
-		};
-	}
+% #4 = label
+\newcommand\patternappl[4][]{
+	\pgfkeys{/patterns, default, #1}%
+	\pgfmathtruncatemacro\rotports{\iftoggle{/patterns/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rotshape{\iftoggle{/patterns/reverse shape}
+		{\iftoggle{/patterns/reverse}{0}{180}}
+		{\iftoggle{/patterns/reverse}{180}{0}}}
+	\begin{scope}[local bounding box= #2]
+		\node[\pShape, draw, inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3, rotate=\rotshape]
+			(#2-shape) {};
+		\node[inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3] (#2-scope) {};
+		\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),]  (#2-p) {};	
+		\node[anchor=south east] (#2-label) at (#2-scope.south east) {\footnotesize\labelStyle{#4}}; 
+		\node[anchor=south west] (#2-type)  at (#2-scope.south west) {\typeStyle{\pType}}; 
+		\node[func\pNFunc, font=\funcStyle, anchor=south west] (#2-f) at (#2-scope.north west) 
+			{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
+	\end{scope}
 }
 
 % Parallel communication
