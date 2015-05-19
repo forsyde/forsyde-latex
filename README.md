@@ -9,7 +9,7 @@ This is the main repo for the ForSyDe TikZ library.  It contains packages:
 Installation
 ------------
 
-The contents of `src` are to be copied on your local machine, ideally in your LaTeX project folder. The package is loaded by compliling your document with the `TEXINPUTS` variable set to your installation path, or by copying all of the package files in your document's root folder or any LaTeX standard loading paths. To include the styles you must add in the document preamble:
+The contents of `src` are to be copied on your local machine. The package is loaded by compiling your document with the `TEXINPUTS` variable set to your installation path, or by copying all package files in your document's root folder or any LaTeX standard loading path. To include the styles you must add in the document preamble:
 
 ```
 \usepackage{forsyde-tikz}
@@ -25,10 +25,10 @@ or
 Manual
 ------
 
-This document comes with a reference manual `doc/refman.tex`. The Makefile provided should be able to compile the document if the LaTeX toolchain is properly set up and all the dependencies are met.
+This document comes with a reference manual `doc/refman.tex`. The Makefile provided should be able to compile the document unless the LaTeX toolchain is not properly set up or there is an unmet dependency.
 
 
 Contribution
 ------------
 
-The package files are documented and contributions should be self-explanatory. Feel free to make a new branch or ask before you push into the master. All new feature should be included also in the reference manual.
+The package files are documented and contributions should be self-explanatory. Feel free to branch your own changes and/or initiate pull requests. All new feature must be documented in the reference manual.
