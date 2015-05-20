@@ -572,7 +572,7 @@
 %%%%%%%%%%%%%%%%%%%
 % PATTERNS SHAPES %
 %%%%%%%%%%%%%%%%%%%
-\pgfdeclareshape{horizontal par shape}{%
+\pgfdeclareshape{dp shape}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetcornersarced{\pgfpoint{3pt}{3pt}} 
@@ -607,7 +607,7 @@
 		\pgfusepath{stroke} 
 	}
 }
-\pgfdeclareshape{pipeshape}{%
+\pgfdeclareshape{pipe shape}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
@@ -642,7 +642,7 @@
 		\pgfusepath{stroke}   
 	}
 }
-\pgfdeclareshape{mergeshape}{%
+\pgfdeclareshape{merge shape}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
@@ -827,12 +827,16 @@
 	\anchorsfromrectangle
 	\backgroundpath{%
 	\pgfsetlinewidth{1.5pt}
+	\northeast\pgf@ya=\pgf@y\southwest\pgf@yb=\pgf@y
+	\pgfmathsetlength{\baz}{\pgf@ya-\pgf@yb}
 		\foreach \i in {1,...,#1} {
 			\pgfmathsetmacro\start{\i / #1}
 			\pgfmathsetmacro\stopp{(\i - 1) / #1} 
 			\southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x
-			\northeast \pgf@ya=\start\pgf@y \pgf@yb=\stopp\pgf@y
-			\advance\pgf@ya by -1pt \advance\pgf@yb by 1pt 
+			\northeast 
+				\pgfmathsetlength{\pgf@ya}{\pgf@y-\start*\baz} 
+				\pgfmathsetlength{\pgf@yb}{\pgf@y-\stopp*\baz}
+			\advance\pgf@ya by 1pt \advance\pgf@yb by -1pt 
 			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
 			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 			\pgfusepath{stroke}
@@ -841,8 +845,10 @@
 			\pgfmathsetmacro\start{\i / #2}
 			\pgfmathsetmacro\stopp{(\i - 1) / #2} 
 			\northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x
-			\northeast \pgf@ya=\start\pgf@y \pgf@yb=\stopp\pgf@y
-			\advance\pgf@ya by -1pt \advance\pgf@yb by 1pt 
+			\northeast 
+				\pgfmathsetlength{\pgf@ya}{\pgf@y-\start*\baz} 
+				\pgfmathsetlength{\pgf@yb}{\pgf@y-\stopp*\baz}
+			\advance\pgf@ya by 1pt \advance\pgf@yb by -1pt 
 			\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
 			\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 			\pgfusepath{stroke}
@@ -935,7 +941,7 @@
 		\pgfusepath{stroke}  
 	}        
 }
-\pgfdeclareshape{vgvbase}{%
+\pgfdeclareshape{transition shape v1gv1}{%
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetlinewidth{1.5pt} 
@@ -960,5 +966,11 @@
 		\pgfusepath{stroke} 
 	}  
 }    
+
+\tikzset{% 
+    noinner/.style={draw=none, inner sep=0pt, minimum height=30pt, minimum width=3pt},
+    funcbox/.style={draw=none, fill=\defaultfillcolor, font=\scriptsize, rotate=90, minimum width=30pt, minimum height=7pt},
+    invbox/.style={draw=none, fill=\defaultfillcolor, rotate=180, minimum height=30pt, minimum width=7pt},
+}
 
 \endinput

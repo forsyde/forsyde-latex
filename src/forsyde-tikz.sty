@@ -1,9 +1,8 @@
-% A simple library for signal flow diagrams
-% based on the pgf/tikz package of Till Tantau
+% A library with graphical primitives for ForSyDe process networks
 %
-% Author: Dr. Karlheinz Ochs, Ruhr-University of Bochum, Germany
-% Version: 0.1
-% Date: 2007/01/05
+% Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
+% Version: 0.3
+% Date: 2015/05/20
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{pgfplots}
 \RequirePackage{pgfkeys}
@@ -13,12 +12,9 @@
 \usetikzlibrary{decorations.markings, shapes, calc, fit, backgrounds}
 
 \ProvidesPackage{forsyde-tikz}
-              [2014/12/01 v0.1 ForSyDe TikZ Library]
+              [2015/05/20 v0.3 ForSyDe TikZ Library]
 
-%
-% Libraries for signal flow diagrams.
-%
-\usetikzlibrary{fpaths,fshapes,forsyde}
+\usetikzlibrary{fkeys,fpaths,fshapes,forsyde}
 
 
 %%%%%%%%%%%%%
@@ -33,8 +29,6 @@
 \definecolor{sdfcolor}{RGB}{220,220,20}
 \definecolor{blackboxcolor}{gray}{0.80}
 % line widths of
-\newlength{\sepq}
-\pgfmathsetlength{\sepq}{2pt}                % constant for small inter-node separation (used for example in function nodes)
 \newcommand{\compositelinewidth}{.4pt}       % composite process line width
 \newcommand{\skeletonlinewidth}{1pt}         % parallel processes line width
 \newcommand{\signalpathlinewidth}{1pt}       % signal paths
