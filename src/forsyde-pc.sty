@@ -47,66 +47,66 @@
 \newcommand\mocinterface[4][]    {\interface[#1]{#2}{#3}{#4}}
 
 % Applicative patterns
-\newcommand\farm[4][]     {\patternappl[#1, shape=dp shape, nf=0, type=farm]{#2}{#3}{#4}}
-\newcommand\farmI[4][]    {\patternappl[#1, shape=dp shape, nf=1, type=farm1]{#2}{#3}{#4}}
-\newcommand\farmII[4][]   {\patternappl[#1, shape=dp shape, nf=2, type=farm2]{#2}{#3}{#4}}
-\newcommand\farmIII[4][]  {\patternappl[#1, shape=dp shape, nf=3, type=farm3]{#2}{#3}{#4}}
-\newcommand\farmIV[4][]   {\patternappl[#1, shape=dp shape, nf=4, type=farm4]{#2}{#3}{#4}}
-\newcommand\pipe[4][]     {\patternappl[#1, shape=pipe shape, nf=0, type=pipe]{#2}{#3}{#4}}
-\newcommand\pipeI[4][]    {\patternappl[#1, shape=pipe shape, nf=1, type=pipe1]{#2}{#3}{#4}}
-\newcommand\pipeII[4][]   {\patternappl[#1, shape=pipe shape, nf=2, type=pipe2]{#2}{#3}{#4}}
-\newcommand\pipeIII[4][]  {\patternappl[#1, shape=pipe shape, nf=3, type=pipe3]{#2}{#3}{#4}}
-\newcommand\pipeIV[4][]   {\patternappl[#1, shape=pipe shape, nf=4, type=pipe4]{#2}{#3}{#4}}
-\newcommand\reduce[4][]   {\patternappl[#1, shape=merge shape, nf=0, type=reduce]{#2}{#3}{#4}}
-\newcommand\reduceI[4][]  {\patternappl[#1, shape=merge shape, nf=1, type=reduce1]{#2}{#3}{#4}}
-\newcommand\reduceII[4][] {\patternappl[#1, shape=merge shape, nf=2, type=reduce2]{#2}{#3}{#4}}
-\newcommand\reduceIII[4][]{\patternappl[#1, shape=merge shape, nf=3, type=reduce3]{#2}{#3}{#4}}
-\newcommand\reduceIV[4][] {\patternappl[#1, shape=merge shape, nf=4, type=reduce4]{#2}{#3}{#4}}
+\newcommand\farm[4][]     {\patterncluster[#1, shape=dp shape, nf=0, type=farm]{#2}{#3}{#4}}
+\newcommand\farmI[4][]    {\patterncluster[#1, shape=dp shape, nf=1, type=farm1]{#2}{#3}{#4}}
+\newcommand\farmII[4][]   {\patterncluster[#1, shape=dp shape, nf=2, type=farm2]{#2}{#3}{#4}}
+\newcommand\farmIII[4][]  {\patterncluster[#1, shape=dp shape, nf=3, type=farm3]{#2}{#3}{#4}}
+\newcommand\farmIV[4][]   {\patterncluster[#1, shape=dp shape, nf=4, type=farm4]{#2}{#3}{#4}}
+\newcommand\pipe[4][]     {\patterncluster[#1, shape=pipe shape, nf=0, type=pipe]{#2}{#3}{#4}}
+\newcommand\pipeI[4][]    {\patterncluster[#1, shape=pipe shape, nf=1, type=pipe1]{#2}{#3}{#4}}
+\newcommand\pipeII[4][]   {\patterncluster[#1, shape=pipe shape, nf=2, type=pipe2]{#2}{#3}{#4}}
+\newcommand\pipeIII[4][]  {\patterncluster[#1, shape=pipe shape, nf=3, type=pipe3]{#2}{#3}{#4}}
+\newcommand\pipeIV[4][]   {\patterncluster[#1, shape=pipe shape, nf=4, type=pipe4]{#2}{#3}{#4}}
+\newcommand\reduce[4][]   {\patterncluster[#1, shape=merge shape, nf=0, type=reduce]{#2}{#3}{#4}}
+\newcommand\reduceI[4][]  {\patterncluster[#1, shape=merge shape, nf=1, type=reduce1]{#2}{#3}{#4}}
+\newcommand\reduceII[4][] {\patterncluster[#1, shape=merge shape, nf=2, type=reduce2]{#2}{#3}{#4}}
+\newcommand\reduceIII[4][]{\patterncluster[#1, shape=merge shape, nf=3, type=reduce3]{#2}{#3}{#4}}
+\newcommand\reduceIV[4][] {\patterncluster[#1, shape=merge shape, nf=4, type=reduce4]{#2}{#3}{#4}}
 %\newcommand\generate[4][] {\parcomp[#1, type=merge,reverse shape=true]{#2}{#3}{#4}}
 
 % Transition patterns
 
 \newcommand\unzipx[3][]   
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape s1v1, type=unzipx]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape s1v1, type=unzipx]{#2}{#3}}
 \newcommand\zipx[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape s1v1, reverse shape, type=zipx]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape s1v1, reverse shape, type=zipx]{#2}{#3}}
 \newcommand\unzipv[3][]
-	{\patterntransstd[#1, ni=1, no=2, shape=transition shape v1v2, type=unzipv]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=2, outer shape=transition shape v1v2, type=unzipv]{#2}{#3}}
 \newcommand\zipv[3][]
-	{\patterntransstd[#1, ni=2, no=1, shape=transition shape v2v1, type=zipv]{#2}{#3}}
+	{\patternnodestd[#1, ni=2, no=1, outer shape=transition shape v2v1, type=zipv]{#2}{#3}}
 \newcommand\splitatv[3][] 
-	{\patterntransstd[#1, ni=1, no=2, shape=transition shape v1v2, type=splitAt, nf=1]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=2, outer shape=transition shape v1v2, type=splitAt, nf=1]{#2}{#3}}
 \newcommand\catv[3][]     
-	{\patterntransstd[#1, ni=2, no=1, shape=transition shape v2v1, type=cat]{#2}{#3}}
+	{\patternnodestd[#1, ni=2, no=1, outer shape=transition shape v2v1, type=cat]{#2}{#3}}
 \newcommand\oddsv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=odds]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=odds]{#2}{#3}}
 \newcommand\evensv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=evens]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=evens]{#2}{#3}}
 \newcommand\reversev[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=reverse]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=reverse]{#2}{#3}}
 \newcommand\groupv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1gv1, type=group]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1gv1, type=group]{#2}{#3}}
 \newcommand\concatv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1gv1, type=concat, reverse shape]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1gv1, type=concat, reverse shape]{#2}{#3}}
 \newcommand\filteridxv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=filterIdx, nf=1]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=filterIdx, nf=1]{#2}{#3}}
 \newcommand\gatherv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=gather, nf=2]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=gather, nf=2]{#2}{#3}}
 \newcommand\gatherAdpv[3][]
-	{\patterntransstd[#1, ni=2, no=1, shape=transition shape v2v1, type=gatherAdp, nf=2]{#2}{#3}}
+	{\patternnodestd[#1, ni=2, no=1, outer shape=transition shape v2v1, type=gatherAdp, nf=2]{#2}{#3}}
 \newcommand\selectv[3][]
-	{\patterntransstd[#1, ni=2, no=1, shape=transition shape v2v1, type=select]{#2}{#3}}
+	{\patternnodestd[#1, ni=2, no=1, outer shape=transition shape v2v1, type=select]{#2}{#3}}
 \newcommand\distributev[3][]
-	{\patterntransstd[#1, ni=2, no=1, shape=transition shape v2v1, type=distribute, nf=1]{#2}{#3}}
+	{\patternnodestd[#1, ni=2, no=1, outer shape=transition shape v2v1, type=distribute, nf=1]{#2}{#3}}
 \newcommand\filterv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=filter, nf=1]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=filter, nf=1]{#2}{#3}}
 \newcommand\getv[3][]
-	{\patterntransstd[#1, ni=1, no=1, shape=transition shape v1v1, type=get, nf=1]{#2}{#3}}
+	{\patternnodestd[#1, ni=1, no=1, outer shape=transition shape v1v1, type=get, nf=1]{#2}{#3}}
 
 % Visual depictions of transition patterns
 
 \newcommand\visualunzipv[3][]{
-	\patterntranscustom[#1, ni=1, no=2, inner shape=custom conduit i4o8, 
+	\patternnodecustom[#1, ni=1, no=2, inner shape=custom conduit i4o8, 
 		outer shape=transition shape v1v2]{#2}{#3};
 	\foreach \i in {0,1,...,3} {
 		\pgfmathtruncatemacro{\dbl}{\i+4}
@@ -115,7 +115,7 @@
 	}
 }
 \newcommand\visualzipv[3][]{
-	\patterntranscustom[#1, ni=2, no=1, inner shape=custom conduit i8o4, 
+	\patternnodecustom[#1, ni=2, no=1, inner shape=custom conduit i8o4, 
 		outer shape=transition shape v2v1]{#2}{#3};
 	\foreach \i in {0,1,...,3} {
 		\pgfmathtruncatemacro{\dbl}{\i+4}
@@ -124,21 +124,21 @@
 	}
 }
 \newcommand\visualoddsv[3][]{ 
-	\patterntranscustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
+	\patternnodecustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
 		outer shape=transition shape v1v1]{#2}{#3};
 	\foreach \i in {0,2,...,6} {
 		\draw[line width=.3pt] (#2-c.vi\i) -- (#2-c.vo\i);
 	}
 }
 \newcommand\visualevensv[3][]{%
-	\patterntranscustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
+	\patternnodecustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
 		outer shape=transition shape v1v1]{#2}{#3};
 	\foreach \i in {1,3,...,7} {
 		\draw[line width=.3pt] (#2-c.vi\i) -- (#2-c.vo\i);
 	}
 }
 \newcommand\visualreversev[3][]{%
-	\patterntranscustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
+	\patternnodecustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
 		outer shape=transition shape v1v1]{#2}{#3};
 	\foreach \i in {0,1,...,7} {
 		\pgfmathtruncatemacro\result{7-\i}
@@ -146,14 +146,14 @@
 	}
 }
 \newcommand\visualgroupv[3][]{%
-	\patterntranscustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
+	\patternnodecustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
 		outer shape=transition shape v1gv1]{#2}{#3};
 	\foreach \i in {0,1,...,7} {
 		\draw[line width=.3pt] (#2-c.vi\i) -- (#2-c.vo\i);
 	}
 }
 \newcommand\visualconcatv[3][]{%
-	\patterntranscustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
+	\patternnodecustom[#1, ni=1, no=1, inner shape=custom conduit i8o8, 
 		outer shape=transition shape v1gv1, reverse shape]{#2}{#3};
 	\foreach \i in {0,1,...,7} {
 		\draw[line width=.3pt] (#2-c.vi\i) -- (#2-c.vo\i);

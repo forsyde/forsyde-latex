@@ -29,6 +29,7 @@
 \definecolor{sdfcolor}{RGB}{220,220,20}
 \definecolor{blackboxcolor}{gray}{0.80}
 % line widths of
+\newlength{\sepq}\pgfmathsetlength{\sepq}{2pt}
 \newcommand{\compositelinewidth}{.4pt}       % composite process line width
 \newcommand{\skeletonlinewidth}{1pt}         % parallel processes line width
 \newcommand{\signalpathlinewidth}{1pt}       % signal paths
@@ -50,4 +51,5 @@
 \newcommand{\textrightof}[2]{\pgftext[left,  at=\pgfpointanchor{#1}{east}, x=+1mm]{#2}}%
 \newcommand{\textbelowof}[2]{\pgftext[top,   at=\pgfpointanchor{#1}{south},y=-1mm]{#2}}%
 \newcommand{\textleftof} [2]{\pgftext[right, at=\pgfpointanchor{#1}{west}, x=-1mm]{#2}}%
+
 

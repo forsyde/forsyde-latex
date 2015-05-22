@@ -1,6 +1,12 @@
 %%%%%%%%%%%%%%%
 % ENVIRONMENT %
 %%%%%%%%%%%%%%%
+\tikzset{global scale/.style={
+    scale=#1,
+    every node/.style={scale=#1}
+  }
+}
+
 \newif\ifnolabel
 \newif\ifnocolor
 \pgfkeys{
@@ -110,7 +116,7 @@
 	reverse shape/.is toggle,
 	default/.style = {
 		type= ,
-		shape = horizontal par shape, 
+		shape = dp shape, 
 		ni=1, no=1, nf=0, 
 		f1=$ \langle f_1\rangle $, 
 		f2=$ \langle f_2\rangle $, 
@@ -123,7 +129,7 @@
 	},
 }
 
-\pgfkeys{/trasition patterns keys/.is family, /trasition patterns keys,
+\pgfkeys{/transition patterns keys/.is family, /transition patterns keys,
  	type/.estore in       = \pType,
  	inner shape/.estore in= \pInnerShape,
 	outer shape/.estore in= \pOuterShape,
@@ -139,7 +145,7 @@
 	default/.style = {
 		type= ,
 		inner shape = noinner, 
-		outer shape = ,
+		outer shape = transition shape v1v1,
 		ni=1, no=1, nf=0, 
 		f1=$ f_1 $, 
 		f2=$ f_2 $, 

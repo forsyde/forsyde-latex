@@ -29,7 +29,7 @@
 			(#2-type) at (#2-labl.south) {\typeStyle{\pType\ifnolabel\else\getmoclabel{\pMoc}\fi}};
 		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-f)(#2-labl)(#2-type),] (#2-p) {};
 		\begin{pgfonlayer}{background}
-			\node[std leaf shape, draw, moc=\pMoc, inner sep=0pt, fit=(#2-f)(#2-labl)(#2-type)] {};
+			\node[leaf shape, draw, moc=\pMoc, inner sep=0pt, fit=(#2-f)(#2-labl)(#2-type)] {};
 		\end{pgfonlayer}
 	\end{scope}
 }
@@ -39,10 +39,10 @@
 % #2 = name
 % #3 = position
 \newcommand{\leafcustom}[3][]{
-	\pgfkeys{/standard leaf keys, default, #1}%
+	\pgfkeys{/custom leaf keys, default, #1}%
 	\pgfmathsetlength{\foo}{max(max(\pNIn,\pNOut)*5pt, \pInnerSep)}
-	\pgfmathtruncatemacro\rotports{\iftoggle{/standard leaf keys/reverse}{180}{0}}
-	\pgfmathtruncatemacro\rotshape{\iftoggle{/standard leaf keys/reverse shape}{180}{0}}
+	\pgfmathtruncatemacro\rotports{\iftoggle{/custom leaf keys/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rotshape{\iftoggle{/custom leaf keys/reverse shape}{180}{0}}
 	\begin{scope}[local bounding box= #2, shift={(#3)}]
 		\node[\pShape, draw, moc=\pMoc, inner sep=\foo, rotate=\rotshape,] (#2-shape) at (0,0) {};
 		\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
@@ -89,10 +89,10 @@
 % #4 = label
 \newcommand\compositebbox[4][]{
 	\pgfkeys{/composite keys, default, #1}%
-	\pgfmathtruncatemacro\rot{\iftoggle{/composite/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rot{\iftoggle{/composite keys/reverse}{180}{0}}
 	\begin{scope}[local bounding box= #2]
-		\node[rectangle, rounded corners = 3pt, minimum width=30pt, minimum height=30pt, inner sep=\innerSep,
-			draw=\defaultdrawcolor, fill=blackboxcolor] (#2-shape) at (#3) {\labelStyle{#4}};
+		\node[rectangle, rounded corners = 3pt, minimum width=30pt, minimum height=30pt, inner xsep=\innerXSep,
+			inner ysep=\innerYSep, draw=\defaultdrawcolor, fill=blackboxcolor] (#2-shape) at (#3) {\labelStyle{#4}};
 		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
 	\end{scope}
 }
@@ -107,7 +107,7 @@
 % #2 = name
 % #3 = list of nodes clustered
 % #4 = label
-\newcommand\patternappl[4][]{
+\newcommand\patterncluster[4][]{
 	\pgfkeys{/applicative patterns keys, default, #1}%
 	\pgfmathtruncatemacro\rotports{\iftoggle{/applicative patterns keys/reverse}{180}{0}}
 	\pgfmathtruncatemacro\rotshape{\iftoggle{/applicative patterns keys/reverse shape}
@@ -128,16 +128,16 @@
 % #1 = keys
 % #2 = name
 % #3 = position
-\newcommand\patterntransstd[3][]{
-	\pgfkeys{/trasition patterns keys, default, #1}%
-	\pgfmathtruncatemacro\rotports{\iftoggle{/trasition patterns keys/reverse}{180}{0}}
+\newcommand\patternnodestd[3][]{
+	\pgfkeys{/transition patterns keys, default, #1}%
+	\pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
 	\begin{scope}[local bounding box= #2, shift={(#3)}]	
 		\begin{scope}	
 			\node[rotate=90] (#2-type) at (0,0) {\typeStyle{\pType}};
 			\node[fit=(#2-type), inner sep=0pt](#2-wt) {};
-			\node[func\pNFunc, font=\funcStyle, anchor=south, yshift=2pt] (#2-f) at (#2-wt.north) 
+			\node[func\pNFunc, font=\funcStyle, anchor=south, inner sep=0pt] (#2-f) at (#2-wt.north) 
 				{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-			\node[\pOuterShape, draw, inner sep=0pt, fit=(#2-f)(#2-wt), rotate=\rotports,] (#2-shape) {};
+			\node[\pOuterShape, draw, inner sep=0pt, fit=(#2-wt), rotate=\rotports,] (#2-shape) {};
 			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
 		\end{scope}
 	\end{scope}
@@ -146,12 +146,12 @@
 % #1 = keys
 % #2 = name
 % #3 = position
-\newcommand\patterntranscustom[3][]{
-	\pgfkeys{/trasition patterns keys, default, #1}%
-	\pgfmathtruncatemacro\rotports{\iftoggle{/trasition patterns keys/reverse}{180}{0}}
-	\pgfmathtruncatemacro\rotshape{\iftoggle{/trasition patterns keys/reverse shape}
-		{\iftoggle{/trasition patterns keys/reverse}{0}{180}}
-		{\iftoggle{/trasition patterns keys/reverse}{180}{0}}}
+\newcommand\patternnodecustom[3][]{
+	\pgfkeys{/transition patterns keys, default, #1}%
+	\pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}
+		{\iftoggle{/transition patterns keys/reverse}{0}{180}}
+		{\iftoggle{/transition patterns keys/reverse}{180}{0}}}
 	\begin{scope}[local bounding box= #2, shift={(#3)}]	
 		\begin{scope}	
 			\node[\pInnerShape, rotate=\rotports] (#2-c) at (0,0) {};
@@ -159,7 +159,7 @@
 				{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
 			\node[\pOuterShape, draw, inner xsep=0pt, inner ysep=1pt, fit=(#2-c), rotate=\rotshape,] 
 				(#2-oshape) {};
-			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-oshape)(#2-f),] (#2-p) {};
+			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-oshape),] (#2-p) {};
 		\end{scope}
 	\end{scope}
 }
