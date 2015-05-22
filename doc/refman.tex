@@ -725,4 +725,23 @@ Following is a list with all process constructors including valid option keys:
 \appendix
 \section{PGF nodes} \label{appendix_shapes}
 
+All graphical elements in the \texttt{forsyde-tikz} package are created using custom PGF shapes defined in \texttt{tikzlibraryfshapes.code.tex}. You can create new elements by combining them, as can be seen in \texttt{tikzlibraryforsyde.code.tex}. Following is a list with these shapes:
+
+\begin{optionslist}
+\item \texttt{ports i[0..10]o[0..10]} : defines anchors for the input/output ports.
+\item \texttt{func[0..4]} : defines boxes and anchors for the functions nodes.
+\item \texttt{leaf shape} : the shape of a standard leaf process outer box.
+\item \texttt{zip shape} : the shape of a custom zip process.
+\item \texttt{interface shape 0} : the node shape of an interface process.
+\item \texttt{interface shape 180} : the node shape of a reversed interface process.
+\item \texttt{composite shape} : the shape of a composite process.
+\item \texttt{dp shape} : the shape of a data-parallel pattern.
+\item \texttt{pipe shape} : the shape of a time-parallel (pipelined) pattern.
+\item \texttt{merge shape} : the shape of a merging (e.g. reduce) pattern.
+\item \texttt{custom conduit i[2..8]o[2..8]} : the inner node depicting the conduit in a custom (visual) transition pattern.
+\item \texttt{transition shape v[1..8]v[1..8]} : the outer box of a transition pattern, depicting vector(s) on one side and vector(s) on the other side.
+\item \texttt{transition shape s1v1} : the outer box of a transition pattern, depicting a signal on one side and a vector on the other side.
+\item \texttt{transition shape v1gv1} : the outer box of a transition pattern, depicting a vector on one side and a group of vectors on the other side.
+\end{optionslist}
+
 \end{document}
