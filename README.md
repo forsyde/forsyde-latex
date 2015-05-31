@@ -9,7 +9,7 @@ This is the main repo for the ForSyDe TikZ library.  It contains packages:
 Installation
 ------------
 
-The contents of `src` are to be copied on your local machine. The package is loaded by compiling your document with the `TEXINPUTS` variable set to your installation path, or by copying all package files in your document's root folder or any LaTeX standard loading path. To include the styles you must add in the document preamble:
+The contents of `forsyde-tikz` are to be copied on your local machine. The package is loaded by compiling your document with the `TEXINPUTS` variable set to your installation path, or by copying all package files in your document's root folder or any LaTeX standard loading path. To include the styles you must add in the document preamble:
 
 ```
 \usepackage{forsyde-tikz}

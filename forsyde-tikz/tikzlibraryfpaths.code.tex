@@ -143,7 +143,7 @@
 \NewDocumentCommand{\tokens}{m}
  {% #1 = character, #2 = string
   \youra_count_char:nn { - } { #1 }
-  \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
+  \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
   \setlength{\inTemp}{\halftokensize}
   \drawtokens{ #1 }
  }
@@ -161,48 +161,30 @@
  {
   \davs__tokens_do:n { #1 } 
   
-  \pgfmathsetlength{\xTemp}{\xTemp+\tokensize+\tokensize}
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
  }
 \cs_new_protected:Nn \davs__tokens_do:n
  {
 	\ifthenelse{ \equal{#1}{scalar}}{
-		\draw[fill=\defaultfillcolor, thin] (\xTemp,0) circle [radius=\tokensize];
+		\node[scalartokenshape, draw] at (\xTemp,0) {};
 	}{
   	\ifthenelse{ \equal{#1}{vector}}{
-		\draw[fill=\defaultfillcolor, thin] (\xTemp-\tokensize,0) -- (\xTemp,-\tokensize) -- (\xTemp+\tokensize,0) -- (\xTemp,\tokensize) -- cycle ;
+		\node[vectortokenshape, draw] at (\xTemp,0) {};
 	}{
   	\ifthenelse{ \equal{#1}{function}}{
-		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,-\tokensize) rectangle (\xTemp+\tokensize,\tokensize);
+		\node[functiontokenshape, draw] at (\xTemp,0) {};
 	}{
-  	\ifthenelse{ \equal{#1}{scalarAE}}{
-		\draw[fill=\defaultfillcolor, thin] (\xTemp,0) circle [radius=\tokensize];
-		\pgfsetlinewidth{.5pt} 
-		\pgfpathmoveto{\pgfpoint{\xTemp}{-.75\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp}{\inTemp}}
-		\pgfusepathqstroke
-		\pgfpathmoveto{\pgfpoint{\xTemp-\inTemp}{-.75\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp+\inTemp}{-.75\inTemp}}
-		\pgfusepathqstroke
+ 	\ifthenelse{ \equal{#1}{scalarAE}}{
+		\node[scalartokenshape, draw] at (\xTemp,0) {};
+ 		\node[aetokenshape, draw] at (\xTemp,0) {};
 	}{
 	\ifthenelse{ \equal{#1}{vectorAE}}{
-		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,0) -- (\xTemp,-\tokensize) -- (\xTemp+\tokensize,0) -- (\xTemp,\tokensize) -- cycle;
-		\pgfsetlinewidth{.5pt} 
-		\pgfpathmoveto{\pgfpoint{\xTemp}{-.75\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp}{\inTemp}}
-		\pgfusepathqstroke
-		\pgfpathmoveto{\pgfpoint{\xTemp-.75\inTemp}{-.75\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp+.75\inTemp}{-.75\inTemp}}
-		\pgfusepathqstroke
+		\node[vectortokenshape, draw] at (\xTemp,0) {};
+ 		\node[aetokenshape, draw] at (\xTemp,0) {};
 	}{
   	\ifthenelse{ \equal{#1}{functionAE}}{
-		\draw[fill=\defaultfillcolor, thin ] (\xTemp-\tokensize,-\tokensize) rectangle (\xTemp+\tokensize,\tokensize);
-		\pgfsetlinewidth{.5pt} 
-		\pgfpathmoveto{\pgfpoint{\xTemp}{-\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp}{\inTemp}}
-		\pgfusepathqstroke
-		\pgfpathmoveto{\pgfpoint{\xTemp-\inTemp}{-\inTemp}}
-		\pgfpathlineto{\pgfpoint{\xTemp+\inTemp}{-\inTemp}}
-		\pgfusepathqstroke
+		\node[functiontokenshape, draw] at (\xTemp,0) {};
+ 		\node[aetokenshape, draw] at (\xTemp,0) {};
 	}{}
 	}}}}}
  }

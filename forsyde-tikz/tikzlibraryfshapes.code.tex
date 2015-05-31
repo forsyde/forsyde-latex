@@ -965,12 +965,54 @@
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
 		\pgfusepath{stroke} 
 	}  
-}    
+}
+
+\pgfdeclareshape{scalartokenshape}{ %
+	\anchorsfromrectangle
+	\backgroundpath{%
+		\pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+		\pgfpathcircle{\pgfpoint{0pt}{0pt}}{\tokensize} \pgfusepath{fill,stroke} 
+	}%	
+}   
+\pgfdeclareshape{vectortokenshape}{ %
+	\anchorsfromrectangle
+	\backgroundpath{%
+		\pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+		\pgfpathmoveto{\pgfpoint{-\tokensize}{0}}
+		\pgfpathlineto{\pgfpoint{0}{\tokensize}}
+		\pgfpathlineto{\pgfpoint{\tokensize}{0}}
+		\pgfpathlineto{\pgfpoint{0}{-\tokensize}}
+		\pgfpathclose \pgfusepath{fill,stroke} 
+	}%	
+}   
+\pgfdeclareshape{functiontokenshape}{ %
+	\anchorsfromrectangle
+	\backgroundpath{%
+		\pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+		\pgfpathrectangle{\pgfpoint{-\tokensize}{-\tokensize}}{\pgfpoint{\tokensize}{\tokensize}}
+		\pgfpathclose \pgfusepath{fill,stroke} 
+	}%	
+}   
+\pgfdeclareshape{aetokenshape}{ %
+	\anchorsfromrectangle
+	\backgroundpath{%
+		\pgfsetlinewidth{0.5pt} \pgfsetstrokecolor{\defaultdrawcolor} 
+		\pgfpathmoveto{\pgfpoint{0pt}{\halftokensize}}
+		\pgfpathlineto{\pgfpoint{0pt}{-\halftokensize}}
+		\pgfusepathqstroke
+		\pgfpathmoveto{\pgfpoint{-\halftokensize}{-\halftokensize}}
+		\pgfpathlineto{\pgfpoint{\halftokensize}{-\halftokensize}}
+		\pgfusepathqstroke
+	}%	
+}   
 
 \tikzset{% 
     noinner/.style={draw=none, inner sep=0pt, minimum height=30pt, minimum width=3pt},
     funcbox/.style={draw=none, fill=\defaultfillcolor, font=\scriptsize, rotate=90, minimum width=30pt, minimum height=7pt},
     invbox/.style={draw=none, fill=\defaultfillcolor, rotate=180, minimum height=30pt, minimum width=7pt},
 }
+
+
+
 
 \endinput
