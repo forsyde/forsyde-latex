@@ -974,6 +974,7 @@
 \pgfdeclareshape{scalartokenshape}{ %
 	\anchorsfromrectangle
 	\backgroundpath{%
+                \pgfsetdash{{1pt}{0pt}}{0pt}
 		\pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
 		\pgfpathcircle{\pgfpoint{0pt}{0pt}}{\tokensize} \pgfusepath{fill,stroke} 
 	}%	
@@ -993,8 +994,11 @@
 	\anchorsfromrectangle
 	\backgroundpath{%
 		\pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
-		\pgfpathrectangle{\pgfpoint{-\tokensize}{-\tokensize}}{\pgfpoint{\tokensize}{\tokensize}}
-		\pgfpathclose \pgfusepath{fill,stroke} 
+                \pgfpathmoveto{\pgfpoint{-\halftokensize}{-\halftokensize}}
+		\pgfpathlineto{\pgfpoint{-\halftokensize}{\halftokensize}}
+		\pgfpathlineto{\pgfpoint{\halftokensize}{\halftokensize}}
+		\pgfpathlineto{\pgfpoint{\halftokensize}{-\halftokensize}}
+		\pgfpathclose \pgfusepath{fill,stroke}  
 	}%	
 }   
 \pgfdeclareshape{aetokenshape}{ %

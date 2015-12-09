@@ -55,7 +55,7 @@
 	\pgfmathtruncatemacro\rot{\iftoggle{/interface keys/reverse}{180}{0}}	
 	\begin{scope}[local bounding box= #2, shift={(#3)}]
 		\node[interface shape \rot, mocin=\pMocIn, mocout=\pMocOut, minimum width=30pt, minimum height=30pt, draw] (#2-shape) at (0,0) {
-			\nodepart{mocin} \typeStyle{\ifnolabel\else\getmoclabel{\pMocIn}\fi}
+			\nodepart{mocin}  \typeStyle{\ifnolabel\else\getmoclabel{\pMocIn}\fi}
 			\nodepart{mocout} \typeStyle{\ifnolabel\else\getmoclabel{\pMocOut}\fi} 
 		};
 		\node[ports i1o1, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};

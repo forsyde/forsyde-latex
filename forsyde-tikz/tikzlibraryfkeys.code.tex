@@ -35,6 +35,18 @@
 %%%%%%%%%%%%
 % FAMILIES % 
 %%%%%%%%%%%%
+\pgfkeys{/primitive keys/.is family, /primitive keys,
+ 	moc/.estore in       = \pMoc,
+	nf/.estore in        = \pNFunc,
+	f/.estore in         = \pFunc,
+	default/.style = {
+		moc=none, 
+                nf=0, 
+		f=$ f $
+	}
+}
+
+
 \pgfkeys{/standard leaf keys/.is family, /standard leaf keys,
  	moc/.estore in       = \pMoc,
  	type/.estore in      = \pType,

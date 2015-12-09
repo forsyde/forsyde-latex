@@ -129,6 +129,7 @@
     \fi
   },
   s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, draw},
+  sn/.style args = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, dashed, draw},
   v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, draw},
   f/.style       = {line width=\functionpathlinewidth, >= ftip, dotted, shorten >= 1mm, shorten <= 1mm, draw},
 }
@@ -136,8 +137,10 @@
 %
 % Styles for data tokens.
 %
+
 \newlength{\xTemp}
 \newlength{\inTemp}
+\newlength{\startFunc}
 \ExplSyntaxOn
 
 \NewDocumentCommand{\tokens}{m}
@@ -159,35 +162,33 @@
  }
 \cs_new_protected:Nn \davs__tokens_rec:n
  {
+  \IfSubStr { #1 } { ( }{ 
+    \pgfmathsetlength{\startFunc}{ \xTemp - \tokensize * \globScale } 
+  }{}
+
   \davs__tokens_do:n { #1 } 
+
+  \IfSubStr { #1 } { ) }{ 
+    \pgfmathsetlength{\inTemp}{ \xTemp + \tokensize * \globScale }
+    \draw[thin] (\startFunc,-\tokensize) rectangle (\inTemp,\tokensize); 
+  }{}
   
   \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
  }
 \cs_new_protected:Nn \davs__tokens_do:n
  {
-	\ifthenelse{ \equal{#1}{scalar}}{
+	\IfSubStr { #1 } { scalar }{
 		\node[scalartokenshape, draw] at (\xTemp,0) {};
 	}{
-  	\ifthenelse{ \equal{#1}{vector}}{
+  	\IfSubStr { #1 } { vector }{
 		\node[vectortokenshape, draw] at (\xTemp,0) {};
 	}{
-  	\ifthenelse{ \equal{#1}{function}}{
+  	\IfSubStr { #1 } { function }{
 		\node[functiontokenshape, draw] at (\xTemp,0) {};
-	}{
- 	\ifthenelse{ \equal{#1}{scalarAE}}{
-		\node[scalartokenshape, draw] at (\xTemp,0) {};
- 		\node[aetokenshape, draw] at (\xTemp,0) {};
-	}{
-	\ifthenelse{ \equal{#1}{vectorAE}}{
-		\node[vectortokenshape, draw] at (\xTemp,0) {};
- 		\node[aetokenshape, draw] at (\xTemp,0) {};
-	}{
-  	\ifthenelse{ \equal{#1}{functionAE}}{
-		\node[functiontokenshape, draw] at (\xTemp,0) {};
- 		\node[aetokenshape, draw] at (\xTemp,0) {};
 	}{}
-	}}}}}
+	}}
  }
+
 \ExplSyntaxOff
 
 
@@ -231,6 +232,9 @@
 % Finally, edge drawing helpers
 \def\signal[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, s=\MoC,] (#4);
+}
+\def\signaln[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, sn=\MoC,] (#4);
 }
 \def\vector[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, v=\MoC,] (#4);
