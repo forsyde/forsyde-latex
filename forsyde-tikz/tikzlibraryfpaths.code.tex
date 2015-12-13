@@ -131,6 +131,7 @@
   s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, draw},
   sn/.style args = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, dashed, draw},
   v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, draw},
+  vn/.style args = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, dashed, draw},
   f/.style       = {line width=\functionpathlinewidth, >= ftip, dotted, shorten >= 1mm, shorten <= 1mm, draw},
 }
 
@@ -238,6 +239,9 @@
 }
 \def\vector[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, v=\MoC,] (#4);
+}
+\def\vectorn[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, vn=\MoC,] (#4);
 }
 \def\function[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, f,] (#4);

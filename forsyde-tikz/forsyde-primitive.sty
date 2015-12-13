@@ -1,5 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{forsyde-tikz}
+\RequirePackage{amssymb}
 \ProvidesPackage{forsyde-primitive}
                  [2015/05/20 v0.3 Some user-defined macros for ForSyDe primitive processes]
 
@@ -10,7 +11,7 @@
 % #4 = label
 \newcommand{\primitiveprocess}[4][]{
 	\pgfkeys{/primitive keys, default, #1}%
-	\node[draw,circle,inner sep=0pt, minimum size=15pt] (#2) at (#3) {#4};
+	\node[draw,circle,inner sep=0pt, minimum size=15pt, fill=white] (#2) at (#3) {#4};
 	\node[func\pNFunc, font=\funcStyle, anchor=south] 
 		(#2-f)    at (#2.north)  {\functionlabels{\pNFunc}{\pFunc}{}{}{}};
 }
@@ -23,4 +24,11 @@
 \newcommand\primUnzip[3][]       {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \lhd $}}
 \newcommand\primZip[3][]         {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \rhd $}}
 
+\newcommand\primNwFunctor[3][]     {\primitiveprocess[#1,nf=1]{#2}{#3}{$ \bullet $}}
+\newcommand\primNwApplicative[3][] {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \star $}}
+\newcommand\primNwPlus[3][]        {\primitiveprocess[#1,nf=1]{#2}{#3}{$ \boxplus $}}
+\newcommand\primNwDot[3][]         {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \boxdot $}}
+\newcommand\primNwTimes[3][]       {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \boxtimes $}}
+\newcommand\primNwAt[3][]          {\primitiveprocess[#1,nf=1]{#2}{#3}{$ @ $}}
+\newcommand\primNwBowtie[3][]      {\primitiveprocess[#1,nf=0]{#2}{#3}{$ \bowtie $}}
 

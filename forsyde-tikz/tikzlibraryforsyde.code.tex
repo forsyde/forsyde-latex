@@ -131,13 +131,14 @@
 \newcommand\patternnodestd[3][]{
 	\pgfkeys{/transition patterns keys, default, #1}%
 	\pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
+	\pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}{180}{0}}
 	\begin{scope}[local bounding box= #2, shift={(#3)}]	
 		\begin{scope}	
 			\node[rotate=90] (#2-type) at (0,0) {\typeStyle{\pType}};
 			\node[fit=(#2-type), inner sep=0pt](#2-wt) {};
 			\node[func\pNFunc, font=\funcStyle, anchor=south, inner sep=0pt] (#2-f) at (#2-wt.north) 
 				{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-			\node[\pOuterShape, draw, inner sep=0pt, fit=(#2-wt), rotate=\rotports,] (#2-shape) {};
+			\node[\pOuterShape, draw, inner sep=0pt, fit=(#2-wt), rotate=\rotshape,] (#2-shape) {};
 			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
 		\end{scope}
 	\end{scope}
