@@ -710,6 +710,50 @@
 	}
 }
 
+\pgfdeclareshape{generic shape}{%
+	\anchorsfromrectangle
+	\backgroundpath{%
+		\pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
+		\pgfsetlinewidth{\skeletonlinewidth} 
+
+		\northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+		\southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}  
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+		\pgfpathclose \pgfusepath{stroke}
+
+		\northeast \pgf@ya=\pgf@y 
+		\pgfmathsetlength{\pgf@xa}{\pgf@x-3pt}
+		\pgfmathsetlength{\pgf@yc}{\pgf@y+3pt}
+		\southwest \pgf@xb=\pgf@x
+		\pgfmathsetlength{\pgf@yb}{\pgf@y+3pt}
+		\pgfmathsetlength{\pgf@xc}{\pgf@x-3pt}
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+		\pgfusepath{stroke} 
+
+		\northeast
+		\pgfmathsetlength{\pgf@ya}{\pgf@y+3pt}
+		\pgfmathsetlength{\pgf@xa}{\pgf@x-6pt}
+		\pgfmathsetlength{\pgf@yc}{\pgf@y+6pt}
+		\southwest 
+		\pgfmathsetlength{\pgf@xb}{\pgf@x-3pt}
+		\pgfmathsetlength{\pgf@yb}{\pgf@y+6pt}
+		\pgfmathsetlength{\pgf@xc}{\pgf@x-6pt}
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+		\pgfusepath{stroke} 
+	}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TRANSITION PATTERNS SHAPES %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -15,7 +15,7 @@
 	/tikz/nomoccolor/.is if=nocolor,
 	/tikz/nomoclabel/.is if=nolabel,
 	/tikz/type style/.store in = \typeStyle,
-	/tikz/type style = \scriptsize\textit,
+	/tikz/type style = \scriptsize\texttt,
 	/tikz/label style/.store in = \labelStyle,
 	/tikz/label style = \textbf,
 	/tikz/function style/.store in = \funcStyle,
@@ -38,11 +38,12 @@
 \pgfkeys{/primitive keys/.is family, /primitive keys,
  	moc/.estore in       = \pMoc,
 	nf/.estore in        = \pNFunc,
-	f/.estore in         = \pFunc,
+	f1/.estore in        = \pFunc,
+        f/.style={f1 = {#1},nf = 1, },
 	default/.style = {
 		moc=none, 
                 nf=0, 
-		f=$ f $
+		f1=$ f $
 	}
 }
 

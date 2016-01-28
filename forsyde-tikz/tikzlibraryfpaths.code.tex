@@ -141,14 +141,13 @@
 
 \newlength{\xTemp}
 \newlength{\inTemp}
+\newlength{\lTemp}
 \newlength{\startFunc}
 \ExplSyntaxOn
 
 \NewDocumentCommand{\tokens}{m}
  {% #1 = character, #2 = string
   \youra_count_char:nn { - } { #1 }
-  \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
-  \setlength{\inTemp}{\halftokensize}
   \drawtokens{ #1 }
  }
 \int_new:N \l_youra_count_char_int
@@ -158,24 +157,35 @@
  }
  
 \NewDocumentCommand{\drawtokens}{ >{ \SplitList { - } } m }
- {
-  \ProcessList { #1 } { \davs__tokens_rec:n }
- }
-\cs_new_protected:Nn \davs__tokens_rec:n
+{
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
+ \pgfmathsetlength{\lTemp}{\tokensize + 0.3pt}
+ \setlength{\inTemp}{\halftokensize}
+ \ProcessList { #1 } { \davs__tokens_drawbox_rec:n }
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
+ \setlength{\inTemp}{\halftokensize}
+ \ProcessList { #1 } { \davs__tokens_drawtok_rec:n }
+}
+
+\cs_new_protected:Nn \davs__tokens_drawbox_rec:n
  {
   \IfSubStr { #1 } { ( }{ 
-    \pgfmathsetlength{\startFunc}{ \xTemp - \tokensize * \globScale } 
+    \pgfmathsetlength{\startFunc}{ \xTemp - 0.3pt - \tokensize * \globScale  } 
   }{}
-
-  \davs__tokens_do:n { #1 } 
-
   \IfSubStr { #1 } { ) }{ 
-    \pgfmathsetlength{\inTemp}{ \xTemp + \tokensize * \globScale }
-    \draw[thin] (\startFunc,-\tokensize) rectangle (\inTemp,\tokensize); 
+    \pgfmathsetlength{\inTemp}{ \xTemp + 0.3pt + \tokensize * \globScale }
+    \pgfsetlinewidth{0.2pt}
+    \draw[ fill=\defaultfillcolor] (\startFunc,-\lTemp) rectangle (\inTemp,\lTemp); 
   }{}
-  
   \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
  }
+
+\cs_new_protected:Nn \davs__tokens_drawtok_rec:n
+ {
+  \davs__tokens_do:n { #1 } 
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
+ }
+
 \cs_new_protected:Nn \davs__tokens_do:n
  {
 	\IfSubStr { #1 } { scalar }{
@@ -198,6 +208,8 @@
 %
 \tikzset{
   token/.style={decoration={name=markings, post length=1pt, pre length=1pt, mark=at position \tokPos with {\tokens{#1}}}, postaction=decorate },
+  -|/.style={ to path={ (\tikztostart) -| (\tikztotarget) \tikztonodes }},
+  |-/.style={ to path={ (\tikztostart) |- (\tikztotarget) \tikztonodes }},
   -|-/.style={ to path={ (\tikztostart) 
 	-| ([xshift=\pDeviate]$(\tikztostart)!#1!(\tikztotarget)$) 
 	|- (\tikztotarget) 
