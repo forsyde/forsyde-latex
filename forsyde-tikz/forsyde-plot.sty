@@ -7,6 +7,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
+\RequirePackage{pgfplots}
 \RequirePackage{calc}
 \usetikzlibrary{arrows,automata} 
 
@@ -125,13 +126,14 @@
 % CONTINUOUS TIME SIGNALS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\pgfplotsset{samples=50}
 % environment that plots a CT signal as a tikz picture
 % #1 keys
 % #2 width / height ratio
 \newenvironment{ct-signal}[2][remember picture]{
   \pgfmathsetmacro\lllh{#2*4}
-  %\setlength{\plw}{#2\plh}
   \begin{tikzpicture}[]
+    \setcounter{signum}{0}
     \begin{axis}[
       height=4cm, width=\lllh cm,
       xlabel={$t$}, ylabel={$v$},
@@ -148,7 +150,26 @@
   \end{tikzpicture}
 }
 
-\newcommand*{\ctsignal}[3][]{
-  \addplot+[#1] coordinates {#3};
-  \addlegendentry{#2}
+\def\signalname{}
+\def\prevposval{}
+\newcommand*{\ctsignal}[1]{% 
+  \def\signalname{#1}
+  \def\prevposval{0,0}
+}
+
+\newcommand*{\ctct}[3]{%
+  \addplot+[mark=none,forget plot] coordinates {(\prevposval) (#1,#3)};
+  \addplot+[mark=none,forget plot] coordinates {(#1,#3) (#2,#3)};
+  \def\prevposval{#2,#3}
+}
+
+\newcommand*{\ctf}[3]{%
+  \addplot+[mark=none,forget plot] coordinates {(\prevposval) (#1,{#3(#1)})};
+  \addplot+[domain=#1:#2,mark=none,forget plot] {#3(x)};
+  \def\prevposval{#2,{#3(#2)}}
+}
+
+\newcommand*{\ctend}{%
+  \addplot+[mark=none] coordinates {(\prevposval) (\prevposval)};
+  \addlegendentry{\signalname}
 }
