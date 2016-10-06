@@ -10,9 +10,10 @@
 \RequirePackage{stmaryrd}
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
-
+\RequirePackage{wasysym}
+\RequirePackage{stackengine}
 \ProvidesPackage{forsyde-math}
-              [2016/01/12 v0.1 SDF TikZ Library]
+              [2016/10/05 v0.2 ForSyDe Math Library]
 
 \newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
 \newcommand\monecirc[3]{\tikz[baseline=(X.base)] 
@@ -49,3 +50,19 @@
 \newcommand{\fscan}{\mathbin{\rotatebox[origin=c]{45}{$\boxast$}}}
 \newcommand\fcat{\mdoubleplus}
 \newcommand\fsel{\mathrel{@}}
+
+
+% \newlength\forsydeOperatorInnerLength
+% \newlength\forsydeOperatorOuterLength
+% \newlength\forsydeOperatorDiffLength
+% \newcommand\mocOperator{\mathpalette\@incircbin}
+% \newcommand\@incircbin[2]{%
+% \mathbin{\ooalign{\hidewidth\raisebox{#1}{$#1#2$}\hidewidth\crcr$#1\ocircle$}}}
+
+\newcommand\mocOperator[2][]{\topinset{$#2$}{$\ocircle$}{#1}{}}
+
+\newcommand{\mapM}{\mocOperator[.35ex]{\cdot}}
+\newcommand{\applM}{\mocOperator[.30ex]{*}} 
+\newcommand{\preM}{\mocOperator[.27ex]{\scriptstyle\prec}} 
+\newcommand{\phiM}{\mocOperator[.06ex]{\scriptstyle\phi}}
+\newcommand{\delayM}{\mocOperator[.20ex]{\scriptstyle\triangle}} 
