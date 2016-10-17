@@ -129,10 +129,11 @@
     \fi
   },
   s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, draw},
-  sn/.style args = {#1}{getsignalmoc={#1}, line width=.6,  >= stip, double distance=2pt, draw},
+  sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stip, double distance=1.3pt, draw},
   v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, draw},
-  vn/.style args = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stip, double, draw},
+  vn/.style args = {#1}{getsignalmoc={#1}, line width=2, double distance=2pt, >= stip, double, draw},
   f/.style       = {line width=\functionpathlinewidth, >= ftip, dotted, shorten >= 1mm, shorten <= 1mm, draw},
+  fn/.style       = {line width=.4, >= ftip, dotted, shorten >= 1mm, shorten <= 1mm, double distance=1pt, double, draw},
 }
 
 %
@@ -257,6 +258,9 @@
 }
 \def\function[#1] (#2) #3 (#4);{
         \draw (#2) edge[#1, #3, f,] (#4);
+}
+\def\functionn[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, fn,] (#4);
 }
 
 \endinput
