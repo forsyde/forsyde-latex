@@ -11,7 +11,6 @@
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
 \RequirePackage{wasysym}
-\RequirePackage{stackengine}
 \ProvidesPackage{forsyde-math}
               [2016/10/05 v0.2 ForSyDe Math Library]
 
@@ -59,13 +58,7 @@
 % \newcommand\@incircbin[2]{%
 % \mathbin{\ooalign{\hidewidth\raisebox{#1}{$#1#2$}\hidewidth\crcr$#1\ocircle$}}}
 
-\newcommand\mocOperator[2][]{\topinset{$#2$}{$\ocircle$}{#1}{}}
-
-\newcommand{\mapM}{\mocOperator[.35ex]{\cdot}}
-\newcommand{\applM}{\mocOperator[.30ex]{*}} 
-\newcommand{\preM}{\mocOperator[.27ex]{\scriptstyle\prec}} 
-\newcommand{\phiM}{\mocOperator[.06ex]{\scriptstyle\phi}}
-\newcommand{\delayM}{\mocOperator[.20ex]{\scriptstyle\triangle}} 
+% \newcommand\mocOperator[2][]{\topinset{$#2$}{$\ocircle$}{#1}{}}
 
 
 \newcommand{\mapS}{\mathbin{\rotatebox[origin=c]{45}{$\boxdot$}}}
@@ -77,3 +70,21 @@
 \newcommand{\catS}{\mdoubleplus}
 
 \newcommand\fopt[1]{\textcolor{black!35}{#1}}
+
+
+\newcommand\mocOperator[1]{{%
+    \setbox0\hbox{$\ocircle$}%
+    \rlap{\hbox to \wd0{\hss$#1$\hss}}\box0
+}}
+
+\newcommand\mocOperatorRaise[2][0ex]{{%
+    \setbox0\hbox{\raisebox{#1}{$#2$}}%
+    \rlap{\hbox to \wd0{\hss$\ocircle$\hss}}\box0
+}}
+
+\newcommand{\mapM}{\mathbin{\mocOperator{\cdot}}} 
+\newcommand{\applM}{\mathbin{\mocOperator{*}} } 
+\newcommand{\preM}{\mathbin{\mocOperatorRaise[.14ex]{\scriptstyle\prec}} } 
+\newcommand{\phiM}{\mathbin{\mocOperatorRaise[.12ex]{\scriptstyle\phi}}} 
+\newcommand{\delayM}{\mathbin{\mocOperatorRaise[.11ex]{\scriptstyle\triangle}} } 
+\newcommand{\combM}{\mathbin{\mocOperator{+}}} 
