@@ -20,8 +20,8 @@
 # make view 
 # make clean
 
-MAIN		= refman
-STYDIR      = ../src
+MAIN     = refman
+STYDIR   = ../forsyde-tikz
 
 all: $(MAIN).pdf
 
