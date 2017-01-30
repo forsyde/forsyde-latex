@@ -117,16 +117,13 @@
 % Styles for signal, vector and function paths.
 %
 \tikzset{
-  getsignalmoc/.code={
-	\ifnocolor
-		\defaultdrawcolor
-	\else
-	  	\ifthenelse{ \equal{#1}{sy}}{\tikzset{sycolor}}{
-	  	\ifthenelse{ \equal{#1}{de}}{\tikzset{decolor}}{
-	  	\ifthenelse{ \equal{#1}{ct}}{\tikzset{ctcolor}}{
-	  	\ifthenelse{ \equal{#1}{sdf}}{\tikzset{sdfcolor}}{}
-	  	}}}
-    \fi
+  getsignalmoc/.code={%
+  \ifnocolor \defaultdrawcolor
+  \else \ifstrequal{#1}{sy}{\tikzset{sycolor}}{%
+        \ifstrequal{#1}{de}{\tikzset{decolor}}{%
+        \ifstrequal{#1}{ct}{\tikzset{ctcolor}}{%
+        \ifstrequal{#1}{sdf}{\tikzset{sdfcolor}}{}}}}
+  \fi
   },
   s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stip, draw},
   sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stip, double distance=1.3pt, draw},

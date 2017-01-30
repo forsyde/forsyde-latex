@@ -8,16 +8,13 @@
 \newlength{\tht}
 
 % command for setting the MoC color
-\newcommand{\setmocbackground}[1]{
-	\ifnocolor
-		\pgfsetfillcolor{\defaultfillcolor}
-	\else
-  	\ifthenelse{ \equal{#1}{sy}}{\pgfsetfillcolor{sycolor}}{
-	  	\ifthenelse{ \equal{#1}{de}}{\pgfsetfillcolor{decolor}}{
-	  	\ifthenelse{ \equal{#1}{ct}}{\pgfsetfillcolor{ctcolor}}{
-	  	\ifthenelse{ \equal{#1}{sdf}}{\pgfsetfillcolor{sdfcolor}}{\pgfsetfillcolor{\defaultfillcolor}}
-		}}}
-	\fi
+\newcommand{\setmocbackground}[1]{%
+\ifnocolor \pgfsetfillcolor{\defaultfillcolor}%
+\else \ifstrequal{#1}{sy}{\pgfsetfillcolor{sycolor}}{%
+         \ifstrequal{#1}{de}{\pgfsetfillcolor{decolor}}{%
+            \ifstrequal{#1}{ct}{\pgfsetfillcolor{ctcolor}}{%
+                \ifstrequal{#1}{sdf}{\pgfsetfillcolor{sdfcolor}}{\pgfsetfillcolor{\defaultfillcolor}}}}}%
+\fi
 }
 \def\anchorsfromrectangle{%
 	\inheritsavedanchors[from=rectangle]

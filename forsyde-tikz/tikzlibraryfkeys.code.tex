@@ -73,6 +73,34 @@
 	}
 }
 
+\pgfkeys{/standard newleaf keys/.is family, /standard newleaf keys,
+ 	moc/.estore in       = \pMoc,
+ 	type/.estore in      = \pType,
+	ni/.estore in        = \pNIn,
+	no/.estore in        = \pNOut,
+	nf/.estore in        = \pNFunc,
+	f1/.estore in        = \pFuncA,
+	f2/.estore in        = \pFuncB,
+	f3/.estore in        = \pFuncC,
+	f4/.estore in        = \pFuncD,
+	inner sep/.estore in = \pInnerSep,
+	anchor/.estore in        = \pAnch,
+	reverse/.is toggle,
+	default/.style = {
+		moc=none, 
+		type= , 
+		ni=1, no=1, nf=0, 
+		f1=$ f_1 $, 
+		f2=$ f_2 $, 
+		f3=$ f_3 $, 
+		f4=$ f_4 $, 
+		inner sep=10pt,
+		reverse = false,
+                anchor=center
+	}
+}
+
+
 \pgfkeys{/custom leaf keys/.is family, /custom leaf keys,
  	moc/.estore in            = \pMoc,
  	shape/.estore in          = \pShape,

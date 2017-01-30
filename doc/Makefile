@@ -21,7 +21,7 @@
 # make clean
 
 MAIN		= refman
-STYDIR      = ../src
+STYDIR      = ../forsyde-tikz
 
 all: $(MAIN).pdf
 
