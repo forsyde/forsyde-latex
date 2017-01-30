@@ -121,6 +121,22 @@
   }
 }
 
+
+\pgfkeys{/forsyde keys/positioning/.is family, /forsyde keys/positioning,
+  shift/.estore in       = \fsdPosShift,
+  relative to/.estore in = \fsdPosRelTo,
+  at/.style       = {relative to=#1}
+  left of/.style  = {relative to={#1.east}, shift={1,0}},
+  right of/.style = {relative to={#1.west}, shift={-1,0}},
+  above of/.style = {relative to={#1.north}, shift={0,1}},
+  below of/.style = {relative to={#1.south}, shift={0,-1}},
+  between/.style args = {#1:#2}{relative to={$(#1)!.5!(#2)$}},
+  default/.style = {
+    relative to = {0,0},
+    shift       = {0,0}
+  }
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SHAPES OF MAIN ELEMENTS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -129,7 +145,7 @@
   nary/.style     ={double distance=1pt, outer sep=.6pt},
   primitive/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
   leaf/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
-  composite/.style={draw, rectangle, dashed},
+  composite/.style={draw, rectangle, dashed, fill opacity=0},
 }
 
 
@@ -158,42 +174,47 @@
 % contains anchors for each port, shows a label and the constructor
 % name, and its field is colored according to a MoC (if this is the
 % case).
-% #1 = keys
-% #2 = name
-% #3 = position
-% #4 = label
-\newcommand{\standard}[4][]{
-  \pgfkeys{/forsyde keys, default, #1}%
+%
+% \standard  [keys] (name) <global pos> {};
+% \standard* [keys] (name) <relative pos keys>  {};
+\NewDocumentCommand\standard{s O{} r() D<>{0,0} m}{
+%% \newcommand{\standard}[4][]{
+  \pgfkeys{/forsyde keys, default, #2}%
+  \IfBooleanTF {#1}%
+    { \pgfkeys{/forsyde keys/positioning, default, #4}%
+      \coordinate (globalPos) at ($ (\fsdPosShift) + (\fsdPosRelTo) $); }
+    { \coordinate (globalPos) at (#4); }
   % the scope binds together all other elements and positions them
   % according to the global coordinates. It also contains port
   % anchors.
   \begin{scope}[%
     ports i\fsdNPortLeft o\fsdNPortRight,
-    local bounding box= #2, shift={(#3)},
+    local bounding box=#3,
+    shift={(globalPos)},
     anchor=\fsdAnchor,
     rotate=\fsdRotate]%
     % a label should be in the center, controlled with \labelStyle
-    \node[] (#2-l) at (0,0) {\labelStyle{#4}};
+    \node[] (#3-l) at (0,0) {\labelStyle{#5}};
     % the functions are inside the scope, above the label
     \node[%
       func\fsdNFunctions,
       font=\funcStyle,
       yshift=\fsdInnerYSep,
-      anchor=north] (#2-f) at (#2-l.north) {%
+      anchor=north] (#3-f) at (#3-l.north) {%
         \functionlabels{\fsdNFunctions}%
         {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
     % the type (constructor) is positioned below the label
     \node[%
       yshift=-\fsdInnerYSep,
       inner sep=2pt,
-      anchor=south] (#2-t) at (#2-l.south){%
+      anchor=south] (#3-t) at (#3-l.south){%
         \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdMoc}\fi}};
     % The main shape is behind any other graphical element.
     \begin{pgfonlayer}{background}
       \node[\fsdOuterShape,
         fill=\getfieldcolor{\fsdMoc},
         rotate=\fsdRotateOuter,
-        fit=(#2-f)(#2-l)(#2-t)] {};
+        fit=(#3-f)(#3-l)(#3-t)] {};
     \end{pgfonlayer}
   \end{scope}
 }
@@ -242,7 +263,7 @@
     rotate=\fsdRotate]%
     % cluster shape
     \begin{pgfonlayer}{backbackground}
-    \node[\fsdOuterShape, 
+    \node[\fsdOuterShape,
       inner xsep=\fsdInnerXSep,
       inner ysep=\fsdInnerYSep, 
       fill=\getfieldcolor{\fsdMoc},
