@@ -78,11 +78,8 @@ The following figure
 %% 	\draw[line width=.3pt] (b-c.vi\i) -- (b-c.vo\result);
 %% }
 \standard[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=de]
-         (c) <5,.3> {};
-\standard*[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf]
-         (d) <below of=c, shift={0,-2}> {p2};
-\standard*[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=de]
-         (q) <between=c:d> {Q};
+(c) <5,.3> {};
+\standard[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf, at=c.south, anchor=north] (d) {p2};
 %% \interface[mocin=sdf, mocout=sy]
 %% 	  {e}{6.5,-2};
 \drawing[ni=2, shape = zip shape, moc=sy, inner sep=20pt]
@@ -93,8 +90,7 @@ The following figure
 %% 	{g}{(d)(e)}{composite1}; 
 %% \cluster[shape=composite, ni=2, no=1, inner xsep=5pt]
 %% 	{h}{(g)(c1)(f)}{composite2};
-%% \cluster[ni=2, shape = dp shape, nf=1, type=farm1, inner sep=20pt]
-	{i}{(h)}{pattern1};
+%% \cluster[ni=2, shape = dp shape, nf=1, type=farm1, inner sep=20pt] {i}{(h)}{pattern1};
 % \patternnodecustom[ni=1, no=2, inner shape=custom conduit i4o8, outer shape=transition shape v1v2]
 % 	{j}{$ (i.o1)+(1.5,0) $};
 % \foreach \i in {0,1,...,3} {

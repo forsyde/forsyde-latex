@@ -6,6 +6,7 @@
 \newlength{\baz}
 \newlength{\twd}
 \newlength{\tht}
+\newlength{\tdp}
 
 % command for setting the MoC color
 \newcommand{\setmocbackground}[1]{%
@@ -193,15 +194,29 @@
 \def\twofuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+6pt}
 \def\threefuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+\wd\pgfnodepartfcbox+12pt}
 \def\fourfuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+\wd\pgfnodepartfcbox+\wd\pgfnodepartfdbox+18pt}
-\def\advancemaxht{
-	\pgfmathsetlength{\tht}{max(\ht\pgfnodepartfabox, \ht\pgfnodepartfbbox, \ht\pgfnodepartfcbox, \ht\pgfnodepartfdbox)}
-	\advance\pgf@y by \tht
-    \advance\pgf@y by 2\sepq
+\def\advancemaxht{%
+  \pgfmathsetlength{\tht}{%
+    max(\ht\pgfnodepartfabox+\dp\pgfnodepartfabox,%
+        \ht\pgfnodepartfbbox+\dp\pgfnodepartfbbox,%
+        \ht\pgfnodepartfcbox+\dp\pgfnodepartfcbox,%
+        \ht\pgfnodepartfdbox+\dp\pgfnodepartfdbox)}
+  \advance\pgf@y by \tht
+  \advance\pgf@y by 2\sepq
 }
+\def\advancemaxdp{%
+  \pgfmathsetlength{\tdp}{%
+    max(\dp\pgfnodepartfabox,%
+        \dp\pgfnodepartfbbox,%
+        \dp\pgfnodepartfcbox,%
+        \dp\pgfnodepartfdbox)}
+  \advance\pgf@y by \tdp
+  \advance\pgf@y by \sepq
+}
+
 
 % set the common anchors first
 \newcommand\makecommonanchors[1]{
-	\anchorsfromrectangle
+        \anchorsfromrectangle
 	\savedanchor\northeast{
 		\pgfmathsetlength{\twd}{.5*(#1)}
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 2\sepq
@@ -221,7 +236,7 @@
 \newcommand\makefaanchors[1]{
 	\savedanchor\faanchor{%	
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advancemaxdp
 		\pgf@x=0pt \advance\pgf@x by\twd
 	}
 	\savedanchor\faif{%	
@@ -242,7 +257,7 @@
 \newcommand\makefbanchors[1]{
 	\savedanchor\fbanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advancemaxdp
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 3\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox	
 	}
@@ -264,7 +279,7 @@
 \newcommand\makefcanchors[1]{
 	\savedanchor\fcanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advancemaxdp
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 6\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox	
 	}
@@ -288,7 +303,7 @@
 \newcommand\makefdanchors[1]{
 	\savedanchor\fdanchor{%
 		\pgfmathsetlength{\twd}{-.5*(#1)}
-		\pgf@y=0pt \advance\pgf@y by \sepq
+		\pgf@y=0pt \advancemaxdp
 		\pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 9\sepq 
 		\advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox	\advance\pgf@x by\wd\pgfnodepartfcbox	
 	}
