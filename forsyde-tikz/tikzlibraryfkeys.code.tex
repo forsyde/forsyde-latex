@@ -7,6 +7,7 @@
   }
 }
 
+
 \newif\ifnolabel
 \newif\ifnocolor
 \pgfkeys{
@@ -20,174 +21,66 @@
 	/tikz/label style = \textbf,
 	/tikz/function style/.store in = \funcStyle,
 	/tikz/function style = \scriptsize,
-	/tikz/moc/.store in = \MoC,
-	/tikz/moc = none,
-	/tikz/mocin/.store in = \MoCin,
-	/tikz/mocin = none,
-	/tikz/mocout/.store in = \MoCout,
-	/tikz/mocout = none,
 	/tikz/token pos/.store in = \tokPos,
 	/tikz/token pos = 0.5,
 	/tikz/deviate/.store in = \pDeviate,
 	/tikz/deviate = 0pt,
 }
 
-%%%%%%%%%%%%
-% FAMILIES % 
-%%%%%%%%%%%%
-\pgfkeys{/primitive keys/.is family, /primitive keys,
- 	moc/.estore in       = \pMoc,
-	nf/.estore in        = \pNFunc,
-	f1/.estore in        = \pFunc,
-        f/.style={f1 = {#1},nf = 1, },
-	default/.style = {
-		moc=none, 
-                nf=0, 
-		f1=$ f $
-	}
-}
-
-
-\pgfkeys{/standard leaf keys/.is family, /standard leaf keys,
- 	moc/.estore in       = \pMoc,
- 	type/.estore in      = \pType,
-	ni/.estore in        = \pNIn,
-	no/.estore in        = \pNOut,
-	nf/.estore in        = \pNFunc,
-	f1/.estore in        = \pFuncA,
-	f2/.estore in        = \pFuncB,
-	f3/.estore in        = \pFuncC,
-	f4/.estore in        = \pFuncD,
-	inner sep/.estore in = \pInnerSep,
-	reverse/.is toggle,
-	default/.style = {
-		moc=none, 
-		type= , 
-		ni=1, no=1, nf=0, 
-		f1=$ f_1 $, 
-		f2=$ f_2 $, 
-		f3=$ f_3 $, 
-		f4=$ f_4 $, 
-		inner sep=10pt,
-		reverse = false
-	}
-}
-
-\pgfkeys{/standard newleaf keys/.is family, /standard newleaf keys,
- 	moc/.estore in       = \pMoc,
- 	type/.estore in      = \pType,
-	ni/.estore in        = \pNIn,
-	no/.estore in        = \pNOut,
-	nf/.estore in        = \pNFunc,
-	f1/.estore in        = \pFuncA,
-	f2/.estore in        = \pFuncB,
-	f3/.estore in        = \pFuncC,
-	f4/.estore in        = \pFuncD,
-	inner sep/.estore in = \pInnerSep,
-	anchor/.estore in        = \pAnch,
-	reverse/.is toggle,
-	default/.style = {
-		moc=none, 
-		type= , 
-		ni=1, no=1, nf=0, 
-		f1=$ f_1 $, 
-		f2=$ f_2 $, 
-		f3=$ f_3 $, 
-		f4=$ f_4 $, 
-		inner sep=10pt,
-		reverse = false,
-                anchor=center
-	}
-}
-
-
-\pgfkeys{/custom leaf keys/.is family, /custom leaf keys,
- 	moc/.estore in            = \pMoc,
- 	shape/.estore in          = \pShape,
-	ni/.estore in             = \pNIn,
-	no/.estore in             = \pNOut,
-	minimum height/.estore in = \pInnerSep,
-	reverse/.is toggle,
-	reverse shape/.is toggle,
-	default/.style = {
-		moc=none, 
-		shape= rectangle, 
-		ni=1, no=1, 
-		minimum height=20pt,
-		reverse = false,
-		reverse shape = false
-	}
-}
-
-
-\pgfkeys{
-	/interface keys/.is family, /interface keys,
-	default/.style = {mocin = none, mocout = none, reverse = false},
- 	mocin/.estore in = \pMocIn,
- 	mocout/.estore in = \pMocOut,
-	reverse/.is toggle,
-}
-
-\pgfkeys{/embedded moc keys/.is family, /embedded moc keys,
- 	moc/.estore in            = \pMoc,
-	ni/.estore in             = \pNIn,
-	no/.estore in             = \pNOut,
- 	inner xsep/.estore in = \innerXSep,
- 	inner ysep/.estore in = \innerYSep,
-	reverse/.is toggle,
-	reverse shape/.is toggle,
-	default/.style = {
-		moc=none, 
-		ni=1, no=1, 
-		inner xsep = 15pt, 
-		inner ysep = 15pt,
-		reverse = false,
-		reverse shape = false
-	}
-}
-
-
-\pgfkeys{/composite keys/.is family, /composite keys,
-	ni/.estore in         = \pNIn,
-	no/.estore in         = \pNOut,
- 	inner xsep/.estore in = \innerXSep,
- 	inner ysep/.estore in = \innerYSep,
- 	reverse/.is toggle,
-	default/.style = {
-		ni=0, no=0,
-		inner xsep = 15pt, 
-		inner ysep = 15pt, 
-		reverse=false
-	},
-}
-
-\pgfkeys{/applicative patterns keys/.is family, /applicative patterns keys,
- 	type/.estore in       = \pType,
- 	shape/.estore in      = \pShape,
-	ni/.estore in         = \pNIn,
-	no/.estore in         = \pNOut,
-	nf/.estore in         = \pNFunc,
-	f1/.estore in         = \pFuncA,
-	f2/.estore in         = \pFuncB,
-	f3/.estore in         = \pFuncC,
-	f4/.estore in         = \pFuncD,
-	inner xsep/.estore in = \innerXSep,
-	inner ysep/.estore in = \innerYSep,
-	reverse/.is toggle,
-	reverse shape/.is toggle,
-	default/.style = {
-		type= ,
-		shape = dp shape, 
-		ni=1, no=1, nf=0, 
-		f1=$ \langle f_1\rangle $, 
-		f2=$ \langle f_2\rangle $, 
-		f3=$ \langle f_3\rangle $, 
-		f4=$ \langle f_4\rangle $, 
-		inner ysep=18pt, 
-		inner xsep=15pt,
-		reverse = false, 
-		reverse shape=false, 
-	},
+%%%%%%%% 
+% KEYS %
+%%%%%%%%
+\pgfkeys{/forsyde keys/.is family, /forsyde keys,
+  %shape & color
+  moc/.estore in   = \fsdMoc,
+  type/.estore in  = \fsdType,
+  shape/.estore in = \fsdShape,
+  blackbox/.style  = {moc=blackbox},
+  % separation
+  inner xsep/.estore in = \fsdInnerXSep,
+  inner ysep/.estore in = \fsdInnerYSep,
+  inner sep/.style      = {inner xsep = #1, inner ysep = #1 },
+  % position
+  anchor/.estore in = \fsdAnchor,
+  xshift/.estore in = \fsdXShift,
+  yshift/.estore in = \fsdYShift,
+  at/.estore in     = \fsdAtInit,
+  left of/.style  = {at={#1.east}, xshift=1cm, anchor=west},
+  right of/.style = {at={#1.west}, xshift=-1cm, anchor=east},
+  above of/.style = {at={#1.north}, yshift=1cm, anchor=south},
+  below of/.style = {at={#1.south}, yshift=-1cm, anchor=north},
+  % rotation
+  rotate shape/.estore in = \fsdRotateShape,
+  rotate/.estore in       = \fsdRotate,
+  reverse/.is toggle,
+  % ports & functions
+  npl/.estore in = \fsdNPortLeft,
+  npr/.estore in = \fsdNPortRight,
+  nf/.estore in  = \fsdNFunctions,
+  f1/.estore in  = \fsdFunA,
+  f2/.estore in  = \fsdFunB,
+  f3/.estore in  = \fsdFunC,
+  f4/.estore in  = \fsdFunD,
+  ni/.style      = {npl = #1 },
+  no/.style      = {npr = #1 },
+  f/.style = {f1 = {#1}, nf = 1, },
+  % default values
+  default/.style = {
+    moc           = none,
+    type          =,
+    shape         = rectangle,
+    anchor        = center,
+    inner ysep    = 3pt,
+    inner xsep    = 5pt,
+    reverse       = false, 
+    rotate        = 0,
+    rotate shape  = \iftoggle{/forsyde keys/reverse}{180}{0},
+    xshift        = 0pt,
+    yshift        = 0pt,
+    at            = {0,0},
+    npl=1, npr=1, nf=0, 
+    f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $,
+  }
 }
 
 \pgfkeys{/transition patterns keys/.is family, /transition patterns keys,
@@ -216,5 +109,39 @@
 		reverse shape=false, 
 	},
 }
+
+
+\ExplSyntaxOn
+% regex function to strip the "|" delimiter between function
+% arguments.
+\tl_new:N \l_stripdelim_tl
+\cs_new:Npn \stripdelim #1 {
+  \tl_set:Nn \l_stripdelim_tl {#1}
+  \regex_replace_all:nnN { | } { } \l_stripdelim_tl
+  \tl_use:N \l_stripdelim_tl
+}
+
+\NewDocumentCommand{\makeFunctions}{m m} {%
+  \def\dummylbl{\funcStyle\stripdelim{#2}}
+  \def\parentName{#1}
+  \coordinate (tmpPosOfFunBox) at (0,0);
+  \pgfmathtruncatemacro{\countFun}{0};
+  % \begin{pgfonlayer}{foreground}
+    \drawFunBoxes{ #2 }
+  % \end{pgfonlayer}
+}
+\NewDocumentCommand{\drawFunBoxes}{ >{ \SplitList { | } } m } {
+  \ProcessList { #1 } { \davs__tokens_drawfun_rec:n }
+}   
+\cs_new_protected:Nn \davs__tokens_drawfun_rec:n {
+  \pgfmathtruncatemacro{\countFun}{\countFun + 1}
+  \node[draw, thin, fill=\defaultfillcolor, anchor=west,
+    inner\space sep=2pt] (\parentName\countFun) at (tmpPosOfFunBox)
+    {\vphantom{\dummylbl}\funcStyle #1};
+  \coordinate[xshift=2pt]
+    (tmpPosOfFunBox) at (\parentName\countFun.east);   
+}
+\ExplSyntaxOff
+
 
 \endinput

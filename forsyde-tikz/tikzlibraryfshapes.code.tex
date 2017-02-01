@@ -8,21 +8,11 @@
 \newlength{\tht}
 \newlength{\tdp}
 
-% command for setting the MoC color
-\newcommand{\setmocbackground}[1]{%
-\ifnocolor \pgfsetfillcolor{\defaultfillcolor}%
-\else \ifstrequal{#1}{sy}{\pgfsetfillcolor{sycolor}}{%
-         \ifstrequal{#1}{de}{\pgfsetfillcolor{decolor}}{%
-            \ifstrequal{#1}{ct}{\pgfsetfillcolor{ctcolor}}{%
-                \ifstrequal{#1}{sdf}{\pgfsetfillcolor{sdfcolor}}{\pgfsetfillcolor{\defaultfillcolor}}}}}%
-\fi
-}
 \def\anchorsfromrectangle{%
-	\inheritsavedanchors[from=rectangle]
-	\inheritanchor[from=rectangle]{center}
-	\inheritanchorborder[from=rectangle]
-	\foreach \anchor in {north,north west,north east,center,west,east,mid, mid west,mid east,base,base west,
-		base east,south,south west,south east}{ \inheritanchor[from=rectangle]{\anchor}}%
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchorborder[from=rectangle]
+  \foreach \anchor in {north,north west,north east,center,west,east,mid, mid west,mid east,base,base west,base east,south,south west,south east}{ \inheritanchor[from=rectangle]{\anchor}}%
 }
 
 %%%%%%%%%%%%%%%%%%%%
@@ -426,22 +416,6 @@
 	}%
 }
 
-%%%%%%%%%%%%%%%%%%%
-% SIMPLE LEAF PROCESS SHAPE %
-%%%%%%%%%%%%%%%%%%%
-\pgfdeclareshape{leaf shape}{
-	\anchorsfromrectangle
-	\backgroundpath{%
-		\pgfsetcornersarced{\pgfpoint{3pt}{3pt}} 
-		\northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
-		\southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}   
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}   
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose \setmocbackground{\MoC} \pgfusepath{fill,stroke} 
-	}%	
-}
 
 %%%%%%%%%%%%%%%%%%%
 % ZIP/UNZIP SHAPE %
@@ -470,115 +444,6 @@
 		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
 		\pgfpathclose \setmocbackground{\MoC} \pgfusepath{fill,stroke} 
 	}%
-}
-
-%%%%%%%%%%%%%%%%%%%
-% INTERFACE SHAPE %
-%%%%%%%%%%%%%%%%%%%
-% new boxes for input/output MoC
-\newbox\pgfnodepartmocinbox
-\newbox\pgfnodepartmocoutbox
-% the shape
-\pgfdeclareshape{interface shape 0}{
-	\nodeparts{mocin,mocout}
-	\anchorsfromrectangle
-	\savedanchor\northeast{
-		\pgf@x=0pt \advance\pgf@x by.7\wd\pgfnodepartmocoutbox \advance\pgf@x by8pt
-		\setlength{\pgf@xa}{.5\pgfshapeminwidth} \ifdim \pgf@x<\pgf@xa \pgf@x=\pgf@xa \fi 
-		\pgf@y=0pt \advance\pgf@y by\ht\pgfnodepartmocinbox \advance\pgf@y by8pt
-		\setlength{\pgf@ya}{.5\pgfshapeminheight} \ifdim\pgf@y<\pgf@ya \pgf@y=\pgf@ya \fi 		
-	}
-	\savedanchor\centerpoint{%
-		\pgf@x=0pt%
-		\pgf@y=0pt%
-	}
-	\savedanchor\southwest{
-		\pgf@x=0pt \advance\pgf@x by-.7\wd\pgfnodepartmocinbox \advance\pgf@x by-8pt
-		\setlength{\pgf@xa}{-.5\pgfshapeminwidth} \ifdim\pgf@x>\pgf@xa \pgf@x=\pgf@xa \fi 
-		\pgf@y=0pt \advance\pgf@y by-\ht\pgfnodepartmocoutbox \advance\pgf@y by-8pt
-		\setlength{\pgf@ya}{-.5\pgfshapeminheight} \ifdim\pgf@y>\pgf@ya \pgf@y=\pgf@ya \fi 	
-	}
-	\savedanchor\mocinanchor{%	
-		\pgf@y=0pt \advance\pgf@y by4pt
-		\pgf@x=0pt \advance\pgf@x by-.7\wd\pgfnodepartmocinbox \advance\pgf@x by-4pt		
-	}
-	\savedanchor\mocoutanchor{%	
-		\pgf@y=0pt \advance\pgf@y by-\ht\pgfnodepartmocoutbox \advance\pgf@y by-4pt
-		\pgf@x=0pt \advance\pgf@x by-.3\wd\pgfnodepartmocinbox \advance\pgf@x by4pt	
-	}
-	\anchor{mocin}{ \mocinanchor} \anchor{mocout}{ \mocoutanchor}
-	\backgroundpath{%
-		\northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
-		\southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}   
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose \setmocbackground{\MoCin} \pgfusepath{fill,stroke}		
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathclose \setmocbackground{\MoCout}  \pgfusepath{fill,stroke}
-	}%
-}
-\pgfdeclareshape{interface shape 180}{
-	\nodeparts{mocin,mocout}
-	\anchorsfromrectangle
-	\savedanchor\northeast{
-		\pgf@x=0pt \advance\pgf@x by.7\wd\pgfnodepartmocinbox \advance\pgf@x by8pt
-		\setlength{\pgf@xa}{.5\pgfshapeminwidth} \ifdim \pgf@x<\pgf@xa \pgf@x=\pgf@xa \fi 
-		\pgf@y=0pt \advance\pgf@y by\ht\pgfnodepartmocoutbox \advance\pgf@y by8pt
-		\setlength{\pgf@ya}{.5\pgfshapeminheight} \ifdim\pgf@y<\pgf@ya \pgf@y=\pgf@ya \fi 		
-	}
-	\savedanchor\centerpoint{%
-		\pgf@x=0pt%
-		\pgf@y=0pt%
-	}
-	\savedanchor\southwest{
-		\pgf@x=0pt \advance\pgf@x by-.7\wd\pgfnodepartmocoutbox \advance\pgf@x by-8pt
-		\setlength{\pgf@xa}{-.5\pgfshapeminwidth} \ifdim\pgf@x>\pgf@xa \pgf@x=\pgf@xa \fi 
-		\pgf@y=0pt \advance\pgf@y by-\ht\pgfnodepartmocinbox \advance\pgf@y by-8pt
-		\setlength{\pgf@ya}{-.5\pgfshapeminheight} \ifdim\pgf@y>\pgf@ya \pgf@y=\pgf@ya \fi 	
-	}
-	\savedanchor\mocinanchor{%	
-		\pgf@y=0pt \advance\pgf@y by4pt
-		\pgf@x=0pt \advance\pgf@x by-.3\wd\pgfnodepartmocinbox \advance\pgf@x by4pt		
-	}
-	\savedanchor\mocoutanchor{%	
-		\pgf@y=0pt \advance\pgf@y by-\ht\pgfnodepartmocoutbox \advance\pgf@y by-4pt
-		\pgf@x=0pt \advance\pgf@x by-.7\wd\pgfnodepartmocinbox \advance\pgf@x by-4pt	
-	}
-	\anchor{mocin}{ \mocinanchor} \anchor{mocout}{ \mocoutanchor}
-	\backgroundpath{%
-		\northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
-		\southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}   
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose \setmocbackground{\MoCout} \pgfusepath{fill,stroke}		
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose \setmocbackground{\MoCin}  \pgfusepath{fill,stroke}
-	}%
-}
-
-%%%%%%%%%%%%%%%%%%%
-% COMPOSITE SHAPE %
-%%%%%%%%%%%%%%%%%%%
-\pgfdeclareshape{composite shape}{%
-	\anchorsfromrectangle
-	\backgroundpath{%
-		\pgfsetdash{{5pt}{2pt}{2pt}{2pt}{5pt}{2pt}}{0pt} \pgfsetlinewidth{\compositelinewidth} 
-		\northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
-		\southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
-		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
-		\pgfpathclose \pgfusepath{stroke}
-	}
 }
 
 %%%%%%%%%%%%%%%%%%%

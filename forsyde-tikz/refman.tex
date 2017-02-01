@@ -67,61 +67,45 @@ A \textsc{ForSyDe} process network is drawn like any other \textsc{TikZ} figure,
 
 The following figure
 
-\begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-%% \patternnodestd[ni=1, no=1, outer shape=transition shape s1v1, type=unzipx]
-%% 	{a}{0,0};
-%% \patternnodecustom[ni=1, no=1, inner shape=custom conduit i8o8, outer shape=transition shape v1v1]
-%% 	{b}{0,-2};
-%% \foreach \i in {0,1,...,7} {
-%% 	\pgfmathtruncatemacro\result{7-\i}
-%% 	\draw[line width=.3pt] (b-c.vi\i) -- (b-c.vo\result);
-%% }
-\standard[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=de]
-(c) <5,.3> {};
-\standard[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf, at=c.south, anchor=north] (d) {p2};
-%% \interface[mocin=sdf, mocout=sy]
-%% 	  {e}{6.5,-2};
-\drawing[ni=2, shape = zip shape, moc=sy, inner sep=20pt]
-	{f}{9,-1.2};
-%% \cluster[shape=leaf, moc=sy, type=MoCwrapper, inner sep=15pt]
-%%         {c1}{(c)}{};
-%% \cluster[shape=composite, ni=1, no=1, inner ysep=10pt]
-%% 	{g}{(d)(e)}{composite1}; 
-%% \cluster[shape=composite, ni=2, no=1, inner xsep=5pt]
-%% 	{h}{(g)(c1)(f)}{composite2};
-%% \cluster[ni=2, shape = dp shape, nf=1, type=farm1, inner sep=20pt] {i}{(h)}{pattern1};
-% \patternnodecustom[ni=1, no=2, inner shape=custom conduit i4o8, outer shape=transition shape v1v2]
-% 	{j}{$ (i.o1)+(1.5,0) $};
-% \foreach \i in {0,1,...,3} {
-% 	\pgfmathtruncatemacro{\dbl}{\i+4}
-% 	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\i);
-% 	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\dbl);
-% }
-% \patternnodestd[ni=2, no=1, outer shape=transition shape v2v1, type=distribute, nf=1, f1=df]
-% 	{k}{$ (j)+(1.5,0) $};
-	
-% \node (in1) at ($ (a.i1)-(1.5,0) $){};
-% \node (in2) at ($ (b.i1)-(1.5,0) $){};
-% \node (out) at ($ (k.o1)+(1.5,0) $){};
+\begin{figure}[htb]\centering
+  \begin{tikzpicture}[]
+    \crossed[ni=1, no=1, shape=transition shape v1v1, type=evens, rotate=-45] (a) {};
+    \crossed[ni=1, no=1, shape=transition shape v1v1, type=filter, rotate=45, nf=1, f1={$>0$} ] (b) <0,2> {};
+    \standard[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=de, left of=b, xshift=3cm] (c) {};
+    \interface[left of=a, xshift=2cm](d1){sy}{sdf};
+    \standard[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf, left of=d1] (d) {p2};
+    \interface[left of=d](e){sdf}{sy};
+    \basic[shape=primitive, left of=c, nf=1, f1=i, xshift=1.5cm] (f) {$\Delta$};
+    \standard[shape=leaf, ni=2, anchor=i2, xshift=2cm, f=$+$, moc=sy, type=comb] (g) <$(e)!.5!(f)$> {red};
+    \cluster[shape=leaf, moc=sy, type=wrap, inner sep=15pt] (h) <(c)> {};
+    \cluster[shape=composite, ni=1, no=1, inner ysep=13pt] (i) <(d1)(d)> {composite1}; 
+    \cluster[shape=composite, ni=2, no=1, inner xsep=5pt] (j) <(g)(i)(h)> {composite2};
+    \cluster[shape = dp shape, nf=2, f1={$\langle f \rangle$}, f2={$\langle 1 .. 1024 \rangle$},
+      type=farm, inner sep=20pt] (k) <(j)> {pattern1};
+    \crossed[shape=transition shape s1v1, rotate shape=180, type=zipx, left of=g, xshift=2cm] (l) {};
+    
+    
+    %   \node (in1) at ($ (a.i1)-(1.5,0) $){};
+    %   \node (in2) at ($ (b.i1)-(1.5,0) $){};
+    %   \node (out) at ($ (k.o1)+(1.5,0) $){};
 
-% \signal[token=vector]           (in1) -> (a.i1);
-% \vector[token=scalar]           (in2) -> (b.i1);
-% \vector[token=scalar, -|-]      (a.o1) ->p (i.i1);
-% \vector[token=scalar, -|-]      (b.o1) ->p (i.i2);
-% \signal[token=scalar, -|-]      (i.i1) -> (c.i1);
-% \signal[token=scalarAE, -|-=.9] (c.o1) -> (f.i1);
-% \signal[token=scalar, -|-]      (i.i2) ->p (g.i1);
-% \signal[]                       (g.i1) -> (d.i1);
-% \signal[token=scalar, -|-]      (d.o1) -> (e.i1);
-% \signal[]                       (e.o1) ->p (g.o1);
-% \signal[token=scalar, -|-]      (g.o1) -> (f.i2);
-% \signal[token=scalarAE-scalar, token pos=.4] (f.o1) -> (i.o1);
-% \vector[token=scalarAE-scalar,] (i.o1) -> (j.i1);
-% \vector[token=scalarAE]         (j.o1) -> (k.i1);
-% \vector[token=scalar]           (j.o2) -> (k.i2);
-% \vector[token=scalarAE]         (k.o1) -> (out);
-\end{tikzpicture}
+    %   \signal[token=vector]           (in1) -> (a.i1);
+    %   \vector[token=scalar]           (in2) -> (b.i1);
+    %   \vector[token=scalar, -|-]      (a.o1) ->p (i.i1);
+    %   \vector[token=scalar, -|-]      (b.o1) ->p (i.i2);
+    %   \signal[token=scalar, -|-]      (i.i1) -> (c.i1);
+    %   \signal[token=scalarAE, -|-=.9] (c.o1) -> (f.i1);
+    %   \signal[token=scalar, -|-]      (i.i2) ->p (g.i1);
+    %   \signal[]                       (g.i1) -> (d.i1);
+    %   \signal[token=scalar, -|-]      (d.o1) -> (e.i1);
+    %   \signal[]                       (e.o1) ->p (g.o1);
+    %   \signal[token=scalar, -|-]      (g.o1) -> (f.i2);
+    %   \signal[token=scalarAE-scalar, token pos=.4] (f.o1) -> (i.o1);
+    %   \vector[token=scalarAE-scalar,] (i.o1) -> (j.i1);
+    %   \vector[token=scalarAE]         (j.o1) -> (k.i1);
+    %   \vector[token=scalar]           (j.o2) -> (k.i2);
+    %   \vector[token=scalarAE]         (k.o1) -> (out);
+  \end{tikzpicture}
 \end{figure}
 
 can be produced by either customizing every element with the basics provided in \texttt{forsyde-tiks}:

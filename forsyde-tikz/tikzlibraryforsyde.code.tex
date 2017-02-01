@@ -4,7 +4,6 @@
 % This file contains macros for drawing all nodes
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%
 % GLOBAL DECLARATIONS %
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -24,18 +23,6 @@
     \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
   }%
 }
-
-% \newcommand{\getmoclabel}[1]{%
-%   \edef\mytemp{{#1}}%
-%    \expandafter\ifstrequal\expandafter\mytemp{sy}{SY}{%
-%      \expandafter\ifstrequal\expandafter\mytemp{de}{DE}{%
-%        \expandafter\ifstrequal\expandafter\mytemp{ct}{CT}{%
-%          \expandafter\ifstrequal\expandafter\mytemp{sdf}{SDF}{}}}}}
-% \newcommand{\getmocfill}[1]{%
-%    \ifstrequal{#1}{sy}{fill=sycolor}{%
-%      \ifstrequal{#1}{de}{fill=decolor}{%
-%        \ifstrequal{#1}{ct}{fill=ctcolor}{%
-%          \ifstrequal{#1}{sdf}{fill=sdfcolor}{}}}}}
 
 \makeswitch[]\getmoclabel
 \addcase\getmoclabel{sy}{SY}
@@ -67,117 +54,19 @@
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
 }
 
-%%%%%%%% 
-% KEYS %
-%%%%%%%%
-
-\pgfkeys{/forsyde keys/.is family, /forsyde keys,
-  %shape & color
-  moc/.estore in         = \fsdMoc,
-  type/.estore in        = \fsdType,
-  inner shape/.estore in = \fsdInnerShape,
-  outer shape/.estore in = \fsdOuterShape,
-  shape/.style           = {outer shape = #1 },
-  blackbox/.style        = {moc=blackbox},
-  % separation & alignment
-  anchor/.estore in     = \fsdAnchor,
-  inner xsep/.estore in = \fsdInnerXSep,
-  inner ysep/.estore in = \fsdInnerYSep,
-  inner sep/.style      = {inner xsep = #1, inner ysep = #1 },
-  % position
-  xshift/.estore in = \fsdXShift,
-  yshift/.estore in = \fsdYShift,
-  at/.estore in     = \fsdAtInit,
-  left of/.style  = {at={#1.east}, xshift=1cm, anchor=west},
-  right of/.style = {at={#1.west}, xshift=-1cm, anchor=east},
-  above of/.style = {at={#1.north}, yshift=1cm, anchor=south},
-  below of/.style = {at={#1.south}, yshift=-1cm, anchor=north},
-  % rotation
-  rotate inner/.estore in = \fsdRotateInner,
-  rotate outer/.estore in = \fsdRotateOuter,
-  rotate/.estore in       = \fsdRotate,
-  reverse inner/.is toggle,
-  reverse outer/.is toggle,
-  reverse/.style          = {reverse outer, reverse inner },
-  % ports & functions
-  npl/.estore in = \fsdNPortLeft,
-  npr/.estore in = \fsdNPortRight,
-  nf/.estore in  = \fsdNFunctions,
-  f1/.estore in  = \fsdFunA,
-  f2/.estore in  = \fsdFunB,
-  f3/.estore in  = \fsdFunC,
-  f4/.estore in  = \fsdFunD,
-  ni/.style      = {npl = #1 },
-  no/.style      = {npr = #1 },
-  f/.style = {f1 = {#1}, nf = 1, },
-  % default values
-  default/.style = {
-    moc           = none,
-    type          =,
-    inner shape   = rectangle,
-    outer shape   = rectangle,
-    anchor        = center,
-    inner ysep    = 10pt,
-    inner xsep    = 10pt,
-    reverse inner = false, 
-    reverse outer = false,
-    rotate        = 0,
-    rotate inner  = \iftoggle{/forsyde keys/reverse inner}{180}{0},
-    rotate outer  = \iftoggle{/forsyde keys/reverse outer}{180}{0},
-    xshift        = 0pt,
-    yshift        = 0pt,
-    at            = {0,0},
-    npl=1, npr=1, nf=0, 
-    f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $,
-  }
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SHAPES OF MAIN ELEMENTS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \tikzset{
-  nary/.style     ={double distance=1pt, outer sep=.6pt},
-  primitive/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
-  leaf/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
-  composite/.style={draw, rectangle, dashed, fill opacity=0},
+  primitive/.style ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
+  primitiven/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor, double distance=1pt, outer sep=.6pt},
+  leaf/.style      ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
+  leafn/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt, double distance=1pt, outer sep=.6pt},
+  composite/.style ={draw, rectangle, dashed, fill opacity=0},
+  compositen/.style={draw, rectangle, dashed, fill opacity=0, double distance=1pt, outer sep=.6pt},
 }
-
-
-\ExplSyntaxOn
-% regex function to strip the "|" delimiter between function
-% arguments.
-\tl_new:N \l_stripdelim_tl
-\cs_new:Npn \stripdelim #1 {
-  \tl_set:Nn \l_stripdelim_tl {#1}
-  \regex_replace_all:nnN { | } { } \l_stripdelim_tl
-  \tl_use:N \l_stripdelim_tl
-}
-
-\NewDocumentCommand{\makeFunctions}{m m} {%
-  \def\dummylbl{\funcStyle\stripdelim{#2}}
-  \def\parentName{#1}
-  \coordinate (tmpPosOfFunBox) at (0,0);
-  \pgfmathtruncatemacro{\countFun}{0};
-  % \begin{pgfonlayer}{foreground}
-    \drawFunBoxes{ #2 }
-  % \end{pgfonlayer}
-}
-\NewDocumentCommand{\drawFunBoxes}{ >{ \SplitList { | } } m } {
-  \ProcessList { #1 } { \davs__tokens_drawfun_rec:n }
-}   
-\cs_new_protected:Nn \davs__tokens_drawfun_rec:n {
-  \pgfmathtruncatemacro{\countFun}{\countFun + 1}
-  \node[draw, thin, fill=\defaultfillcolor, anchor=west,
-    inner\space sep=2pt] (\parentName\countFun) at (tmpPosOfFunBox)
-    {\vphantom{\dummylbl}\funcStyle #1};
-  \coordinate[xshift=2pt]
-    (tmpPosOfFunBox) at (\parentName\countFun.east);   
-}
-\ExplSyntaxOff
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%% 
 % MACRO DEFINITIONS %
@@ -186,15 +75,16 @@
 % The basic node is the simplest depiction of a function (atom,
 % pattern) with maximum one argument. It is represented as a circle
 % node.
-% #1 = keys
-% #2 = name
-% #3 = position
-% #4 = label
-\newcommand{\basic}[4][]{
+%
+% \basic[keys] (name) [<position>] {label};
+\NewDocumentCommand\basic{O{} r() D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
-  \node[\fsdOuterShape] (#2) at (#3) {#4};
+  \coordinate (globalPos) at (#3);
+  \node[\fsdShape,
+    yshift=\fsdYShift, xshift=\fsdXShift,
+    anchor=\fsdAnchor] (#2) at ($(globalPos) + (\fsdAtInit)$) {#4};
   \begin{pgfonlayer}{foreground}
-    \node[func\fsdNFunctions, font=\funcStyle](#2-f) at (#2.north){
+    \node[func\fsdNFunctions, font=\funcStyle, anchor=south](#2-f) at (#2.north){
       \functionlabels{\fsdNFunctions}{\fsdFunA}{}{}{}};
   \end{pgfonlayer}   
 }
@@ -209,66 +99,91 @@
 \NewDocumentCommand\standard{O{} r() D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
-  % the scope binds together all other elements and positions them
-  % according to the global coordinates. It also contains port
-  % anchors.
-  \begin{scope}[%
-    ports i\fsdNPortLeft o\fsdNPortRight,
-    local bounding box=#2,
-    shift={($(globalPos) + (\fsdAtInit)$)},
-    anchor=\fsdAnchor,
-    rotate=\fsdRotate]%
-    % a label should be in the center, controlled with \labelStyle
-    \node[] (#2-l) at (0,0) {\labelStyle{#4}};
-    % the functions are inside the scope, above the label
-    \node[%
-      func\fsdNFunctions,
-      font=\funcStyle,
-      yshift=\fsdInnerYSep,
-      anchor=north] (#2-f) at (#2-l.north) {%
+  \node[%
+  ports i\fsdNPortLeft o\fsdNPortRight,
+  anchor=\fsdAnchor,
+  yshift=\fsdYShift,
+  xshift=\fsdXShift,
+  rotate=\fsdRotate,
+  inner sep=0,
+  ] (#2) at ($(globalPos) + (\fsdAtInit)$) {%
+    \begin{tikzpicture}
+      % a label should be in the center, controlled with \labelStyle
+      \node[] (#2-l) at (0,0) {\labelStyle{#4}};
+      % the functions are inside the scope, above the label
+      \node[func\fsdNFunctions, font=\funcStyle,yshift=\fsdInnerYSep, anchor=south]
+      (#2-f) at (#2-l.north) {%
         \functionlabels{\fsdNFunctions}%
-        {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
-    % the type (constructor) is positioned below the label
-    \node[%
-      yshift=-\fsdInnerYSep,
-      inner sep=2pt,
-      anchor=south] (#2-t) at (#2-l.south){%
-        \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdMoc}\fi}};
-    % The main shape is behind any other graphical element.
-    \begin{pgfonlayer}{background}
-      \node[\fsdOuterShape,
+        {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}
+      };
+      % the type (constructor) is positioned below the label
+      \node[yshift=-\fsdInnerYSep,inner sep=2pt, anchor=north]
+      (#2-t) at (#2-l.south){%
+        \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdMoc}\fi}
+      };
+      % The main shape is behind any other graphical element.
+      \begin{pgfonlayer}{background}
+        \node[\fsdShape,
         fill=\getfieldcolor{\fsdMoc},
-        rotate=\fsdRotateOuter,
+        rotate=\fsdRotateShape,
         fit=(#2-f)(#2-l)(#2-t)] {};
-    \end{pgfonlayer}
-  \end{scope}
+      \end{pgfonlayer}
+    \end{tikzpicture}
+  };
+  \node[] at (#2.south) {};
 }
 
-
-% Custom leaf node. It is the least flexible and contains no
-% additional info nor labels. It accepts any shape or drawing as
-% `outer shape` and it binds ports to inputs.
-% #1 = keys
-% #2 = name
-% #3 = position
-\newcommand{\drawing}[3][]{
+\NewDocumentCommand\crossed{O{} r() D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
-  % artifice to fix the inner ysep according to the maximum number of
-  % ports
-  \pgfmathsetlength{\foo}{max(max(\fsdNPortLeft,\fsdNPortRight)*5pt,
-    \fsdInnerYSep)}
-  % the scope has only ports and contains the shape node
-  \begin{scope}[%
-    ports i\fsdNPortLeft o\fsdNPortRight,
-    local bounding box= #2, shift={(#3)},
-    anchor=\fsdAnchor,
-    rotate=\fsdRotate]%
-    % shape node
-    \node[\fsdOuterShape,
-      inner sep=\foo, 
-      fill=\getfieldcolor{\fsdMoc},
-      rotate=\fsdRotateOuter] {};
-  \end{scope}
+  \coordinate (globalPos) at (#3);
+  \ifnum \fsdRotate >0 \def\labelrot{-90} \else \def\labelrot{90} \fi
+  \node[%
+  ports i\fsdNPortLeft o\fsdNPortRight,
+  anchor=\fsdAnchor,
+  yshift=\fsdYShift,
+  xshift=\fsdXShift,
+  rotate=\fsdRotate,
+  inner sep=0,
+  ] (#2) at ($(globalPos) + (\fsdAtInit)$) {%
+    \begin{tikzpicture}
+      \node[rotate=\labelrot, inner sep=3pt] (#2-t) {\typeStyle{\fsdType}};
+      \node[fit=(#2-t)] (#2-wt) {};
+      \begin{pgfonlayer}{foreground}
+        \node[func\fsdNFunctions, font=\funcStyle, anchor=south](#2-f) at (#2-wt.north){
+          \functionlabels{\fsdNFunctions}{\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
+      \end{pgfonlayer}
+      \node[\fsdShape, draw, fit=(#2-wt), rotate=\fsdRotateShape,] (#2-out) {};
+    \end{tikzpicture}
+  };
+  \node[] at (#2.south) {};
+}
+
+% Interface
+\NewDocumentCommand\interface{O{} r() D<>{0,0} m m}{
+% \newcommand{\interface}[3][]{
+  \pgfkeys{/forsyde keys, default, #1}%
+  \coordinate (globalPos) at (#3);
+  \node[%
+  ports i1o1,
+  anchor=\fsdAnchor,
+  yshift=\fsdYShift,
+  xshift=\fsdXShift,
+  rotate=\fsdRotate,
+  ] (#2) at ($(globalPos) + (\fsdAtInit)$) {% 
+    \begin{tikzpicture}
+      \node[anchor=south east, outer sep=0] (#2-l) {%
+        \typeStyle{\ifnolabel\else\getmoclabel{#4}\fi}};
+      \node[anchor=north west, outer sep=0] (#2-r) at (#2-l.south east) {%
+        \typeStyle{\ifnolabel\else\getmoclabel{#5}\fi}};
+      \gettikzxy{(#2-l.north west)}{\xl}{\yl}
+      \gettikzxy{(#2-r.south east)}{\xr}{\yr}
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=\getfieldcolor{#4}] (\xl,\yl) -- (\xl,\yr) -- (\xr,\yl) -- cycle;
+        \filldraw[fill=\getfieldcolor{#5}] (\xr,\yl) -- (\xr,\yr) -- (\xl,\yr) -- cycle;
+      \end{pgfonlayer} 
+    \end{tikzpicture}
+  };
+  \node[] at (#2.south) {};
 }
 
 % Cluster node. Instead of taking a coordinate, it takes a list of
@@ -277,21 +192,18 @@
 % #2 = name
 % #3 = list of nodes clustered
 % #4 = label
-\newcommand\cluster[4][]{
+\NewDocumentCommand\cluster{O{} r() r<> m}{
   \pgfkeys{/forsyde keys, default, #1}%
   % the scope now contains only the cluster shape and the
   % labels. Functions are outside of it.
-  \begin{scope}[%
-    ports i\fsdNPortLeft o\fsdNPortRight,
-    local bounding box= #2,
-    rotate=\fsdRotate]%
+  \begin{scope}[local bounding box=#2]
     % cluster shape
     \begin{pgfonlayer}{backbackground}
-    \node[\fsdOuterShape,
+    \node[\fsdShape,
       inner xsep=\fsdInnerXSep,
       inner ysep=\fsdInnerYSep, 
       fill=\getfieldcolor{\fsdMoc},
-      fit=#3, rotate=\fsdRotateOuter] (#2-s) {};
+      fit=#3, rotate=\fsdRotateShape] (#2-s) {};
     \end{pgfonlayer}
     % label
     \node[anchor=south east] (#2-l) at (#2-s.south east){
@@ -300,6 +212,7 @@
     \node[anchor=south west] (#2-t) at (#2-s.south west){
       \typeStyle{\fsdType}}; 
   \end{scope}
+  \node[ports i\fsdNPortLeft o\fsdNPortRight, inner sep=0, fit=(#2-s)(#2-t)(#2-l)] {};
   % the functions are in foreground, outside the scope of the cluster.
   \begin{pgfonlayer}{foreground}
     \node[func\fsdNFunctions,
@@ -311,148 +224,24 @@
 }
 
 
-% Interface
-\newcommand{\interface}[3][]{
-  \pgfkeys{/interface keys, default, #1}%
-  \pgfmathtruncatemacro\rot{\iftoggle{/interface keys/reverse}{180}{0}}	
-  \begin{scope}[local bounding box= #2, shift={(#3)}]
-    \node[interface shape \rot, mocin=\pMocIn, mocout=\pMocOut, minimum width=30pt, minimum height=30pt, draw] (#2-shape) at (0,0) {
-      \nodepart{mocin}  \typeStyle{\ifnolabel\else\getmoclabel{\pMocIn}\fi}
-      \nodepart{mocout} \typeStyle{\ifnolabel\else\getmoclabel{\pMocOut}\fi} 
-    };
-    \node[ports i1o1, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
-  \end{scope}
-}
-
-% Embedding (hybrid) processes
-% #1 = keys
-% #2 = name
-% #3 = list of nodes clustered
-% #4 = label
-\newcommand\embed[4][]{
-  \pgfkeys{/embedded moc keys, default, #1}%
-  \pgfmathtruncatemacro\rot{\iftoggle{/standard leaf keys/reverse}{180}{0}}
-  \begin{scope}[on background layer, local bounding box= #2]
-    \node[leaf shape, draw, inner xsep=\innerXSep, inner ysep=\innerYSep, moc=\pMoc,
-    fit=#3] (#2-shape) {};
-    \node[anchor=south east] (#2-label) at (#2-shape.south east) {\footnotesize\labelStyle{#4}}; 
-    \node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
-  \end{scope}
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%
-% COMPOSITE PROCESSES %
-%%%%%%%%%%%%%%%%%%%%%%%
-
-%Composite
-
-% Generic composite process
-% #1 = keys
-% #2 = name
-% #3 = list of nodes clustered
-% #4 = label
-\newcommand\compositestd[4][]{
-	\pgfkeys{/composite keys, default, #1}%
-	\pgfmathtruncatemacro\rot{\iftoggle{/composite keys/reverse}{180}{0}}
-	\begin{scope}[local bounding box= #2]
-		\node[composite shape, inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3 , draw] (#2-shape) {};
-		\node[anchor=south east] (#2-label) at (#2-shape.south east) {\footnotesize\labelStyle{#4}}; 
-		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
-	\end{scope}
-}
-% Generic black-box composite process
-% #1 = keys
-% #2 = name
-% #3 = position
-% #4 = label
-\newcommand\compositebbox[4][]{
-	\pgfkeys{/composite keys, default, #1}%
-	\pgfmathtruncatemacro\rot{\iftoggle{/composite keys/reverse}{180}{0}}
-	\begin{scope}[local bounding box= #2]
-		\node[rectangle, rounded corners = 3pt, minimum width=30pt, minimum height=30pt, inner xsep=\innerXSep,
-			inner ysep=\innerYSep, draw=\defaultdrawcolor, fill=blackboxcolor] (#2-shape) at (#3) {\labelStyle{#4}};
-		\node[ports i\pNIn o\pNOut, rotate=\rot, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
-	\end{scope}
-}
-
-
-%%%%%%%%%%%%
-% PATTERNS %
-%%%%%%%%%%%%
-
-% Applicative pattern
-% #1 = keys
-% #2 = name
-% #3 = list of nodes clustered
-% #4 = label
-\newcommand\patterncluster[4][]{
-	\pgfkeys{/applicative patterns keys, default, #1}%
-	\pgfmathtruncatemacro\rotports{\iftoggle{/applicative patterns keys/reverse}{180}{0}}
-	\pgfmathtruncatemacro\rotshape{\iftoggle{/applicative patterns keys/reverse shape}
-		{\iftoggle{/applicative patterns keys/reverse}{0}{180}}
-		{\iftoggle{/applicative patterns keys/reverse}{180}{0}}}
-	\begin{scope}[local bounding box= #2]
-		\node[\pShape, draw, inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3, rotate=\rotshape]
-			(#2-shape) {};
-		\node[inner xsep=\innerXSep, inner ysep=\innerYSep, fit=#3] (#2-scope) {};
-		\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),]  (#2-p) {};	
-		\node[anchor=south east] (#2-label) at (#2-scope.south east) {\footnotesize\labelStyle{#4}}; 
-		\node[anchor=south west] (#2-type)  at (#2-scope.south west) {\typeStyle{\pType}}; 
-		\node[func\pNFunc, font=\funcStyle, anchor=south west] (#2-f) at (#2-scope.north west) 
-			{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-	\end{scope}
-}
-% Standard transition pattern
-% #1 = keys
-% #2 = name
-% #3 = position
-\newcommand\patternnodestd[3][]{
-	\pgfkeys{/transition patterns keys, default, #1}%
-	\pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
-	\pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}{180}{0}}
-	\begin{scope}[local bounding box= #2, shift={(#3)}]	
-		\begin{scope}	
-			\node[rotate=90] (#2-type) at (0,0) {\typeStyle{\pType}};
-			\node[fit=(#2-type), inner sep=0pt](#2-wt) {};
-			\node[func\pNFunc, font=\funcStyle, anchor=south, inner sep=0pt] (#2-f) at (#2-wt.north) 
-				{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-			\node[\pOuterShape, draw, inner sep=0pt, fit=(#2-wt), rotate=\rotshape,] (#2-shape) {};
-			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-shape),] (#2-p) {};
-		\end{scope}
-	\end{scope}
-}
 % Custom transition pattern
 % #1 = keys
 % #2 = name
 % #3 = position
 \newcommand\patternnodecustom[3][]{
-	\pgfkeys{/transition patterns keys, default, #1}%
-	\pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
-	\pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}
-		{\iftoggle{/transition patterns keys/reverse}{0}{180}}
-		{\iftoggle{/transition patterns keys/reverse}{180}{0}}}
-	\begin{scope}[local bounding box= #2, shift={(#3)}]	
-		\begin{scope}	
-			\node[\pInnerShape, rotate=\rotports] (#2-c) at (0,0) {};
-			\node[func\pNFunc, font=\funcStyle, anchor=south] (#2-f) at (#2-c.north) 
-				{\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-			\node[\pOuterShape, draw, inner xsep=0pt, inner ysep=1pt, fit=(#2-c), rotate=\rotshape,] 
-				(#2-oshape) {};
-			\node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-oshape),] (#2-p) {};
-		\end{scope}
-	\end{scope}
+  \pgfkeys{/transition patterns keys, default, #1}%
+  \pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
+  \pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}
+    {\iftoggle{/transition patterns keys/reverse}{0}{180}}
+    {\iftoggle{/transition patterns keys/reverse}{180}{0}}}
+  \begin{scope}[local bounding box= #2, shift={(#3)}]	
+    \begin{scope}	
+      \node[\pInnerShape, rotate=\rotports] (#2-c) at (0,0) {};
+      \node[func\pNFunc, font=\funcStyle, anchor=south] (#2-f) at (#2-c.north) 
+      {\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
+      \node[\pShape, draw, inner xsep=0pt, inner ysep=1pt, fit=(#2-c), rotate=\rotshape,] 
+      (#2-oshape) {};
+      \node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-oshape),] (#2-p) {};
+    \end{scope}
+  \end{scope}
 }
-
-%%%%%%%%%
-% PATHS %
-%%%%%%%%%
-% \def\signal[#1] (#2) #3 (#4);{
-%         \draw (#2) edge[#1, #3, s=\MoC,] (#4);
-% }
-% \def\vector[#1] (#2) #3 (#4);{
-%         \draw (#2) edge[#1, #3, v=\MoC,] (#4);
-% }
-% \def\function[#1] (#2) #3 (#4);{
-%         \draw (#2) edge[#1, #3, f,] (#4);
-% }

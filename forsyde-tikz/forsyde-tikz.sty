@@ -61,6 +61,22 @@
     \@ifundefined{pgf@sh@ns@#1}{#3}{#2}%
 }
 
+\newcommand{\gettikzx}[2]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+}
+% Get y-coordinate of node
+\newcommand{\gettikzy}[2]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@y}%
+}
+% Get x- and y- coordinate of node
+\newcommand{\gettikzxy}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+  \edef#3{\the\pgf@y}%
+}
+
 % Decorate process ports with info
 % #1 = node label
 \newcounter{iportnum}
