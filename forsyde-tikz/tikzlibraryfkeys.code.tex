@@ -11,20 +11,32 @@
 \newif\ifnolabel
 \newif\ifnocolor
 \pgfkeys{
-	/tikz/globsc/.store in = \globScale,
-	/tikz/globsc = 1,
-	/tikz/nomoccolor/.is if=nocolor,
-	/tikz/nomoclabel/.is if=nolabel,
-	/tikz/type style/.store in = \typeStyle,
-	/tikz/type style = \scriptsize\texttt,
-	/tikz/label style/.store in = \labelStyle,
-	/tikz/label style = \textbf,
-	/tikz/function style/.store in = \funcStyle,
-	/tikz/function style = \scriptsize,
-	/tikz/token pos/.store in = \tokPos,
-	/tikz/token pos = 0.5,
-	/tikz/deviate/.store in = \pDeviate,
-	/tikz/deviate = 0pt,
+  /tikz/globsc/.store in = \globScale,
+  /tikz/globsc = 1,
+  /tikz/nomoccolor/.is if=nocolor,
+  /tikz/nomoclabel/.is if=nolabel,
+  /tikz/type style/.store in = \typeStyle,
+  /tikz/type style = \scriptsize\texttt,
+  /tikz/label style/.store in = \labelStyle,
+  /tikz/label style = \textbf,
+  /tikz/function style/.store in = \funcStyle,
+  /tikz/function style = \scriptsize,
+  /tikz/token pos/.store in = \tokPos,
+  /tikz/token pos = 0.5,
+  /tikz/deviate/.store in = \pDeviate,
+  /tikz/deviate = 0pt,
+  /tikz/nary/.style={double distance=1pt, outer sep=.6pt},
+  /tikz/alwaystrue/.is toggle,
+  /tikz/alwaystrue = true,
+}
+
+\tikzset{
+  primitive shape/.style ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
+  primitiven shape/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor, double distance=1pt, outer sep=.6pt},
+  leaf shape/.style      ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
+  leafn shape/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt, double distance=1pt, outer sep=.6pt},
+  composite shape/.style ={draw, rectangle, dashed, fill opacity=0},
+  compositen shape/.style={draw, rectangle, dashed, fill opacity=0, double distance=1pt, outer sep=.6pt},
 }
 
 %%%%%%%% 
@@ -32,6 +44,7 @@
 %%%%%%%%
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
   %shape & color
+  hasmoc/.is toggle,
   moc/.estore in   = \fsdMoc,
   type/.estore in  = \fsdType,
   shape/.estore in = \fsdShape,
@@ -52,7 +65,6 @@
   % rotation
   rotate shape/.estore in = \fsdRotateShape,
   rotate/.estore in       = \fsdRotate,
-  reverse/.is toggle,
   % ports & functions
   npl/.estore in = \fsdNPortLeft,
   npr/.estore in = \fsdNPortRight,
@@ -63,83 +75,131 @@
   f4/.estore in  = \fsdFunD,
   ni/.style      = {npl = #1 },
   no/.style      = {npr = #1 },
-  f/.style = {f1 = {#1}, nf = 1, },
+  f/.code        = {\makeFunctions{#1}},
+  f/.default=$f_1$,
   % default values
   default/.style = {
+    hasmoc        = false,
     moc           = none,
     type          =,
     shape         = rectangle,
     anchor        = center,
     inner ysep    = 3pt,
     inner xsep    = 5pt,
-    reverse       = false, 
     rotate        = 0,
-    rotate shape  = \iftoggle{/forsyde keys/reverse}{180}{0},
+    rotate shape  = 0,
     xshift        = 0pt,
     yshift        = 0pt,
     at            = {0,0},
     npl=1, npr=1, nf=0, 
     f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $,
-  }
+  },
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % SHAPES OF MAIN ELEMENTS %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%
+  primitive/.style ={%
+    shape=primitive shape
+    },
+  primitiven/.style={%
+    shape=primitiven shape,
+    },
+  leaf/.style={%
+    hasmoc,
+    shape=leaf shape,
+    },
+  leafn/.style={% 
+    hasmoc,
+    shape=leafn shape,
+    },
+  composite/.style={%
+    shape=composite shape
+    },
+  compositen/.style={%
+    shape=compositen shape,
+    },
+  embed/.style={%
+    hasmoc,
+    shape=leaf shape,
+    inner sep=15pt,
+    },
+  farmstyle/.style={%
+    shape = dp shape,
+    inner xsep = 15pt,
+    inner ysep = 20pt,
+    },
+  pipestyle/.style={%
+    shape = pipe shape,
+    inner xsep = 15pt,
+    inner ysep = 20pt,
+    },
+  skeleton/.style={%
+    shape = generic shape,
+    inner xsep = 15pt,
+    inner ysep = 20pt,
+    },
+  transition/.code 2 args = {%
+    \edef\theshape{transition shape #1#2}
+    \tikzset{/forsyde keys/shape = \theshape}
+    },
+  transition/.default={v1}{v1},
+  zipx/.style = {%
+    transition={s1}{v1},
+    rotate shape=180,
+    type=zipx,
+    },
+  unzipx/.style = {%
+    transition={s1}{v1},
+    type=unzipx,
+    },    
 }
 
+
 \pgfkeys{/transition patterns keys/.is family, /transition patterns keys,
- 	type/.estore in       = \pType,
- 	inner shape/.estore in= \pInnerShape,
-	outer shape/.estore in= \pOuterShape,
-	ni/.estore in         = \pNIn,
-	no/.estore in         = \pNOut,
-	nf/.estore in         = \pNFunc,
-	f1/.estore in         = \pFuncA,
-	f2/.estore in         = \pFuncB,
-	f3/.estore in         = \pFuncC,
-	f4/.estore in         = \pFuncD,
-	reverse/.is toggle,
-	reverse shape/.is toggle,
-	default/.style = {
-		type= ,
-		inner shape = noinner, 
-		outer shape = transition shape v1v1,
-		ni=1, no=1, nf=0, 
-		f1=$ f_1 $, 
-		f2=$ f_2 $, 
-		f3=$ f_3 $, 
-		f4=$ f_4 $, 
-		reverse = false, 
-		reverse shape=false, 
-	},
+  type/.estore in       = \pType,
+  inner shape/.estore in= \pInnerShape,
+  outer shape/.estore in= \pOuterShape,
+  ni/.estore in         = \pNIn,
+  no/.estore in         = \pNOut,
+  nf/.estore in         = \pNFunc,
+  f1/.estore in         = \pFuncA,
+  f2/.estore in         = \pFuncB,
+  f3/.estore in         = \pFuncC,
+  f4/.estore in         = \pFuncD,
+  reverse/.is toggle,
+  reverse shape/.is toggle,
+  default/.style = {
+    type= ,
+    inner shape = noinner, 
+    outer shape = transition shape v1v1,
+    ni=1, no=1, nf=0, 
+    f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $, 
+    reverse = false, 
+    reverse shape=false, 
+  },
 }
 
 
 \ExplSyntaxOn
-% regex function to strip the "|" delimiter between function
-% arguments.
-\tl_new:N \l_stripdelim_tl
-\cs_new:Npn \stripdelim #1 {
-  \tl_set:Nn \l_stripdelim_tl {#1}
-  \regex_replace_all:nnN { | } { } \l_stripdelim_tl
-  \tl_use:N \l_stripdelim_tl
-}
 
-\NewDocumentCommand{\makeFunctions}{m m} {%
-  \def\dummylbl{\funcStyle\stripdelim{#2}}
-  \def\parentName{#1}
-  \coordinate (tmpPosOfFunBox) at (0,0);
+\NewDocumentCommand{\makeFunctions}{m} {%
+  \yourb_count_char:nn { ; } { #1 }  
+  \pgfmathtruncatemacro{\nFunc}{\l_yourb_count_char_int + 1};
+  \def\nnnnFunc{\nFunc}
+  \tikzset{/forsyde\space keys/nf = \nFunc}
   \pgfmathtruncatemacro{\countFun}{0};
-  % \begin{pgfonlayer}{foreground}
-    \drawFunBoxes{ #2 }
-  % \end{pgfonlayer}
+  \setFunctions{ #1 }
 }
-\NewDocumentCommand{\drawFunBoxes}{ >{ \SplitList { | } } m } {
-  \ProcessList { #1 } { \davs__tokens_drawfun_rec:n }
+\int_new:N \l_yourb_count_char_int
+\cs_new_protected:Npn \yourb_count_char:nn #1 #2 {
+  \regex_count:nnN { #1 } { #2 } \l_yourb_count_char_int
+}
+\NewDocumentCommand{\setFunctions}{ >{ \SplitList { ; } } m } {
+  \ProcessList { #1 } { \davs__tokens_setfun_rec:n }
 }   
-\cs_new_protected:Nn \davs__tokens_drawfun_rec:n {
+\cs_new_protected:Nn \davs__tokens_setfun_rec:n {
+  \def\currentfunckey{/forsyde\space keys/f\countFun}
   \pgfmathtruncatemacro{\countFun}{\countFun + 1}
-  \node[draw, thin, fill=\defaultfillcolor, anchor=west,
-    inner\space sep=2pt] (\parentName\countFun) at (tmpPosOfFunBox)
-    {\vphantom{\dummylbl}\funcStyle #1};
-  \coordinate[xshift=2pt]
-    (tmpPosOfFunBox) at (\parentName\countFun.east);   
+  \tikzset{\currentfunckey = {#1}}
 }
 \ExplSyntaxOff
 

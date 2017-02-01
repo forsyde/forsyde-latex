@@ -17,7 +17,10 @@
 % HELPERS %
 %%%%%%%%%%%
 
-\newcommand\addcase[3]{\expandafter\def\csname\string#1@case@#2\endcsname{#3}}
+
+\newcommand\addcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
 \newcommand\makeswitch[2][]{%
   \newcommand#2[1]{%
     \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
@@ -37,35 +40,18 @@
 \addcase\getfieldcolor{sdf}{sdfcolor}
 \addcase\getfieldcolor{blackbox}{blackboxcolor}
 
-\newcommand{\fillfield}[1][\@nil]{%
-  \def\tmp{#1}%
-  \ifx\tmp\@nnil
-  \else\getfieldcolor{#1}
-  \fi
+\newcommand\getcolor[3]{%
+  \iftoggle{#1}%
+    {\edef#3{\ifnocolor\defaultfillcolor\else\getfieldcolor{#2}\fi}}%
+    {\edef#3{\getfieldcolor{#2}}%
+  }%
 }
-
-\makeswitch[10pt]\getnodeysep
-\addcase\getnodeysep{composite}{18pt}
 
 \newcommand{\functionlabels}[5]{ %#1=nf, #2... = functions
   \ifnum #1>0 \nodepart{fa} #2\else\fi%
   \ifnum #1>1 \nodepart{fb} #3\else\fi%
   \ifnum #1>2 \nodepart{fc} #4\else\fi%
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SHAPES OF MAIN ELEMENTS %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\tikzset{
-  primitive/.style ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
-  primitiven/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor, double distance=1pt, outer sep=.6pt},
-  leaf/.style      ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
-  leafn/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt, double distance=1pt, outer sep=.6pt},
-  composite/.style ={draw, rectangle, dashed, fill opacity=0},
-  compositen/.style={draw, rectangle, dashed, fill opacity=0, double distance=1pt, outer sep=.6pt},
 }
 
 %%%%%%%%%%%%%%%%%%%%% 
@@ -77,14 +63,15 @@
 % node.
 %
 % \basic[keys] (name) [<position>] {label};
-\NewDocumentCommand\basic{O{} r() D<>{0,0} m}{
+\NewDocumentCommand\basic{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
+  \ifnum \fsdNFunctions>1 \edef\numFunc{1} \else \edef\numFunc{\fsdNFunctions} \fi%
   \coordinate (globalPos) at (#3);
   \node[\fsdShape,
     yshift=\fsdYShift, xshift=\fsdXShift,
     anchor=\fsdAnchor] (#2) at ($(globalPos) + (\fsdAtInit)$) {#4};
   \begin{pgfonlayer}{foreground}
-    \node[func\fsdNFunctions, font=\funcStyle, anchor=south](#2-f) at (#2.north){
+    \node[func\numFunc, font=\funcStyle, anchor=south](#2-f) at (#2.north){
       \functionlabels{\fsdNFunctions}{\fsdFunA}{}{}{}};
   \end{pgfonlayer}   
 }
@@ -96,9 +83,10 @@
 % case).
 %
 % \standard[keys] (name) [<position>] {label};
-\NewDocumentCommand\standard{O{} r() D<>{0,0} m}{
+\NewDocumentCommand\standard{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
+  \getcolor{/forsyde keys/hasmoc}{\fsdMoc}{\fillcolor}
   \node[%
   ports i\fsdNPortLeft o\fsdNPortRight,
   anchor=\fsdAnchor,
@@ -124,7 +112,7 @@
       % The main shape is behind any other graphical element.
       \begin{pgfonlayer}{background}
         \node[\fsdShape,
-        fill=\getfieldcolor{\fsdMoc},
+        fill=\fillcolor,
         rotate=\fsdRotateShape,
         fit=(#2-f)(#2-l)(#2-t)] {};
       \end{pgfonlayer}
@@ -133,7 +121,7 @@
   \node[] at (#2.south) {};
 }
 
-\NewDocumentCommand\crossed{O{} r() D<>{0,0} m}{
+\NewDocumentCommand\crossed{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
   \ifnum \fsdRotate >0 \def\labelrot{-90} \else \def\labelrot{90} \fi
@@ -159,27 +147,30 @@
 }
 
 % Interface
-\NewDocumentCommand\interface{O{} r() D<>{0,0} m m}{
+\NewDocumentCommand\interface{O{} D(){} D<>{0,0} m m}{
 % \newcommand{\interface}[3][]{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
+  \getcolor{/tikz/alwaystrue}{#4}{\fillcolorl}
+  \getcolor{/tikz/alwaystrue}{#5}{\fillcolorr}
   \node[%
   ports i1o1,
   anchor=\fsdAnchor,
   yshift=\fsdYShift,
   xshift=\fsdXShift,
   rotate=\fsdRotate,
+  inner sep=0,
   ] (#2) at ($(globalPos) + (\fsdAtInit)$) {% 
     \begin{tikzpicture}
-      \node[anchor=south east, outer sep=0] (#2-l) {%
+      \node[anchor=south east, inner sep=3pt] (#2-l) {%
         \typeStyle{\ifnolabel\else\getmoclabel{#4}\fi}};
-      \node[anchor=north west, outer sep=0] (#2-r) at (#2-l.south east) {%
+      \node[anchor=north west, inner sep=3pt] (#2-r) at (#2-l.south east) {%
         \typeStyle{\ifnolabel\else\getmoclabel{#5}\fi}};
       \gettikzxy{(#2-l.north west)}{\xl}{\yl}
       \gettikzxy{(#2-r.south east)}{\xr}{\yr}
       \begin{pgfonlayer}{background}
-        \filldraw[fill=\getfieldcolor{#4}] (\xl,\yl) -- (\xl,\yr) -- (\xr,\yl) -- cycle;
-        \filldraw[fill=\getfieldcolor{#5}] (\xr,\yl) -- (\xr,\yr) -- (\xl,\yr) -- cycle;
+        \filldraw[fill=\fillcolorl] (\xl,\yl) -- (\xl,\yr) -- (\xr,\yl) -- cycle;
+        \filldraw[fill=\fillcolorr] (\xr,\yl) -- (\xr,\yr) -- (\xl,\yr) -- cycle;
       \end{pgfonlayer} 
     \end{tikzpicture}
   };
@@ -192,8 +183,9 @@
 % #2 = name
 % #3 = list of nodes clustered
 % #4 = label
-\NewDocumentCommand\cluster{O{} r() r<> m}{
+\NewDocumentCommand\cluster{O{} D(){} r<> m}{
   \pgfkeys{/forsyde keys, default, #1}%
+  \getcolor{/forsyde keys/hasmoc}{\fsdMoc}{\fillcolor}
   % the scope now contains only the cluster shape and the
   % labels. Functions are outside of it.
   \begin{scope}[local bounding box=#2]
@@ -202,7 +194,7 @@
     \node[\fsdShape,
       inner xsep=\fsdInnerXSep,
       inner ysep=\fsdInnerYSep, 
-      fill=\getfieldcolor{\fsdMoc},
+      fill=\fillcolor,
       fit=#3, rotate=\fsdRotateShape] (#2-s) {};
     \end{pgfonlayer}
     % label
@@ -221,6 +213,10 @@
       \functionlabels{\fsdNFunctions}%
       {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
   \end{pgfonlayer}
+  \path[name path=#2-left]   (#2.north west) -- (south west);
+  \path[name path=#2-right]  (#2.north east) -- (south east);
+  \path[name path=#2-top]    (#2.north west) -- (north east);
+  \path[name path=#2-bottom] (#2.south west) -- (south east);
 }
 
 
