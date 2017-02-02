@@ -10,63 +10,6 @@
 %
 % Styles for signal, vector and function paths.
 %
-\tikzset{
-  getsignalmoc/.code={%
-    \ifnocolor \defaultdrawcolor \else
-    \ifstrequal{#1}{sy}{\tikzset{sycolor}}{%
-      \ifstrequal{#1}{de}{\tikzset{decolor}}{%
-        \ifstrequal{#1}{ct}{\tikzset{ctcolor}}{%
-          \ifstrequal{#1}{sdf}{\tikzset{sdfcolor}}{}}}}
-    \fi
-  },
-  s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stealth},
-  sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stealth, double distance=1.3pt},
-  v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stealth},
-  vn/.style args = {#1}{getsignalmoc={#1}, line width=2, double distance=2pt, >= stealth, double},
-  f/.style       = {line width=\functionpathlinewidth, >= open triangle 90, dotted},
-  fn/.style      = {line width=.4, >= open triangle 90, dotted, double distance=1pt, double},
-  srcport/.style={%
-    shorten <=2pt,%
-    decoration={%
-      name=markings,
-      mark=at position 0 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
-    },%
-    postaction=decorate,
-  },
-  dstport/.style={%
-    shorten >=2pt,%
-    decoration={%
-      name=markings,
-      mark=at position 1 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
-    },%
-    postaction=decorate,
-  },
-}
-
-\tikzset{
-  trans/.style n args={3}{%
-    decoration={show path construction, lineto code={
-      \path[draw opacity=0, name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
-      \path[name intersections={of=this path and #2,by={int-1}}];%
-      \path (\tikzinputsegmentfirst) edge[#1] (int-1)
-            (int-1) edge[#3] (\tikzinputsegmentlast); 
-      }
-    },
-    decorate,
-  },
-  trans2/.style n args={5}{%
-    decoration={show path construction, lineto code={
-      \path[draw opacity=0, name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
-      \path[name intersections={of=this path and #2,by={first-int}}];% 
-      \path[name intersections={of=this path and #4,by={second-int}}];%
-      \path (second-int) edge[#5] (\tikzinputsegmentlast)
-            (first-int)  edge[#3] (second-int)
-            (\tikzinputsegmentfirst) edge[#1] (first-int);
-      }
-    },
-    decorate,
-  },
-}
 
 
 %
@@ -137,11 +80,67 @@
 \ExplSyntaxOff
 
 
-%
-% Path splines syntax
-%
+
 \tikzset{
-  token/.style={decoration={name=markings, post length=1pt, pre length=1pt, mark=at position \tokPos with {\tokens{#1}}}, postaction=decorate },
+  getsignalmoc/.code={%
+    \ifnocolor \defaultdrawcolor \else
+    \ifstrequal{#1}{sy}{\tikzset{sycolor}}{%
+      \ifstrequal{#1}{de}{\tikzset{decolor}}{%
+        \ifstrequal{#1}{ct}{\tikzset{ctcolor}}{%
+          \ifstrequal{#1}{sdf}{\tikzset{sdfcolor}}{}}}}
+    \fi
+  },
+  s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stealth},
+  sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stealth, double distance=1.3pt},
+  v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stealth},
+  vn/.style args = {#1}{getsignalmoc={#1}, line width=2, double distance=2pt, >= stealth, double},
+  f/.style       = {line width=\functionpathlinewidth, >= open triangle 90, dotted},
+  fn/.style      = {line width=.4, >= open triangle 90, dotted, double distance=1pt, double},
+  srcport/.style={%
+    shorten <=2pt,%
+    decoration={%
+      name=markings,
+      mark=at position 0 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+    },%
+    postaction=decorate,
+  },
+  dstport/.style={%
+    shorten >=2pt,%
+    decoration={%
+      name=markings,
+      mark=at position 1 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+    },%
+    postaction=decorate,
+  },
+
+  token/.style={%
+    decoration={%
+      name=markings,
+      mark=at position \tokPos with {\tokens{#1}}%
+    },
+    postaction=decorate,
+  },
+
+  trans/.style n args={3}{%
+    decoration={show path construction, lineto code={
+      \path[draw opacity=0, name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
+      \path[name intersections={of=this path and #2,by={int-1}}];%
+      \path (\tikzinputsegmentfirst) edge[#1] (int-1)
+            (int-1) edge[#3] (\tikzinputsegmentlast); 
+      }
+    },
+    decorate,
+  },
+  intersect/.style = {%
+    decoration={show path construction, lineto code={
+      \path[name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
+      \path[name intersections={of=this path and #1,by={\pIntName}}];%
+      }
+    },
+    decorate,
+  },
+
+
   -|/.style={ to path={ (\tikztostart) -| (\tikztotarget) \tikztonodes }},
   |-/.style={ to path={ (\tikztostart) |- (\tikztotarget) \tikztonodes }},
   -|-/.style={ to path={ (\tikztostart) 
@@ -175,6 +174,8 @@
 	\tikztonodes }
   }, |-|-|/.default=0.3:0.7,
 }
+
+
 
 % Finally, edge drawing helpers
 \def\signal[#1] (#2) #3 (#4);{
