@@ -136,13 +136,13 @@
     \begin{tikzpicture}
       \node[rotate=\labelrot, inner sep=3pt] (#2-t) {\typeStyle{\fsdType}};
       \node[fit=(#2-t)] (#2-wt) {};
-      \begin{pgfonlayer}{foreground}
-        \node[func\fsdNFunctions, font=\funcStyle, anchor=south](#2-f) at (#2-wt.north){
-          \functionlabels{\fsdNFunctions}{\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
-      \end{pgfonlayer}
       \node[\fsdShape, draw, fit=(#2-wt), rotate=\fsdRotateShape,] (#2-out) {};
     \end{tikzpicture}
   };
+  \begin{pgfonlayer}{foreground}
+    \node[func\fsdNFunctions, font=\funcStyle, anchor=south,rotate=\fsdRotate,](#2-f) at (#2.north){
+      \functionlabels{\fsdNFunctions}{\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
+  \end{pgfonlayer}
   \node[] at (#2.south) {};
 }
 
@@ -213,10 +213,10 @@
       \functionlabels{\fsdNFunctions}%
       {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
   \end{pgfonlayer}
-  \path[name path=#2-left]   (#2.north west) -- (south west);
-  \path[name path=#2-right]  (#2.north east) -- (south east);
-  \path[name path=#2-top]    (#2.north west) -- (north east);
-  \path[name path=#2-bottom] (#2.south west) -- (south east);
+  \path[name path=#2-left]   (#2.north west) -- (#2.south west);
+  \path[name path=#2-right]  (#2.north east) -- (#2.south east);
+  \path[name path=#2-top]    (#2.north west) -- (#2.north east);
+  \path[name path=#2-bottom] (#2.south west) -- (#2.south east);
 }
 
 

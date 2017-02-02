@@ -31,11 +31,24 @@
     label/.style={font=\ttfamily\scriptsize}
 }
 \lstset{
-basicstyle=\scriptsize\ttfamily,
-frame=single,
-breaklines=true,
-language=TeX,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  frame=single,
+  numberstyle=\tiny\color{black!30},
+  commentstyle=\color{blue}\textit,
+  stringstyle=\color{magenta}\textit,
+  flexiblecolumns=false,
+  basewidth={0.5em,0.45em},
+  breaklines=true,
+  language={[LaTeX]TeX},
+  texcsstyle=*\color{red}\bfseries,
+  keywordstyle=\color{blue}\bfseries,
+  morekeywords={tikzpicture,document},
+  moretexcs={crossed,standard,interface,basic,cluster,node,path},
 }
+
+
+
 
 \begin{document}
 \maketitle
@@ -65,173 +78,13 @@ A \textsc{ForSyDe} process network is drawn like any other \textsc{TikZ} figure,
 	\end{tikzpicture}
 \end{verbatim}
 
-The following figure
+The following figure can be produced by either customizing every element with the basics provided in \texttt{forsyde-tiks}:
 
-\begin{figure}[htb!]\centering
-\begin{tikzpicture}[]
-\patternnodestd[ni=1, no=1, outer shape=transition shape s1v1, type=unzipx]
-	{a}{0,0};
-\patternnodecustom[ni=1, no=1, inner shape=custom conduit i8o8, outer shape=transition shape v1v1]
-	{b}{0,-2};
-\foreach \i in {0,1,...,7} {
-	\pgfmathtruncatemacro\result{7-\i}
-	\draw[line width=.3pt] (b-c.vi\i) -- (b-c.vo\result);
-}
-\standard[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=sy]
-        {c}{4,0}{};
-\standard[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf]
-	{d}{4,-2}{p2};
-\interface[mocin=sdf, mocout=sy]
-	{e}{6.5,-2};
-\drawing[ni=2, shape = zip shape, moc=sy, inner sep=20pt]
-	{f}{9,-1.2}; 
-\cluster[shape=composite, ni=1, no=1, inner ysep=10pt]
-	{g}{(d)(e)}{composite1}; 
-\cluster[shape=composite, ni=2, no=1, inner xsep=5pt]
-	{h}{(g)(c)(f)}{composite2};
-\cluster[ni=2, shape = dp shape, nf=1, type=farm1, inner sep=20pt]
-	{i}{(h)}{pattern1};
-% \patternnodecustom[ni=1, no=2, inner shape=custom conduit i4o8, outer shape=transition shape v1v2]
-% 	{j}{$ (i.o1)+(1.5,0) $};
-% \foreach \i in {0,1,...,3} {
-% 	\pgfmathtruncatemacro{\dbl}{\i+4}
-% 	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\i);
-% 	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\dbl);
-% }
-% \patternnodestd[ni=2, no=1, outer shape=transition shape v2v1, type=distribute, nf=1, f1=df]
-% 	{k}{$ (j)+(1.5,0) $};
-	
-% \node (in1) at ($ (a.i1)-(1.5,0) $){};
-% \node (in2) at ($ (b.i1)-(1.5,0) $){};
-% \node (out) at ($ (k.o1)+(1.5,0) $){};
-
-% \signal[token=vector]           (in1) -> (a.i1);
-% \vector[token=scalar]           (in2) -> (b.i1);
-% \vector[token=scalar, -|-]      (a.o1) ->p (i.i1);
-% \vector[token=scalar, -|-]      (b.o1) ->p (i.i2);
-% \signal[token=scalar, -|-]      (i.i1) -> (c.i1);
-% \signal[token=scalarAE, -|-=.9] (c.o1) -> (f.i1);
-% \signal[token=scalar, -|-]      (i.i2) ->p (g.i1);
-% \signal[]                       (g.i1) -> (d.i1);
-% \signal[token=scalar, -|-]      (d.o1) -> (e.i1);
-% \signal[]                       (e.o1) ->p (g.o1);
-% \signal[token=scalar, -|-]      (g.o1) -> (f.i2);
-% \signal[token=scalarAE-scalar, token pos=.4] (f.o1) -> (i.o1);
-% \vector[token=scalarAE-scalar,] (i.o1) -> (j.i1);
-% \vector[token=scalarAE]         (j.o1) -> (k.i1);
-% \vector[token=scalar]           (j.o2) -> (k.i2);
-% \vector[token=scalarAE]         (k.o1) -> (out);
-\end{tikzpicture}
+\begin{figure}[htb]\centering
+\includegraphics[width=\textwidth]{figs/example-forsyde-tikz}
 \end{figure}
 
-can be produced by either customizing every element with the basics provided in \texttt{forsyde-tiks}:
-
-\begin{lstlisting}
-\documentclass{standalone}
-\usepackage{forsyde-tikz}
-
-\begin{document}
-\begin{tikzpicture}[global scale=.85]
-\patternnodestd[ni=1, no=1, outer shape=transition shape s1v1, type=unzipx]
-	{a}{0,0};
-\patternnodecustom[ni=1, no=1, inner shape=custom conduit i8o8, outer shape=transition shape v1v1]
-	{b}{0,-2};
-\foreach \i in {0,1,...,7} {
-	\pgfmathtruncatemacro\result{7-\i}
-	\draw[line width=.3pt] (b-c.vi\i) -- (b-c.vo\result);
-}
-\standard[shape=leaf,ni=1, no=1, nf=1, type=comb, moc=sy]
-	{c}{4,0}{p1};
-\standard[shape=leaf,ni=1, nf=3, f1=ns, f2=od, f3=1, type=mealy, moc=sdf]
-	{d}{4,-2}{p2};
-\interface[mocin=sdf, mocout=sy]
-	{e}{6.5,-2};
-\standard[ni=2, shape = zip shape, moc=sy]
-	{f}{9,-1.2};
-\compositestd[ni=1, no=1, inner ysep=10pt]
-	{g}{(d)(e)}{composite1};
-\compositestd[ni=2, no=1, inner xsep=5pt]
-	{h}{(g)(c)(f)}{composite2};
-\patterncluster[ni=2, shape = dp shape, nf=1, type=farm1, inner xsep=20pt]
-	{i}{(h)}{pattern1};
-\patternnodecustom[ni=1, no=2, inner shape=custom conduit i4o8, outer shape=transition shape v1v2]
-	{j}{$ (i.o1)+(1.5,0) $};
-\foreach \i in {0,1,...,3} {
-	\pgfmathtruncatemacro{\dbl}{\i+4}
-	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\i);
-	\draw[line width=.3pt] (j-c.vi\i) -- (j-c.vo\dbl);
-}
-\patternnodestd[ni=2, no=1, outer shape=transition shape v2v1, type=distribute, nf=1, f1=df]
-	{k}{$ (j)+(1.5,0) $};
-	
-\node (in1) at ($ (a.i1)-(1.5,0) $){};
-\node (in2) at ($ (b.i1)-(1.5,0) $){};
-\node (out) at ($ (k.o1)+(1.5,0) $){};
-
-\signal[token=vector]           (in1) -> (a.i1);
-\vector[token=scalar]           (in2) -> (b.i1);
-\vector[token=scalar, -|-]      (a.o1) ->p (i.i1);
-\vector[token=scalar, -|-]      (b.o1) ->p (i.i2);
-\signal[token=scalar, -|-]      (i.i1) -> (c.i1);
-\signal[token=scalarAE, -|-=.9] (c.o1) -> (f.i1);
-\signal[token=scalar, -|-]      (i.i2) ->p (g.i1);
-\signal[]                       (g.i1) -> (d.i1);
-\signal[token=scalar, -|-]      (d.o1) -> (e.i1);
-\signal[]                       (e.o1) ->p (g.o1);
-\signal[token=scalar, -|-]      (g.o1) -> (f.i2);
-\signal[token=scalarAE-scalar, token pos=.4] (f.o1) -> (i.o1);
-\vector[token=scalarAE-scalar,] (i.o1) -> (j.i1);
-\vector[token=scalarAE]         (j.o1) -> (k.i1);
-\vector[token=scalar]           (j.o2) -> (k.i2);
-\vector[token=scalarAE]         (k.o1) -> (out);
-\end{tikzpicture}
-\end{document}
-\end{lstlisting}
-
-or, since the process network depicts standard ForSyDe processes, you can use the helpers in \texttt{forsyde-pc} to make your life easier:
-
-\begin{lstlisting}
-\documentclass{standalone}
-\usepackage{forsyde-pc}
-
-\begin{document}
-\begin{tikzpicture}[global scale=.85]
-\unzipx      []                                 {a}{0,0};
-\visualreversev[]                               {b}{0,-2};
-\comb        [moc=sy]                           {c}{4,0}{p1};
-\mealy       [moc=sdf]                          {d}{4,-2}{p2};
-\mocinterface[mocin=sdf, mocout=sy]             {e}{6.5,-2};
-\zip         [moc=sy]                           {f}{9,-1.2};
-\composite   [ni=1, no=1, inner ysep=10pt]      {g}{(d)(e)}{composite1};
-\composite   [ni=2, no=1, inner xsep=5pt]       {h}{(g)(c)(f)}{composite2};
-\farmI       [ni=2, type=farm1, inner xsep=20pt]{i}{(h)}{pattern1};
-\visualunzipv[]                                 {j}{$ (i.o1)+(1.5,0) $};
-\distributev [f1=df]                            {k}{$ (j)+(1.5,0) $};
-	
-\node (in1) at ($ (a.i1)-(1.5,0) $){};
-\node (in2) at ($ (b.i1)-(1.5,0) $){};
-\node (out) at ($ (k.o1)+(1.5,0) $){};
-
-\signal[token=vector]           (in1) -> (a.i1);
-\vector[token=scalar]           (in2) -> (b.i1);
-\vector[token=scalar, -|-]      (a.o1) ->p (i.i1);
-\vector[token=scalar, -|-]      (b.o1) ->p (i.i2);
-\signal[token=scalar, -|-]      (i.i1) -> (c.i1);
-\signal[token=scalarAE, -|-=.9] (c.o1) -> (f.i1);
-\signal[token=scalar, -|-]      (i.i2) ->p (g.i1);
-\signal[]                       (g.i1) -> (d.i1);
-\signal[token=scalar, -|-]      (d.o1) -> (e.i1);
-\signal[]                       (e.o1) ->p (g.o1);
-\signal[token=scalar, -|-]      (g.o1) -> (f.i2);
-\signal[token=scalarAE-scalar, token pos=.4] (f.o1) -> (i.o1);
-\vector[token=scalarAE-scalar,] (i.o1) -> (j.i1);
-\vector[token=scalarAE]         (j.o1) -> (k.i1);
-\vector[token=scalar]           (j.o2) -> (k.i2);
-\vector[token=scalarAE]         (k.o1) -> (out);
-\end{tikzpicture}
-\end{document}
-\end{lstlisting}
-
+\lstinputlisting{figs/example-forsyde-tikz.tex}
 
 \section{The \texttt{forsyde-tikz} package}
 
