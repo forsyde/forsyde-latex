@@ -1,4 +1,7 @@
 *
+!figs
+figs/*
+!figs/*.tex
 !Makefile
 !.gitignore
 !*.tex

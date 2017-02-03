@@ -1,0 +1,42 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \crossed  [transition, type=evens, rotate=-45]                   (a)             {};
+  \crossed  [transition, type=filter, rotate=45, nf=1, f1={$>0$} ] (b) <0,2>       {};
+  \standard [leaf, nf=1, type=comb, moc=de, left of=b, xshift=3cm] (c)             {};
+  \interface[left of=a, xshift=2cm]                                (d1)            {sy}{sdf};
+  \standard [leaf, f={ns;od;1}, type=mealy, moc=sdf, left of=d1]   (d)             {p2};
+  \interface[left of=d]                                            (e)             {sdf}{sy};
+  \basic    [primitiven, left of=c, f=i, xshift=1.5cm]             (f)             {$\Delta$};
+  \standard [leaf, ni=2, anchor=i2, xshift=2cm,
+             f=$+$, moc=sy, type=comb]                             (g) <$(e)!.5!(f)$> {red};
+  \cluster  [embed, moc=sy, type=wrap, inner sep=15pt]             (h) <(c)>       {};
+  \cluster  [composite,  inner ysep=13pt]                          (i) <(d1)(d)>   {composite1}; 
+  \cluster  [composite, ni=2, inner xsep=5pt]                      (j) <(g)(i)(h)> {composite2};
+  \cluster  [farmstyle, type=farm,
+             f={$\langle f \rangle$;$\langle 1 .. 1024 \rangle$}]  (k) <(j)>       {pattern1};
+  \crossed  [zipx, left of=g,xshift=2cm]                           (l)             {};
+  % additional info nodes
+  \node[connector] (con) at ($ (a)!.5!(b)-(1,0) $){};
+  \node (in)  at ($ (con)-(1.5,0) $){$V(S)_{in}$};
+  \node (out) at ($ (l)+(1.5,0) $)  {$S(V)_{in}$};
+  % singal/vector edges
+  \path[v] (con) edge (in) edge (a.i1) edge (b.i1);
+  \path (b.o1) edge[intersect=k-left, as=b-c1] (c) edge[intersect=h-left, as=b-c2] (c)
+        (b-c1) edge[v]  (b.o1)  edge[s=sy,srcport]   (b-c2)
+        (b-c2) edge[s=de,->]                         (c)
+        (f)    edge[trans={<-,sn=sy}{h-right}{sn=de}](c)
+               edge[sn=sy,-|-=.8]                    (g.i1)
+        (a.o1) edge[trans={v,dstport}{k-left}{s,->}] (d1) 
+        (d)    edge[<-, srcport, s]                  (d1)
+               edge[s, srcport, ->]                  (e)
+        (e)    edge[s,-|-,->]                        (g.i2)
+        (g.o1) edge[intersect=k-right, as=g-l]       (l)
+               edge[s]                               (g-l)
+        (g-l)  edge[v,srcport,token=scalar,->]       (l)
+        (l)    edge[s,token=vector,->]               (out);
+  % function edges, suggest the passing of functions as arguments
+  \path[f] (k-f.o1) edge[|-|=.3,->] (c.north) (k-f.o2) edge[|-|=.2,->] (f-f.i1);
+\end{tikzpicture}
+\end{document}
