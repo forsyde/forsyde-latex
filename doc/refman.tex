@@ -1,4 +1,4 @@
-\title{The \textsc{ForSyDe-TikZ} library}
+\title{The \textsc{ForSyDe-\LaTeX} utilities}
 \author{
         George Ungureanu \\
                 Department of Electronic Systems\\
@@ -11,6 +11,8 @@
 \usepackage[a4paper]{geometry}
 \usepackage{forsyde-pc}
 \usepackage[footnotesize]{caption}
+\usepackage{longtable}
+\usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{marginnote}
@@ -26,10 +28,6 @@
 	\setlength{\parsep}{0pt}
 }}{\end{list}}
 \newcommand\bookmark[1]{\marginpar{\ttfamily #1}}
-\tikzset{% 
-    anch/.style={circle, draw=none, fill=red, inner sep=0pt, minimum size=3pt},
-    label/.style={font=\ttfamily\scriptsize}
-}
 \lstset{
   basicstyle=\footnotesize\ttfamily,
   numbers=left,
@@ -44,41 +42,47 @@
   texcsstyle=*\color{red}\bfseries,
   keywordstyle=\color{blue}\bfseries,
   morekeywords={tikzpicture,document},
-  moretexcs={crossed,standard,interface,basic,cluster,node,path},
+  moretexcs={trans,standard,interface,basic,cluster,node,path},
 }
-
-
-
+\def\opt#1{\color{gray}{#1}}
+\def\man#1{\color{black}{#1}}
 
 \begin{document}
 \maketitle
 \reversemarginpar
 
 \begin{abstract}
-This document is the reference manual for using the \texttt{forsyde-tikz} and \texttt{forsyde-pc} packages.  All API features are documented here.
+This is the reference manual for the \LaTeX\ utilities used in the context of \textsc{ForSyDe}. All packages and their API features are documented here.
 \end{abstract}
 
 \section{Introduction}
 
-\textsc{ForSyDe-TikZ} is a collection \textsc{TikZ} \& \textsc{PGF} graphical basics and environment macros for plotting process networks in \textsc{ForSyDe}. \textsc{ForSyDe} is a high-level design methodology aiming at synthesizing correct-by-construction systems using formal means. For more information check  \url{https://forsyde.ict.kth.se/trac}.
+This library was developed as an effort to standardize symbols and graphical primitives in documents related to \textsc{ForSyDe}, but also to provide tools and utilities for user convenience. \textsc{ForSyDe} is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
 
-This library provides two main packages. \texttt{forsyde-tikz} provides graphical basics and macros for creating custom process constructors whereas \texttt{forsyde-pc} contains helper macros for drawing the process constructors defined in \textsc{ForSyDe} at the time of writing this document.
+The library contains the following main packages:
+\begin{itemize}
+\item \texttt{forsyde-tikz} : is a collection of \textsc{PGF} and
+  \textsc{TikZ} styles, graphical primitives and commands for
+  drawing \textsc{ForSyDe} process networks;
+\item \texttt{forsyde-math} : is a collection of math symbols used in
+  the \textsc{ForSyDe} formal notation. It is mainly focused on the
+  ongoing \textsc{ForSyDe-Atom} methodology;
+\item \texttt{forsyde-plot} : provides utilities for plotting
+  \textsc{ForSyDe} signals;
+\item \texttt{forsyde-legacy} : API for the previous versions of this
+  library.
+\end{itemize}
 
 \section{Installation}
 
-The contents of \texttt{src} are to be copied on your local machine, ideally in your LaTeX  project folder. The package is loaded by compiling your document with the \texttt{TEXINPUTS} variable set to your installation path, or by copying all of the package files in your document's root folder or any LaTeX  standard loading paths. 
+There are three main alternatives to use the libraries:
 
-\section{Getting started}
+\begin{enumerate}
+\item copy the contents of \texttt{forsyde-latex/src} under the \texttt{TEXMFHOME} path or any standard loading path, as specified by your \LaTeX\ compiler;
+\item compile your document with the variable \texttt{TEXINPUTS} set to \texttt{/path/to/forsyde-latex/src/};
+\item copy the contents of \texttt{forsyde-latex/src} in the same folder as your document and compile normally.
+\end{enumerate}
 
-A \textsc{ForSyDe} process network is drawn like any other \textsc{TikZ} figure, inside a \texttt{tikzpicture} environment. The \texttt{options} provided are key variables defined by the \texttt{tikz} package. \bookmark{environment}
-
-\begin{verbatim}
-	\begin{tikzpicture}[options]
-		content...
-	\end{tikzpicture}
-\end{verbatim}
-
-The following figure can be produced by either customizing every element with the basics provided in \texttt{forsyde-tiks}:
 
 \begin{figure}[htb]\centering
 \includegraphics[width=\textwidth]{figs/example-forsyde-tikz}
@@ -94,294 +98,298 @@ The \texttt{forsyde-tikz} package is included with
 	\usepackage{forsyde-tikz}
 \end{verbatim}
 
+
+A \textsc{ForSyDe} process network is drawn like any other \textsc{TikZ} figure, inside a \texttt{tikzpicture} environment. The \texttt{options} provided are key variables defined by the \texttt{tikz} package. \bookmark{environment}
+
+\begin{verbatim}
+	\begin{tikzpicture}[options]
+		content...
+	\end{tikzpicture}
+\end{verbatim}
+
 Apart from the standard keys, \texttt{forsyde-tikz} provides the following variables:\bookmark{environment variables}
- \begin{optionslist}
-\item \texttt{nomoccolor} : disables process coloring according to their MoC.
-\item \texttt{nomoclabel} : disables process labeling according to their MoC.
+\begin{optionslist}
+\item \texttt{no moc color} : disables process coloring according to their MoC.
+\item \texttt{no moc label} : disables process labeling according to their MoC.
 \item \texttt{label style=} : font style for the process type labels. Default is \texttt{\char`\\ textbf}.
 \item \texttt{type style=} : font style for the process name labels. Default is \texttt{\char`\\ scriptsize\char`\\textit}.
 \item \texttt{function style=} : font style for the functions. Default is \texttt{\char`\\ scriptsize}.
-\item \texttt{global scale=} : scale of the picture. Should be used instead of the \textsc{TikZ} \texttt{scale}.
 \end{optionslist}
 
 \subsection{Main nodes}
 
-Leaf processes are basic nodes in a process network. They can be drawn either using a standad symbol or using a custom shape. One special case of leaf process is the interface. \texttt{forsyde-tikz} provides a command for creating each of these nodes: \texttt{\char`\\leafstd} for standard symbol, \texttt{\char`\\standard} for custom shape or \texttt{\char`\\interface} for interface.\\
+Using \texttt{forsyde-tikz}, process networks are drawn using a combination of commands and style options for customizing shapes. 
 
-\hspace{1pt}\bookmark{\char`\\standard[shape=leaf,options]\{id\}\{position\}\{label\}}
+\subsubsection{Draw commands}
+\label{sec:draw-commands}
+
+Inside the \texttt{tikzpicture} environment, one can use a set of draw commands which are used as templates for placing shapes and information provided as arguments. In the following listing, the \opt{gray}\man{} arguments are optional while the \man{black} ones are mandatory. 
+The library also provide as set of helper styles for setting several options at once, presented in \ref{sec:helper-options}.\\
+
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-basic}
+\lstinputlisting[linerange={5-5}]{figs/example-node-basic.tex}
+\caption{The \texttt{\char`\\basic} draw command. The red dots are custom anchors, accessed with \texttt{[name]-f.[anchor]}.}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\basic\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
+
+\noindent The basic node is the simplest depiction of a function (e.g., process, atom) with maximum one argument. It is the most lightweight graphical primitive, and does not contain port anchors. It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
 \begin{optionslist}
-\item \texttt{moc=[none,ct,de,sy,sdf]} the model of computation. Defaut is \texttt{none}.
-\item \texttt{type=} the process type. It will be shown below the label.
-\item \texttt{ni=[0..10]} the number of input ports. Default is 1.
-\item \texttt{no=[0..10]} the number of output ports. Default is 1.
-\item \texttt{nf=[0..4]} the number of passed functions. Default is 1.
-\item \texttt{f1=} the first function label. It will be shown in the appropriate place in case \texttt{nf > 0}. Default is $f_1$.
-\item \texttt{f2=} the second function label. It will be shown in the appropriate place in case \texttt{nf > 1}. Default is $f_2$.
-\item \texttt{f3=} the third function label. It will be shown in the appropriate place in case \texttt{nf > 2}. Default is $f_3$.
-\item \texttt{f4=} the fourth function label. It will be shown in the appropriate place in case \texttt{nf > 3}. Default is $f_4$.
-\item\texttt{inner sep=} vertical distance between the function labels, process label and process type. Default is \texttt{10pt}.
-\item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
+\item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
+\item \texttt{nf=[0..1]} the number of passed functions. Default is \texttt{0}. If \texttt{nf>1} then \texttt{nf=1}.
+\item \texttt{f1=} function label. Appears as a box above the main shape in case \texttt{nf > 0}. Default is $f_1$.
+\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
 \end{optionslist}
 
-% \begin{lstlisting}
-% \standard[shape=leaf,moc=ct, type=comb, nf=4, ni=2, no=3, f1=$x/y$, f2=$a+b$] {p1}{0,0}{P1};
-% \standard[shape=leaf,moc=sy, reverse, type=comb, nf=4, ni=2, no=5, f2=$a+b$,inner sep=15pt] {p2}{6,0}{P2};
-% \end{lstlisting}
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% \standard[shape=leaf,moc=ct, type=comb, nf=4, ni=2, no=3, f1=$x/y$, f2=$a+b$] {p1}{0,0}{P1};
-% \standard[shape=leaf,moc=sy, reverse, type=comb, nf=4, ni=2, no=5, f2=$a+b$,inner sep=15pt] {p2}{6,0}{P2};
 
-% \node[anch] (a) at (p1.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p1.i1}};
-% \node[anch] (a) at (p1.i2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p1.i2}};
-% \node[anch] (a) at (p1.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{p1.o1}};
-% \node[anch] (a) at (p1.o2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{p1.o2}};
-% \node[anch] (a) at (p1.o3) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{p1.o3}};
-% \node[anch] (a) at (p1-f.i1) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p1-f.i1}};
-% \node[anch] (a) at (p1-f.i2) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p1-f.i2}};
-% \node[anch] (a) at (p1-f.i3) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p1-f.i3}};
-% \node[anch] (a) at (p1-f.i4) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p1-f.i4}};
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-standard}
+\lstinputlisting[linerange={5-5}]{figs/example-node-standard.tex}
+\caption{The \texttt{\char`\\standard} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\standard\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
 
-% \node[anch] (a) at (p2.i1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{p2.i1}};
-% \node[anch] (a) at (p2.i2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{p2.i2}};
-% \node[anch] (a) at (p2.o1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p2.o1}};
-% \node[anch] (a) at (p2.o2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p2.o2}};
-% \node[anch] (a) at (p2.o3) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p2.o3}};
-% \node[anch] (a) at (p2.o4) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p2.o4}};
-% \node[anch] (a) at (p2.o5) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{p2.o5}};
-% \node[anch] (a) at (p2-f.i1) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p2-f.i1}};
-% \node[anch] (a) at (p2-f.i2) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p2-f.i2}};
-% \node[anch] (a) at (p2-f.i3) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p2-f.i3}};
-% \node[anch] (a) at (p2-f.i4) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{p2-f.i4}};
-% \end{tikzpicture}
-% \end{figure}
+\noindent The standard node is a more complex depiction of a ForSyDe block. It contains anchors for each port, shows a label and the constructor name, and its field is colored according to a MoC (if this is the case). It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
-% \hspace{1pt}\bookmark{\char`\\standard[options]\{id\}\{position\}}
+\begin{optionslist}
+\item \texttt{class=[sy|de|ct|sdf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
+\item \texttt{hasmoc} flag for saying that this node is a process, therefore it is associated with a MoC. It need to be provided otherwise the global flags will ignore MoC-related options (e.g. \texttt{nomoccolor}).
+\item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
+\item \texttt{type=} the type / constructor of that particular ForSyDe block. It shows below the main label and it is affected by the \texttt{class} argument.
+\item \texttt{npw=[0..10]} number of ports on the left side of the node, i.e. the number of left port anchors.
+\item \texttt{ni=[0..10]} alias for \texttt{npw}, stands for ``number of inputs''.
+\item \texttt{npe=[0..10]} number of ports on the right side of the node, i.e. the number of right port anchors.
+\item \texttt{no=[0..10]} alias for \texttt{npe}, stands for ``number of outputs''.
+\item \texttt{nf=[0..4]} the number of passed functions. Default is \texttt{0}.
+\item \texttt{f1=} first function label. Appears as a box in the upper part in case \texttt{nf > 0}. Default is $f_1$.
+\item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
+\item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
+\item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
+\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner ysep=[distance]} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
+\end{optionslist}
 
-% \begin{optionslist}
-% \item \texttt{moc=[none,ct,de,sy,sdf]} the model of computation. Defaut is \texttt{none}.
-% \item \texttt{shape=} the node shape. For a list of available shapes check \autoref{appendix_shapes}.
-% \item \texttt{ni=[0..10]} the number of input ports. Default is 1.
-% \item \texttt{no=[0..10]} the number of output ports. Default is 1.
-% \item \texttt{minimum height=} the minimum height of a node. Default is \texttt{15pt}.
-% \item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
-% \item\texttt{reverse shape} toggle switch which determines the orientation of the chosen shape. Default is off.
-% \end{optionslist}
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-interface}
+\lstinputlisting[linerange={5-5}]{figs/example-node-interface.tex}
+\caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\interface\opt{[options]}\opt{(name)}\opt{<position>}\man{\{domain~left\}}\man{\{domain~right\}};}
 
-% \begin{lstlisting}
-% \standard[moc=de, shape=zip shape, reverse, reverse shape, ni=2, no=1] {lc}{5,0};
-% \end{lstlisting}
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% \standard[moc=de, shape=zip shape, reverse, reverse shape, ni=2, no=1] {lc}{5,0};
+\noindent This command draws an interface from one domain to another (e.g. a MoC interface). It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
-% \node[anch] (a) at (lc.i1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{lc.i1}};
-% \node[anch] (a) at (lc.i2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{lc.i2}};
-% \node[anch] (a) at (lc.o1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{lc.o1}};
-% \end{tikzpicture}
-% \end{figure}
-
-% \hspace{1pt}\bookmark{\char`\\interface[options]\{id\}\{position\}}
-% \begin{optionslist}
-% \item \texttt{mocin=[none,ct,de,sy,sdf]} the input MoC. Defaut is \texttt{none}.
-% \item \texttt{mocin=[none,ct,de,sy,sdf]} the output MoC. Defaut is \texttt{none}.
-% \item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
-% \end{optionslist}
-
-% \begin{lstlisting}
-% \interface[mocin=ct, mocout=de] {di}{0,0};
-% \interface[mocin=ct, mocout=de, reverse] {direv}{5,0};
-% \end{lstlisting}
-
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% \interface[mocin=ct, mocout=de] {di}{0,0};
-% \interface[mocin=ct, mocout=de, reverse] {direv}{5,0};
-
-% \node[anch] (a) at (di.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{di.i1}};
-% \node[anch] (a) at (di.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{di.o1}};
-
-% \node[anch] (a) at (direv.i1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{direv.i1}};
-% \node[anch] (a) at (direv.o1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{direv.o1}};
-% \end{tikzpicture}
-% \end{figure}
-
-% \hspace{1pt}\bookmark{\char`\\compositestd[options]\{id\}\{list~of~clustered~nodes\}\{label\}}
-
-% \hspace{1pt}\bookmark{\char`\\compositebbox[options]\{id\}\{position\}\{label\}}
+\begin{optionslist}
+\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\end{optionslist}
 
 
-% \begin{optionslist}
-% \item \texttt{ni=[0..10]} the number of input ports. Default is 1.
-% \item \texttt{no=[0..10]} the number of output ports. Default is 1.
-% \item\texttt{inner xsep=} the distance between the outermost clustered nodes and the composite box edge. Default is 15pt.
-% \item\texttt{inner ysep=} the distance between the outermost clustered nodes and the composite box edge. Default is 15pt.
-% \item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
-% \end{optionslist}
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-trans}
+\lstinputlisting[linerange={5-5}]{figs/example-node-trans.tex}
+\caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\trans\opt{[options]}\opt{(name)}\opt{<position>}\man{\{\}};}
 
-% \begin{lstlisting}
-% \compositebbox[ni=1, no=1]                 {bb}  {0,0} {BlackBox};
-% \leafstd      [nf=0, inner sep=3pt]        {dm1} {8,-0.5} {Dummy1};
-% \leafstd      [nf=0, inner sep=3pt]        {dm2} {8,0.5} {Dummy2};
-% \compositestd [ni=2, no=3, inner xsep=35pt]{cp1} {(bb)} {CP1};
-% \compositestd [ni=2, no=3, reverse]        {cp2} {(dm1)(dm2)} {CP2};
-% \end{lstlisting}
+\noindent This command draws a transversal node over a path (usually 90 degrees), which symbolizes a structural transition of the path's type (e.g. permutation). The label is ignored, but the brackets are necessary to mark the end of the arguments. It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[global scale=.93]
-% \compositebbox[ni=1, no=1] {bb} {0,0} {BlackBox};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm1} {8,-0.5} {Dummy1};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm2} {8,0.5} {Dummy2};
-% \compositestd[ni=2, no=3, inner xsep=35pt] {cp1} {(bb)} {CP1};
-% \compositestd[ni=2, no=3, reverse] {cp2} {(dm1)(dm2)} {CP2};
+\begin{optionslist}
+\item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
+\item \texttt{type=} the type / constructor of that particular ForSyDe block. It is shown as the main label, rotated at 90 degrees.
+\item \texttt{npw=[0..10]} number of ports on the left side of the node, i.e. the number of left port anchors.
+\item \texttt{ni=[0..10]} alias for \texttt{npw}, stands for ``number of inputs''.
+\item \texttt{npe=[0..10]} number of ports on the right side of the node, i.e. the number of right port anchors.
+\item \texttt{no=[0..10]} alias for \texttt{npe}, stands for ``number of outputs''.
+\item \texttt{nf=[0..4]} the number of passed functions. Default is \texttt{0}.
+\item \texttt{f1=} first function label. Appears as a box in the upper part in case \texttt{nf > 0}. Default is $f_1$.
+\item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
+\item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
+\item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
+\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner ysep=[distance]} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
+\end{optionslist}
 
-% \node[anch] (a) at (bb.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{bb.i1}};
-% \node[anch] (a) at (bb.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{bb.o1}};
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-cluster}
+\lstinputlisting[linerange={5-7}]{figs/example-node-cluster.tex}
+\caption{The \texttt{\char`\\cluster} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]}, the port anchors are accessed with \texttt{[name].[anchor]} and the cluster outer shape edges are named \texttt{[name]-[position]}}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\cluster\opt{[options]}\opt{(name)}\man{<list~of~clustered~nodes>}\man{\{label\}};}
 
-% \node[anch] (a) at (cp1.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp1.i1}};
-% \node[anch] (a) at (cp1.i2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp1.i2}};
-% \node[anch] (a) at (cp1.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{cp1.o1}};
-% \node[anch] (a) at (cp1.o2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{cp1.o2}};
-% \node[anch] (a) at (cp1.o3) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{cp1.o3}};
+\noindent This command draws a cluster around other nodes. Instead of a position, it requires a list of nodes to fit. Apart from the functions and port anchors as seen in the previous commands, this command provides the edges of the outer shape cluster as names. These names can be used further in computing intersection points. It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
-% \node[anch] (a) at (cp2.i1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{cp2.i1}};
-% \node[anch] (a) at (cp2.i2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{cp2.i2}};
-% \node[anch] (a) at (cp2.o1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp2.o1}};
-% \node[anch] (a) at (cp2.o2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp2.o2}};
-% \node[anch] (a) at (cp2.o3) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{cp2.o3}};
-% \end{tikzpicture}
-% \end{figure}
+\begin{optionslist}
+\item \texttt{class=[sy|de|ct|sdf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
+\item \texttt{hasmoc} flag for saying that this node is a process, therefore it is associated with a MoC. It need to be provided otherwise the global flags will ignore MoC-related options (e.g. \texttt{nomoccolor}).
+\item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
+\item \texttt{type=} the type / constructor of that particular ForSyDe block. It shows below the main label and it is affected by the \texttt{class} argument.
+\item \texttt{npw=[0..10]} number of ports on the left side of the node, i.e. the number of left port anchors.
+\item \texttt{ni=[0..10]} alias for \texttt{npw}, stands for ``number of inputs''.
+\item \texttt{npe=[0..10]} number of ports on the right side of the node, i.e. the number of right port anchors.
+\item \texttt{no=[0..10]} alias for \texttt{npe}, stands for ``number of outputs''.
+\item \texttt{nf=[0..4]} the number of passed functions. Default is \texttt{0}.
+\item \texttt{f1=} first function label. Appears as a box in the upper part in case \texttt{nf > 0}. Default is $f_1$.
+\item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
+\item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
+\item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
+\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner xsep=[distance]} the inner separation in X direction. Default is \texttt{3pt}.
+\item \texttt{inner ysep=[distance]} the inner separation in Y direction. Default is \texttt{3pt}.
+\end{optionslist}
 
-% \vspace{20pt}
-% \hspace{1pt}\bookmark{\char`\\patterncluster[options]\{id\}\{list~of~clustered~nodes\}\{label\}}
+\subsubsection{Shapes}
+\label{sec:provided-shapes}
+\bookmark{node shapes}
+\textsc{ForSyDe-TikZ} provides a collection of raw shapes either as \textsc{TikZ} styles or as low-level \textsc{PGF} drawings. They are often used as arguments for drawing commands. Below is a list with them and their usage:
 
-% \begin{optionslist}
-% \item \texttt{type=} the process type label.
-% \item \texttt{shape=} the cluster node shape. Default is \texttt{dp shape}. For a list of shapes check \autoref{appendix_shapes}
-% \item \texttt{ni=[0..10]} the number of input ports. Default is 1.
-% \item \texttt{no=[0..10]} the number of output ports. Default is 1.
-% \item \texttt{nf=[0..4]} the number of passed functions. Default is 1.
-% \item \texttt{f1=} the first function label. It will be shown in the appropriate place in case \texttt{nf > 0}. Default is $\langle f_1 \rangle$.
-% \item \texttt{f2=} the second function label. It will be shown in the appropriate place in case \texttt{nf > 1}. Default is $\langle f_2 \rangle$.
-% \item \texttt{f3=} the third function label. It will be shown in the appropriate place in case \texttt{nf > 2}. Default is $\langle f_3 \rangle$.
-% \item \texttt{f4=} the fourth function label. It will be shown in the appropriate place in case \texttt{nf > 3}. Default is $\langle f_4 \rangle$.
-% \item\texttt{inner xsep=} the distance between the outermost clustered nodes and the composite box X edge. Default is 15pt.
-% \item\texttt{inner ysep=} the distance between the outermost clustered nodes and the composite box Y edge. Default is 18pt.
-% \item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
-% \item\texttt{reverse shape} toggle switch which determines the orientation of the chosen shape. Default is off.
-% \end{optionslist}
 
-% \begin{lstlisting}
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm1} {0,-0.5} {Dummy 1};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm2} {0,0.5} {Dummy 2};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm3} {6,0} {Dummy 3};
-% \patterncluster[ni=2, no=2, nf=2, shape=dp shape, type=farm2, inner ysep=25pt] 
-% 	{dp} {(dm1)(dm2)} {Farm1};
-% \patterncluster[ni=1, no=2, nf=3, f3=scanld (+), shape=pipe shape, type=pipe3, reverse, inner ysep=25pt] 
-% 	{pr} {(dm3)} {PipeRev1};
-% \end{lstlisting}
+\begin{longtable} { | p{3cm} | c | p{9cm} | }
+  \toprule
+  \textbf{Shape}  & \textbf{Drawing} & \textbf{Description} \\
+  \midrule
+  \texttt{atom shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[atom shape] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\basic} command, it is a good candidate for depicting ForSyDe atoms or other primitive blocks.
+  \\
+  \texttt{nary atom shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[nary atom shape] {}; \end{tikzpicture}
+  & similar to \texttt{atom shape}, but suggests an n-tuple of blocks.
+  \\
+  \texttt{leaf shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[leaf shape, inner sep=7pt] {}; \end{tikzpicture}
+  &  meant to be used with the \texttt{\char`\\standard} command, it is a good candidate for depicting abstractions of complex semantics (e.g. black boxes).
+  \\
+  \texttt{nary leaf shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[nary leaf shape, inner sep=7pt] {}; \end{tikzpicture}
+  & similar to \texttt{leaf shape}, but suggests an n-tuple of blocks.
+  \\
+  \texttt{comp shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[comp shape, inner sep=7pt] {}; \end{tikzpicture}
+  &  meant to be used with the \texttt{\char`\\cluster} command, it is a good candidate for depicting exposed hierarchical blocks such as composite processes.
+  \\
+  \texttt{nary comp shape}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[nary comp shape, inner sep=7pt] {}; \end{tikzpicture}
+  & similar to \texttt{leaf shape}, but suggests an n-tuple of blocks.
+  \\
+  \texttt{\texttt{ports e[0..10]w[0..10]}}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[ports e1w1] {}; \end{tikzpicture}
+  & these are multiple shapes that have no drawing, but define additional anchors\footnote{apart from the ones inherited from \texttt{rectangle}} for ports on the east (\texttt{.e[index]}) and west (\texttt{.w[index]}) sides of the node. It is meant to fit around an existing shape. 
+  \\
+  \texttt{\texttt{func[0..4]}}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[func4] {\functionlabels{4}{a}{b}{c}{d}}; \end{tikzpicture}
+  & these shapes create a series of boxes with text and for each box two anchors: north (\texttt{.n[index]}), south (\texttt{.s[index]}). They are used to show functions as input arguments.
+  \\
+  \texttt{\texttt{dp shape}}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[dp shape, inner sep=7pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\cluster} command, this shape suggests a data parallel skeleton.
+  \\
+  \texttt{\texttt{pipe shape}}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[pipe shape, inner sep=7pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\cluster} command, this shape suggests a pipeline skeleton.
+  \\
+  \texttt{\texttt{merge shape}}
+  & \vspace{0pt} \begin{tikzpicture}[baseline] \node[merge shape, inner sep=7pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\cluster} command, this shape suggests a reduce/recur skeleton.
+  \\
+  \texttt{\texttt{generic skel shape}}
+  & \vspace{0pt}\begin{tikzpicture}[baseline] \node[generic skel shape, inner sep=7pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\cluster} command, this shape suggests generic skeleton which implies a recursive composition of functions/blocks.
+  \\
+  \texttt{\texttt{trans shape v[1..8]v[1..8]}}
+  & \vspace{0pt}\begin{tikzpicture}[baseline] \node[trans shape v2v3, inner ysep=10pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\trans} command, this shape suggests a transition in the structure of \texttt{n} input vectors resulting in \texttt{n'} output vectors.
+  \\
+  \texttt{\texttt{trans shape s1v1}}
+  & \vspace{0pt}\begin{tikzpicture}[baseline] \node[trans shape s1v1, inner ysep=10pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\trans} command, this shape suggests a transposition of a vector to/from a stream.
+  \\
+  \texttt{\texttt{trans shape v1gv1}}
+  & \vspace{0pt}\begin{tikzpicture}[baseline] \node[trans shape v1gv1, inner ysep=10pt] {}; \end{tikzpicture}
+  & meant to be used with the \texttt{\char`\\trans} command, this shape suggests a grouping/merging to/from a vector of vectors.
+  \\
+  \bottomrule
+\end{longtable}
 
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm1} {0,-0.5} {Dummy 1};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm2} {0,0.5} {Dummy 2};
-% \standard[shape=leaf,nf=0, inner sep=3pt] {dm3} {6,0} {Dummy 3};
-% \patterncluster[ni=2, no=2, nf=2, shape=dp shape, type=farm2, inner ysep=25pt] 
-% 	{dp} {(dm1)(dm2)} {Farm1};
-% \patterncluster[ni=1, no=2, nf=3, f3=scanld (+), shape=pipe shape, type=pipe3, reverse, inner ysep=25pt] 
-% 	{pr} {(dm3)} {PipeRev1};
+\subsubsection{Helper options}
+\label{sec:helper-options}
 
-% \node[anch] (a) at (dp.i1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{dp.i1}};
-% \node[anch] (a) at (dp.i2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{dp.i2}};
-% \node[anch] (a) at (dp.o1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{dp.o1}};
-% \node[anch] (a) at (dp.o2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{dp.o2}};
-% \node[anch] (a) at (dp-f.i1) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{dp-f.i1}};
-% \node[anch] (a) at (dp-f.i2) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{dp-f.i2}};
-% \node[anch] (a) at (dp-f.o1) {}; \node[label, anchor=west, rotate=-45] (l) at (a.north) {\texttt{dp-f.o1}};
-% \node[anch] (a) at (dp-f.o2) {}; \node[label, anchor=west, rotate=-45] (l) at (a.north) {\texttt{dp-f.o2}};
+\bookmark{node helper keys}
+The \texttt{forsyde-tikz} library provides a large set of styles or function keys that can be used for user convenience as options in the draw commands shown in section \ref{sec:draw-commands}. 
 
-% \node[anch] (a) at (pr.i1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{pr.i1}};
-% \node[anch] (a) at (pr.o1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{pr.o1}};
-% \node[anch] (a) at (pr.o2) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{pr.o2}};
-% \node[anch] (a) at (pr-f.i1) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{pr-f.i1}};
-% \node[anch] (a) at (pr-f.i2) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{pr-f.i2}};
-% \node[anch] (a) at (pr-f.i3) {}; \node[label, anchor=west, rotate=90] (l) at (a.north) {\texttt{pr-f.i3}};
-% \node[anch] (a) at (pr-f.o1) {}; \node[label, anchor=west, rotate=-45] (l) at (a.north) {\texttt{pr-f.o1}};
-% \node[anch] (a) at (pr-f.o2) {}; \node[label, anchor=west, rotate=-45] (l) at (a.north) {\texttt{pr-f.o2}};
-% \node[anch] (a) at (pr-f.o3) {}; \node[label, anchor=west, rotate=-45] (l) at (a.north) {\texttt{pr-f.o3}};
-% \end{tikzpicture}
-% \end{figure}
+\begin{longtable} { r|p{11cm} }
+  \toprule
+  \textbf{Key}  & \textbf{Description/Expands to}  \\
+  \midrule
+  \texttt{moc=x} & \texttt{hasmoc, class=x} \\
+  \texttt{inner sep=x} & \texttt{inner xsep=x, inner ysep=x} \\
+  \texttt{left of=x} & positions left of node \texttt{x}, with an edge-to-edge distance = 1cm \\
+  \texttt{right of=x} & positions right of node \texttt{x}, with an edge-to-edge distance = 1cm \\
+  \texttt{above of=x} & positions above of node \texttt{x}, with an edge-to-edge distance = 1cm \\
+  \texttt{below of=x} & positions below of node \texttt{x}, with an edge-to-edge distance = 1cm \\
+  \texttt{f=\{a;b;c;d\}} & parses a string of functions separated by \texttt{;} and sets \texttt{nf}, \texttt{f1}, \texttt{f2}, \texttt{f3} and \texttt{f4} accordingly \\
+  \texttt{primitive} & \texttt{shape=atom shape} \\
+  \texttt{primitiven} & \texttt{shape=nary atom shape} \\
+  \texttt{process} & \texttt{shape=leaf shape, hasmoc} \\
+  \texttt{processn} & \texttt{shape=nary leaf shape, hasmoc} \\
+  \texttt{composite} & \texttt{shape=comp shape} \\
+  \texttt{compositen} & \texttt{shape=comp shape} \\
+  \texttt{embed} & \texttt{shape=leaf shape, hasmoc, inner sep=15pt} \\
+  \texttt{farmstyle} & \texttt{shape=dp shape, inner xsep = 15pt, inner ysep = 20pt,} \\
+  \texttt{pipestyle} & \texttt{shape=pipe shape, inner xsep = 15pt, inner ysep = 20pt,} \\
+  \texttt{skeleton} & \texttt{shape=generic skel shape, inner xsep = 15pt, inner ysep = 20pt,} \\
+  \texttt{transition=v2v3} & \texttt{shape=trans shape v2v3}. Default argument is \texttt{v1v1}. \\
+  \texttt{zipx} & \texttt{transition={s1v1}, rotate shape=180, type=zipx,} \\
+  \texttt{unzipx} & \texttt{transition={s1v1}, type=unzipx,} \\
+  \bottomrule
+\end{longtable}
 
-% \hspace{1pt}\bookmark{\char`\\patternnodestd[options]\{id\}\{position\}}
 
-% \hspace{1pt}\bookmark{\char`\\patternnodecustom[options]\{id\}\{position\}}
+\subsection{Paths}
 
-% \begin{optionslist}
-% \item \texttt{type=} type label.
-% \item \texttt{inner shape=} the inner shape. Default is \texttt{noinner}. For a list of available shapes check \autoref{appendix_shapes}.
-% \item \texttt{outer shape=} the outer shape. Default is \texttt{transition shape v1gv1}. For a list of available shapes check \autoref{appendix_shapes}.
-% \item \texttt{ni=[0..10]} the number of input ports. Default is 1.
-% \item \texttt{no=[0..10]} the number of output ports. Default is 1.
-% \item \texttt{nf=[0..4]} the number of passed functions. Default is 1.
-% \item \texttt{f1=} the first function label. It will be shown in the appropriate place in case \texttt{nf > 0}. Default is $f_1$.
-% \item \texttt{f2=} the second function label. It will be shown in the appropriate place in case \texttt{nf > 1}. Default is $f_2$.
-% \item \texttt{f3=} the third function label. It will be shown in the appropriate place in case \texttt{nf > 2}. Default is $f_3$.
-% \item \texttt{f4=} the fourth function label. It will be shown in the appropriate place in case \texttt{nf > 3}. Default is $f_4$.
-% \item\texttt{reverse} toggle switch which determines the orientation of the input/output ports. Default is off (inputs to the left and outputs to the right).
-% \item\texttt{reverse shape} toggle switch which determines the orientation of the chosen shape. Default is off.
-% \end{optionslist}
+Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between components. These are regular \textsc{TikZ} paths, customized with a series of keys provided by the library. There are obvious advantages for using the \textsc{TikZ} infrastructure, such as being able to further customize paths outside the scope of this library, or reuse existing keys (e.g. the arrow tips, shapes). The custom port or function anchors presented in the previous section come in handy when considering port-to-port connections. 
 
-% \begin{lstlisting}
-% \patternnodecustom[outer shape=transition shape s1v1] {a}{0,0};
-% \patternnodestd   [ni=2, nf=1, f1=$f(i)$, type=distribute, outer shape=transition shape v2v1] {b}{3,0};
-% \patternnodecustom[inner shape=custom conduit i8o3] {c}{6,0};
-% \patternnodecustom[inner shape=custom conduit i8o8, outer shape=transition shape v1gv1, reverse] {d}{9,0};
-% \end{lstlisting}
+The library provides the following custom keys:\bookmark{path keys}
 
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}
-% \patternnodecustom[outer shape=transition shape s1v1] {a}{0,0};
-% \patternnodestd   [ni=2, nf=1, f1=$f(i)$, type=distribute, outer shape=transition shape v2v1] {b}{3,0};
-% \patternnodecustom[inner shape=custom conduit i8o3] {c}{6,0};
-% \patternnodecustom[inner shape=custom conduit i8o8, outer shape=transition shape v1gv1, reverse] {d}{9,0};
-
-% \node[anch] (x) at (a.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{a.i1}};
-% \node[anch] (x) at (a.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{a.o1}};
-% \node[anch] (x) at (b.i1) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{b.i1}};
-% \node[anch] (x) at (b.i2) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{b.i2}};
-% \node[anch] (x) at (b.o1) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{b.o1}};
-% \foreach \i in {0,1,...,2} {	\node[anch] (x) at (c-c.vo\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{c-c.vo\i}};}
-% \foreach \i in {0,1,...,7} {
-% 	\node[anch] (x) at (c-c.vi\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{c-c.vi\i}};
-% 	\node[anch] (x) at (d-c.vo\i) {}; \node[label, anchor=east] (l) at (x.west) {\texttt{d-c.vo\i}};
-
-% 	\node[anch] (x) at (d-c.vi\i) {}; \node[label, anchor=west] (l) at (x.east) {\texttt{d-c.vi\i}};
-% }
-% \end{tikzpicture}
-% \end{figure}
-
-% \subsection{Paths}
-
-% Data flow in ForSyDe is represented with paths. \textsc{ForSyDe-TikZ} provides three macros for drawing signals (\texttt{\string\signal}), vectors (\texttt{\string\vector}) or function interfaces (\texttt{\string\function}) between process anchors. \\
+\begin{optionslist}
+\item \texttt{s=[MoC]} draws a signal. If the global options allow it, passing a MoC string to this key will color the signal accordingly. 
+\item \texttt{sn=[MoC]} draws an n-tuple of signals. If the global options allow it, passing a MoC string to this key will color the signal accordingly. 
+\item \texttt{v=[MoC]} draws a vector. If the global options allow it, passing a MoC string to this key will color the vector accordingly, suggesting that it contains signals of their respective MoC.
+\item \texttt{vn=[MoC]} draws an n-tuple of vectors. If the global options allow it, passing a MoC string to this key will color the vector accordingly, suggesting that it contains signals of their respective MoC.
+\item \texttt{f} draws an edge used for showing how functions and parameters are passed from higher order functions downwards into the hierarchy.  
+\item \texttt{fn} similar to \texttt{f}, but for n-tuples of functions.  
+\item \texttt{token=[scalar,vector,function,scalarAE,vectorAE,functionAE]} draws symbols for depicting the token structure of ForSyDe signals or vectors. Function paths will ignore this key. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar, absent extended vector and function can be drawn with \texttt{token=scalar-vectorAE-function}.
+\item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor where the token begins to be drawn.
+\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{deviation=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
+\end{optionslist}
 
 
 % \hspace{1pt}\bookmark{\char`\\signal[options]~(from)~shape~(to);}
 
 % \hspace{1pt}\bookmark{\char`\\vector[options]~(from)~shape~(to);}
 
-% \begin{optionslist}
-% \item \texttt{moc=[none,ct,de,sy,sdf]} the model of computation. Defaut is \texttt{none}.
-% \item \texttt{token=[scalar,vector,function,scalarAE,vectorAE,functionAE]} draws symbols for depicting the token structure of ForSyDe signals or vectors. Function paths will ignore this key. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar, absent extended vector and function can be drawn with \texttt{token=scalar-vectorAE-function}.
-% \item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor where the token begins to be drawn.
-% \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-% \item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-% \item \texttt{deviation=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
-% \end{optionslist}
 
 % \begin{lstlisting}
 % \signal[]                                     (0,2)  ->  (1.5,2); 
@@ -575,26 +583,26 @@ Leaf processes are basic nodes in a process network. They can be drawn either us
 % \end{lstlisting}
 
 % \newpage
-% \appendix
-% \section{PGF nodes} \label{appendix_shapes}
+% \section
+% \section{PGF nodes} \label{section_shapes}
 
 % All graphical elements in the \texttt{forsyde-tikz} package are created using custom PGF shapes defined in \texttt{tikzlibraryfshapes.code.tex}. You can create new elements by combining them, as can be seen in \texttt{tikzlibraryforsyde.code.tex}. Following is a list with these shapes:
 
 % \begin{optionslist}
-% \item \texttt{ports i[0..10]o[0..10]} : defines anchors for the input/output ports.
+% \item \texttt{ports e[0..10]o[0..10]} : defines anchors for the input/output pwrts.
 % \item \texttt{func[0..4]} : defines boxes and anchors for the functions nodes.
 % \item \texttt{leaf shape} : the shape of a standard leaf process outer box.
 % \item \texttt{zip shape} : the shape of a custom zip process.
 % \item \texttt{interface shape 0} : the node shape of an interface process.
 % \item \texttt{interface shape 180} : the node shape of a reversed interface process.
-% \item \texttt{composite shape} : the shape of a composite process.
+% \item \texttt{comp shape} : the shape of a composite process.
 % \item \texttt{dp shape} : the shape of a data-parallel pattern.
 % \item \texttt{pipe shape} : the shape of a time-parallel (pipelined) pattern.
 % \item \texttt{merge shape} : the shape of a merging (e.g. reduce) pattern.
 % \item \texttt{custom conduit i[2..8]o[2..8]} : the inner node depicting the conduit in a custom (visual) transition pattern.
-% \item \texttt{transition shape v[1..8]v[1..8]} : the outer box of a transition pattern, depicting vector(s) on one side and vector(s) on the other side.
-% \item \texttt{transition shape s1v1} : the outer box of a transition pattern, depicting a signal on one side and a vector on the other side.
-% \item \texttt{transition shape v1gv1} : the outer box of a transition pattern, depicting a vector on one side and a group of vectors on the other side.
+% \item \texttt{trans shape v[1..8]v[1..8]} : the outer box of a transition pattern, depicting vector(s) on one side and vector(s) on the other side.
+% \item \texttt{trans shape s1v1} : the outer box of a transition pattern, depicting a signal on one side and a vector on the other side.
+% \item \texttt{trans shape v1gv1} : the outer box of a transition pattern, depicting a vector on one side and a group of vectors on the other side.
 % \end{optionslist}
 
 
@@ -607,6 +615,7 @@ Leaf processes are basic nodes in a process network. They can be drawn either us
 
 \end{document}
 %%% Local Variables:
+%%% TeX-command-default: "Make"
 %%% mode: latex
 %%% TeX-master: t
 %%% End:

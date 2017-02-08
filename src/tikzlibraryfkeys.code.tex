@@ -13,8 +13,8 @@
 \pgfkeys{
   /tikz/globsc/.store in = \globScale,
   /tikz/globsc = 1,
-  /tikz/nomoccolor/.is if=nocolor,
-  /tikz/nomoclabel/.is if=nolabel,
+  /tikz/no moc color/.is if=nocolor,
+  /tikz/no moc label/.is if=nolabel,
   /tikz/type style/.store in = \typeStyle,
   /tikz/type style = \scriptsize\texttt,
   /tikz/label style/.store in = \labelStyle,
@@ -25,33 +25,22 @@
   /tikz/token pos = 0.5,
   /tikz/deviate/.store in = \pDeviate,
   /tikz/deviate = 0pt,
-  /tikz/nary/.style={double distance=1pt, outer sep=.6pt},
   /tikz/alwaystrue/.is toggle,
   /tikz/alwaystrue = true,
   /tikz/as/.store in = \pIntName,
   /tikz/as = int,
 }
 
-\tikzset{
-  primitive shape/.style ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
-  primitiven shape/.style={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor, double distance=1pt, outer sep=.6pt},
-  leaf shape/.style      ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
-  leafn shape/.style     ={draw, rectangle, rounded corners=3pt, inner sep=0pt, double distance=1pt, outer sep=.6pt},
-  composite shape/.style ={draw, rectangle, dashed, fill opacity=0},
-  compositen shape/.style={draw, rectangle, dashed, fill opacity=0, double distance=1pt, outer sep=.6pt},
-  connector/.style       ={draw, circle, fill=\defaultdrawcolor, inner sep=2pt, outer sep=0},
-}
-
 %%%%%%%% 
 % KEYS %
 %%%%%%%%
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
-  %shape & color
+  %shape & color  
   hasmoc/.is toggle,
-  moc/.estore in   = \fsdMoc,
+  class/.estore in = \fsdClass,
   type/.estore in  = \fsdType,
   shape/.estore in = \fsdShape,
-  blackbox/.style  = {moc=blackbox},
+  moc/.style       = {hasmoc, class=#1},
   % separation
   inner xsep/.estore in = \fsdInnerXSep,
   inner ysep/.estore in = \fsdInnerYSep,
@@ -69,15 +58,15 @@
   rotate shape/.estore in = \fsdRotateShape,
   rotate/.estore in       = \fsdRotate,
   % ports & functions
-  npl/.estore in = \fsdNPortLeft,
-  npr/.estore in = \fsdNPortRight,
+  npw/.estore in = \fsdNPortLeft,
+  npe/.estore in = \fsdNPortRight,
   nf/.estore in  = \fsdNFunctions,
   f1/.estore in  = \fsdFunA,
   f2/.estore in  = \fsdFunB,
   f3/.estore in  = \fsdFunC,
   f4/.estore in  = \fsdFunD,
-  ni/.style      = {npl = #1 },
-  no/.style      = {npr = #1 },
+  ni/.style      = {npw = #1 },
+  no/.style      = {npe = #1 },
   f/.code        = {\makeFunctions{#1}},
   f/.default=$f_1$,
   % default values
@@ -94,31 +83,31 @@
     xshift        = 0pt,
     yshift        = 0pt,
     at            = {0,0},
-    npl=1, npr=1, nf=0, 
+    npw=1, npe=1, nf=0, 
     f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $,
   },
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   % SHAPES OF MAIN ELEMENTS %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%
   primitive/.style ={%
-    shape=primitive shape
+    shape=atom shape
     },
   primitiven/.style={%
-    shape=primitiven shape,
+    shape=nary atom shape
     },
-  leaf/.style={%
+  process/.style={%
     hasmoc,
     shape=leaf shape,
     },
-  leafn/.style={% 
+  processn/.style={% 
     hasmoc,
     shape=leafn shape,
     },
   composite/.style={%
-    shape=composite shape
+    shape=comp shape
     },
   compositen/.style={%
-    shape=compositen shape,
+    shape=nary comp shape,
     },
   embed/.style={%
     hasmoc,
@@ -136,12 +125,12 @@
     inner ysep = 20pt,
     },
   skeleton/.style={%
-    shape = generic shape,
+    shape = generic skel shape,
     inner xsep = 15pt,
     inner ysep = 20pt,
     },
-  transition/.code 2 args = {%
-    \edef\theshape{transition shape #1#2}
+  transition/.code = {%
+    \edef\theshape{trans shape #1}
     \tikzset{/forsyde keys/shape = \theshape}
     },
   transition/.default={v1}{v1},
@@ -153,34 +142,8 @@
   unzipx/.style = {%
     transition={s1}{v1},
     type=unzipx,
-    },    
+    },
 }
-
-
-\pgfkeys{/transition patterns keys/.is family, /transition patterns keys,
-  type/.estore in       = \pType,
-  inner shape/.estore in= \pInnerShape,
-  outer shape/.estore in= \pOuterShape,
-  ni/.estore in         = \pNIn,
-  no/.estore in         = \pNOut,
-  nf/.estore in         = \pNFunc,
-  f1/.estore in         = \pFuncA,
-  f2/.estore in         = \pFuncB,
-  f3/.estore in         = \pFuncC,
-  f4/.estore in         = \pFuncD,
-  reverse/.is toggle,
-  reverse shape/.is toggle,
-  default/.style = {
-    type= ,
-    inner shape = noinner, 
-    outer shape = transition shape v1v1,
-    ni=1, no=1, nf=0, 
-    f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $, 
-    reverse = false, 
-    reverse shape=false, 
-  },
-}
-
 
 \ExplSyntaxOn
 
@@ -204,7 +167,20 @@
   \pgfmathtruncatemacro{\countFun}{\countFun + 1}
   \tikzset{\currentfunckey = {#1}}
 }
+
+
+\NewDocumentCommand{\listKeys}{ >{ \SplitList { , } } m } {
+  \ProcessList { #1 } { /tikz/#1, }
+}
 \ExplSyntaxOff
 
+\newcommand\addcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
+\newcommand\makeswitch[2][]{%
+  \newcommand#2[1]{%
+    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
+  }%
+}
 
 \endinput

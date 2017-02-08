@@ -13,20 +13,6 @@
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{backbackground,background,main,foreground}
 
-%%%%%%%%%%%
-% HELPERS %
-%%%%%%%%%%%
-
-
-\newcommand\addcase[3]{%
-  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
-}
-\newcommand\makeswitch[2][]{%
-  \newcommand#2[1]{%
-    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
-  }%
-}
-
 \makeswitch[]\getmoclabel
 \addcase\getmoclabel{sy}{SY}
 \addcase\getmoclabel{de}{DE}
@@ -54,15 +40,15 @@
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
 }
 
-%%%%%%%%%%%%%%%%%%%%% 
-% MACRO DEFINITIONS %
-%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% 
+% DRAW FUNCTIONS %
+%%%%%%%%%%%%%%%%%%
 
 % The basic node is the simplest depiction of a function (atom,
 % pattern) with maximum one argument. It is represented as a circle
 % node.
 %
-% \basic[keys] (name) [<position>] {label};
+% \basic[keys] [(name)] [<position>] {label};
 \NewDocumentCommand\basic{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \ifnum \fsdNFunctions>1 \edef\numFunc{1} \else \edef\numFunc{\fsdNFunctions} \fi%
@@ -82,18 +68,18 @@
 % name, and its field is colored according to a MoC (if this is the
 % case).
 %
-% \standard[keys] (name) [<position>] {label};
+% \standard[keys] [(name)] [<position>] {label};
 \NewDocumentCommand\standard{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
-  \getcolor{/forsyde keys/hasmoc}{\fsdMoc}{\fillcolor}
+  \getcolor{/forsyde keys/hasmoc}{\fsdClass}{\fillcolor}
   \node[%
-  ports i\fsdNPortLeft o\fsdNPortRight,
+  ports e\fsdNPortLeft w\fsdNPortRight,
   anchor=\fsdAnchor,
   yshift=\fsdYShift,
   xshift=\fsdXShift,
   rotate=\fsdRotate,
-  inner sep=0,
+  inner sep=0, outer sep=0,
   ] (#2) at ($(globalPos) + (\fsdAtInit)$) {%
     \begin{tikzpicture}
       % a label should be in the center, controlled with \labelStyle
@@ -107,7 +93,7 @@
       % the type (constructor) is positioned below the label
       \node[yshift=-\fsdInnerYSep,inner sep=2pt, anchor=north]
       (#2-t) at (#2-l.south){%
-        \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdMoc}\fi}
+        \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdClass}\fi}
       };
       % The main shape is behind any other graphical element.
       \begin{pgfonlayer}{background}
@@ -118,15 +104,28 @@
       \end{pgfonlayer}
     \end{tikzpicture}
   };
-  \node[] at (#2.south) {};
+  % we need to draw the functions again to make their anchors accessible
+  % \node[func\fsdNFunctions, font=\funcStyle,yshift=\fsdInnerYSep, anchor=north]
+  % (#2-f) at (#2.north) {%
+  %   \functionlabels{\fsdNFunctions}%
+  %   {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}
+  % };
+  % dummy nodes for scaling bugs.
+  \node[] at (#2.south west) {}; \node[] at (#2.north east) {};
 }
 
-\NewDocumentCommand\crossed{O{} D(){} D<>{0,0} m}{
+% A transversal node over a path (usually 90 degrees), which
+% symbolizes a structural transition of the path's type
+% (e.g. permutation). The label is ignored, but it is necessary to
+% mark the end of the arguments.
+%
+% \trans[keys] [(name)] [<position>] {};
+\NewDocumentCommand\trans{O{} D(){} D<>{0,0} m}{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
   \ifnum \fsdRotate >0 \def\labelrot{-90} \else \def\labelrot{90} \fi
   \node[%
-  ports i\fsdNPortLeft o\fsdNPortRight,
+  ports e\fsdNPortLeft w\fsdNPortRight,
   anchor=\fsdAnchor,
   yshift=\fsdYShift,
   xshift=\fsdXShift,
@@ -134,7 +133,7 @@
   inner sep=0,
   ] (#2) at ($(globalPos) + (\fsdAtInit)$) {%
     \begin{tikzpicture}
-      \node[rotate=\labelrot, inner sep=3pt] (#2-t) {\typeStyle{\fsdType}};
+      \node[rotate=\labelrot, inner xsep=\fsdInnerYSep, inner ysep=3pt] (#2-t) {\typeStyle{\fsdType}};
       \node[fit=(#2-t)] (#2-wt) {};
       \node[\fsdShape, draw, fit=(#2-wt), rotate=\fsdRotateShape,] (#2-out) {};
     \end{tikzpicture}
@@ -143,18 +142,20 @@
     \node[func\fsdNFunctions, font=\funcStyle, anchor=south,rotate=\fsdRotate,](#2-f) at (#2.north){
       \functionlabels{\fsdNFunctions}{\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
   \end{pgfonlayer}
-  \node[] at (#2.south) {};
+  % dummy nodes for scaling bugs.
+  \node[] at (#2.south west) {}; \node[] at (#2.north east) {};
 }
 
-% Interface
+% An interface from one domain to another (e.g. a MoC interface).
+%
+% \interface[keys] [(name)] [<position>] {domain-left} {domain-right};
 \NewDocumentCommand\interface{O{} D(){} D<>{0,0} m m}{
-% \newcommand{\interface}[3][]{
   \pgfkeys{/forsyde keys, default, #1}%
   \coordinate (globalPos) at (#3);
   \getcolor{/tikz/alwaystrue}{#4}{\fillcolorl}
   \getcolor{/tikz/alwaystrue}{#5}{\fillcolorr}
   \node[%
-  ports i1o1,
+  ports e1w1,
   anchor=\fsdAnchor,
   yshift=\fsdYShift,
   xshift=\fsdXShift,
@@ -174,18 +175,18 @@
       \end{pgfonlayer} 
     \end{tikzpicture}
   };
-  \node[] at (#2.south) {};
+  % dummy nodes for scaling bugs.
+  \node[] at (#2.south west) {}; \node[] at (#2.north east) {};
 }
 
-% Cluster node. Instead of taking a coordinate, it takes a list of
-% nodes and draws the shape around them.
-% #1 = keys
-% #2 = name
-% #3 = list of nodes clustered
-% #4 = label
+
+% A cluster around other nodes. Instead of a position, it requires a
+% list of nodes.
+%
+% \cluster[keys] [(name)] <(list)(of)(nodes)> {label};
 \NewDocumentCommand\cluster{O{} D(){} r<> m}{
   \pgfkeys{/forsyde keys, default, #1}%
-  \getcolor{/forsyde keys/hasmoc}{\fsdMoc}{\fillcolor}
+  \getcolor{/forsyde keys/hasmoc}{\fsdClass}{\fillcolor}
   % the scope now contains only the cluster shape and the
   % labels. Functions are outside of it.
   \begin{scope}[local bounding box=#2]
@@ -204,7 +205,7 @@
     \node[anchor=south west] (#2-t) at (#2-s.south west){
       \typeStyle{\fsdType}}; 
   \end{scope}
-  \node[ports i\fsdNPortLeft o\fsdNPortRight, inner sep=0, fit=(#2-s)(#2-t)(#2-l)] {};
+  \node[ports e\fsdNPortLeft w\fsdNPortRight, inner sep=0, fit=(#2-s)(#2-t)(#2-l)] (#2) {};
   % the functions are in foreground, outside the scope of the cluster.
   \begin{pgfonlayer}{foreground}
     \node[func\fsdNFunctions,
@@ -220,24 +221,13 @@
 }
 
 
-% Custom transition pattern
-% #1 = keys
-% #2 = name
-% #3 = position
-\newcommand\patternnodecustom[3][]{
-  \pgfkeys{/transition patterns keys, default, #1}%
-  \pgfmathtruncatemacro\rotports{\iftoggle{/transition patterns keys/reverse}{180}{0}}
-  \pgfmathtruncatemacro\rotshape{\iftoggle{/transition patterns keys/reverse shape}
-    {\iftoggle{/transition patterns keys/reverse}{0}{180}}
-    {\iftoggle{/transition patterns keys/reverse}{180}{0}}}
-  \begin{scope}[local bounding box= #2, shift={(#3)}]	
-    \begin{scope}	
-      \node[\pInnerShape, rotate=\rotports] (#2-c) at (0,0) {};
-      \node[func\pNFunc, font=\funcStyle, anchor=south] (#2-f) at (#2-c.north) 
-      {\functionlabels{\pNFunc}{\pFuncA}{\pFuncB}{\pFuncC}{\pFuncD}};
-      \node[\pShape, draw, inner xsep=0pt, inner ysep=1pt, fit=(#2-c), rotate=\rotshape,] 
-      (#2-oshape) {};
-      \node[ports i\pNIn o\pNOut, rotate=\rotports, inner sep=0pt, fit=(#2-oshape),] (#2-p) {};
-    \end{scope}
-  \end{scope}
+% Draws conduit from ports
+% #1 = length
+% #2 = inner node
+% #3 = number of ports on the east
+% #3 = number of ports on the west
+\newcommand{\drawconduit}[4][2pt]{
+  \foreach \i in {0,...,#3} { \draw[line width=.3pt] (#2.w\i) -- +(-#1,0); }
+  \foreach \i in {0,...,#3} { \draw[line width=.3pt] (#2.e\i) -- +(#1,0); }
 }
+

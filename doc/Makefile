@@ -21,18 +21,19 @@
 # make clean
 
 MAIN        = refman
-STYDIR      = ../forsyde-tikz
+STYDIR      = ../src
 FIGS_DIR    = figs
 
 TIKZ_FIGS   = $(patsubst $(FIGS_DIR)%.tex,$(FIGS_DIR)%.pdf,$(wildcard $(FIGS_DIR)/*.tex))
-TEXFILES    = $(./*.tex)
+TEXFILES    = $(wildcard ./*.tex)
+STYFILES    = $(wildcard $(STYDIR)/*.tex) $(wildcard $(STYDIR)/*.sty)
 
 all: $(MAIN).pdf
 
 view: $(MAIN).pdf
 	evince $(MAIN).pdf &
 
-$(MAIN).pdf : $(TEXFILES) $(TIKZ_FIGS) Makefile
+$(MAIN).pdf : $(STYFILES) $(TEXFILES) $(TIKZ_FIGS) Makefile
 	TEXINPUTS=:$(STYDIR)/ pdflatex --shell-escape $(MAIN)
 	@while ( grep "Rerun to get cross-references" 	\
 	$(MAIN).log > /dev/null ); do		\
@@ -56,6 +57,7 @@ clean:
 	find . -name "*.toc" -type f -delete
 	find . -name "*.lo*" -type f -delete
 	find . -name "comment.cut" -type f -delete
+	find . -name "auto" -type d -exec rm -rf "{}" \;
 
 # Rules for Tikz and LaTeX figures
 $(TIKZ_FIGS): figs/%.pdf: figs/%.tex

@@ -14,7 +14,7 @@
 \ProvidesPackage{forsyde-tikz}
               [2015/05/20 v0.3 ForSyDe TikZ Library]
 
-\usetikzlibrary{fkeys,fshapes,fpaths,forsyde}
+\usetikzlibrary{fkeys,fshapes,fpaths,fnodes}
 
 
 %%%%%%%%%%%%%
@@ -103,3 +103,13 @@
   \def\oportinfoanchy{north west}
   \def\oportinfoshift{-1mm}
 }
+
+
+\tikzset{% 
+    anch/.style={circle, draw=none, fill=red, inner sep=0pt, minimum size=3pt},
+    label/.style={font=\ttfamily\scriptsize, text=red}
+}
+
+
+
+
