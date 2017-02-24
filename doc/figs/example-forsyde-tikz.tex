@@ -23,16 +23,16 @@
   \node (out) at ($ (l)+(1.5,0) $)  {$S(V)_{in}$};
   % singal/vector edges
   \path[v] (con) edge (in) edge (a.w1) edge (b.w1);
-  \path (b.e1) edge[intersect=k-left, as=b-c1] (c) edge[intersect=h-left, as=b-c2] (c)
+  \path (b.e1) edge[intersect=k-west, as=b-c1] (c) edge[intersect=h-west, as=b-c2] (c)
         (b-c1) edge[v]  (b.e1)  edge[s=sy,srcport]   (b-c2)
         (b-c2) edge[s=de,->]                         (c)
-        (f)    edge[trans={<-,sn=sy}{h-right}{sn=de}](c)
+        (f)    edge[trans={<-,sn=sy}{h-east}{sn=de}] (c)
                edge[sn=sy,-|-=.8,->]                 (g.w1)
-        (a.e1) edge[trans={v,dstport}{k-left}{s,->}] (d1) 
+        (a.e1) edge[trans={v,dstport}{k-west}{s,->}] (d1) 
         (d)    edge[<-, srcport, s]                  (d1)
                edge[s, srcport, ->]                  (e)
         (e)    edge[s,-|-,->]                        (g.w2)
-        (g.e1) edge[intersect=k-right, as=g-l]       (l)
+        (g.e1) edge[intersect=k-east, as=g-l]        (l)
                edge[s]                               (g-l)
         (g-l)  edge[v,srcport,token=scalar,->]       (l)
         (l)    edge[s,token=vector,->]               (out);

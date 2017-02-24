@@ -214,18 +214,27 @@
       \functionlabels{\fsdNFunctions}%
       {\fsdFunA}{\fsdFunB}{\fsdFunC}{\fsdFunD}};
   \end{pgfonlayer}
-  \path[name path=#2-left]   (#2.north west) -- (#2.south west);
-  \path[name path=#2-right]  (#2.north east) -- (#2.south east);
-  \path[name path=#2-top]    (#2.north west) -- (#2.north east);
-  \path[name path=#2-bottom] (#2.south west) -- (#2.south east);
+  \path[name path=#2-west]  (#2.north west) -- (#2.south west);
+  \path[name path=#2-east]  (#2.north east) -- (#2.south east);
+  \path[name path=#2-north] (#2.north west) -- (#2.north east);
+  \path[name path=#2-south] (#2.south west) -- (#2.south east);
 }
 
+% Helper for embedding another node into a cluster
+%
+% \embed[keys-cluster] [(name-cluster)] {embedded-node}
+\NewDocumentCommand\embed{O{} D(){} m}{%
+  \begin{scope}[local bounding box=tempInterior]
+    #3%
+  \end{scope}
+  \cluster[#1] (#2) <(tempInterior)> {};
+}
 
 % Draws conduit from ports
 % #1 = length
 % #2 = inner node
 % #3 = number of ports on the east
-% #3 = number of ports on the west
+% #4 = number of ports on the west
 \newcommand{\drawconduit}[4][2pt]{
   \foreach \i in {0,...,#3} { \draw[line width=.3pt] (#2.w\i) -- +(-#1,0); }
   \foreach \i in {0,...,#3} { \draw[line width=.3pt] (#2.e\i) -- +(#1,0); }

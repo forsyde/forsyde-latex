@@ -42,7 +42,7 @@
   texcsstyle=*\color{red}\bfseries,
   keywordstyle=\color{blue}\bfseries,
   morekeywords={tikzpicture,document},
-  moretexcs={trans,standard,interface,basic,cluster,node,path},
+  moretexcs={trans,standard,interface,basic,cluster,node,path,embed},
 }
 \def\opt#1{\color{gray}{#1}}
 \def\man#1{\color{black}{#1}}
@@ -254,6 +254,15 @@ The library also provide as set of helper styles for setting several options at 
 \item \texttt{inner ysep=[distance]} the inner separation in Y direction. Default is \texttt{3pt}.
 \end{optionslist}
 
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-node-embed}
+\lstinputlisting[linerange={5-7}]{figs/example-node-embed.tex}
+\caption{The \texttt{\char`\\embed} draw command. It is basically \texttt{\char`\\cluster} but where the clustered nodes are passed as a parameter}
+\end{figure}
+\hspace{1pt}\bookmark{\char`\\embed\opt{[cluster~options]}\opt{(name)}\man{\{code~for~clustered~nodes\}};}
+
+\noindent This command is basically the same as \texttt{\char`\\cluster} but it takes the code for the clustered nodes as a parameter.
+
 \subsubsection{Shapes}
 \label{sec:provided-shapes}
 \bookmark{node shapes}
@@ -365,6 +374,13 @@ The \texttt{forsyde-tikz} library provides a large set of styles or function key
 
 Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between components. These are regular \textsc{TikZ} paths, customized with a series of keys provided by the library. There are obvious advantages for using the \textsc{TikZ} infrastructure, such as being able to further customize paths outside the scope of this library, or reuse existing keys (e.g. the arrow tips, shapes). The custom port or function anchors presented in the previous section come in handy when considering port-to-port connections. 
 
+
+\begin{figure}[htb]\centering
+\includegraphics{figs/example-paths}
+\lstinputlisting[linerange={6-16}]{figs/example-paths.tex}
+\caption{Different paths created with the library provided styles}
+\end{figure}
+
 The library provides the following custom keys:\bookmark{path keys}
 
 \begin{optionslist}
@@ -374,119 +390,60 @@ The library provides the following custom keys:\bookmark{path keys}
 \item \texttt{vn=[MoC]} draws an n-tuple of vectors. If the global options allow it, passing a MoC string to this key will color the vector accordingly, suggesting that it contains signals of their respective MoC.
 \item \texttt{f} draws an edge used for showing how functions and parameters are passed from higher order functions downwards into the hierarchy.  
 \item \texttt{fn} similar to \texttt{f}, but for n-tuples of functions.  
-\item \texttt{token=[scalar,vector,function,scalarAE,vectorAE,functionAE]} draws symbols for depicting the token structure of ForSyDe signals or vectors. Function paths will ignore this key. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar, absent extended vector and function can be drawn with \texttt{token=scalar-vectorAE-function}.
-\item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor where the token begins to be drawn.
+\item \texttt{srcport} draws a port symbol at the source of the path.
+\item \texttt{dstport} draws a port symbol at the destination of the path.
+\item \texttt{token=[token-string]} draws symbols for depicting the data structures carried by ForSyDe signals or vectors. The accepted tokens strings are \texttt{scalar|vector|function}. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar,  vector and function can be drawn with \texttt{token=scalar-vector-function}. To depict functions which take other data types as arguments, you can group some tokens between parentheses. E.g. a 2-tuple of a scalar and a function which takes a vector and a scalar as arguments can be drawn with \texttt{token=scalar-(vector-scalar)}.
+\item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor of the token symbols' center position. Default is \texttt{0.5}.
+\item \texttt{intersect=[path-name]} finds the first intersection with the path named \texttt{[path-name]}, and creates a coordinate from it, named by default \texttt{int} if no other name was given with the \texttt{as} key.
+\item \texttt{as=[coordinate-name]} names the intersection coordinate found with the \texttt{intersect}.
+\item \texttt{trans=\{source-path-style\}\{intersection-path-name\}\{destination-path-style\}} is a helper key which finds the intersection of the current path with \texttt{intersection-path-name}, splits the current path into two, decorated with \texttt{source-path-style} and  \texttt{destination-path-style} respectively.
 \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
 \item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
 \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
 \item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
 \item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
 \item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-\item \texttt{deviation=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
+\item \texttt{deviate=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
 \end{optionslist}
 
 
-% \hspace{1pt}\bookmark{\char`\\signal[options]~(from)~shape~(to);}
+\subsection{Miscellaneous functions}
 
-% \hspace{1pt}\bookmark{\char`\\vector[options]~(from)~shape~(to);}
+Following is a list of miscellaneous functions and environments provided for user convenience:\\
 
+\hspace{1pt}\bookmark{\texttt{\string\textleftof\{node\}\{text\}}}
 
-% \begin{lstlisting}
-% \signal[]                                     (0,2)  ->  (1.5,2); 
-% \signal[moc=ct, token=vectorAE-functionAE]    (2,2)  <-  (3.5,2);
-% \signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2)  p->p (5.5,2);
-% \signal[token=scalarAE, -|-]                  (6,1.7) ->p (7.5,2.3);
-% \signal[token pos=0.2, token=scalar-vector]   (8,2)  ->  (9.5,2);
-% \end{lstlisting}
+\hspace{1pt}\bookmark{\texttt{\string\textrightof\{node\}\{text\}}}
 
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% 	\signal[]                                     (0,2)  ->  (1.5,2); 
-% 	\signal[moc=ct, token=vectorAE-functionAE]    (2,2)  <-  (3.5,2);
-% 	\signal[moc=sy, -|-|-=0.2:0.6, deviate=-10pt] (4,2)  p->p (5.5,2);
-% 	\signal[token=scalarAE, -|-]                  (6,1.7) ->p (7.5,2.3);
-% 	\signal[token pos=0.2, token=scalar-vector]   (8,2)  ->  (9.5,2);
-% \end{tikzpicture}
-% \end{figure}
+\hspace{1pt}\bookmark{\texttt{\string\textaboveof\{node\}\{text\}}}
 
-% \begin{lstlisting}
-% \vector[token=scalar-scalar-scalar-scalar] (0,1) p->p (2,1);	
-% \vector[moc=sdf]                           (3,1) p->p (5,1);
-% \vector[token=vectorAE, token pos=0.35]    (6,1) p->p (8,1);
-% \end{lstlisting}
-
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% 	\vector[token=scalar-scalar-scalar-scalar] (0,1) p->p (2,1);	
-% 	\vector[moc=sdf]                           (3,1) p->p (5,1);
-% 	\vector[token=vectorAE, token pos=0.35]    (6,1) p->p (8,1);
-% \end{tikzpicture}
-% \end{figure}
+\hspace{1pt}\bookmark{\texttt{\string\textbelowof\{node\}\{text\}}}
 
 
-% \hspace{1pt}\bookmark{\char`\\function[options]~(from)~shape~(to);}
-% \begin{optionslist}
-% \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-% \item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-% \item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-% \item \texttt{deviation=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
-% \end{optionslist}
+\subsection{Further customizing the environment}
 
-% \begin{lstlisting}
-% \function[] (0,0) -> (2,0);
-% \function[|-|=.6] (3,.5) fi-> (4,-.5);
-% \function[|-|-|] (5,.5) <- (5,-.5);
-% \end{lstlisting}
-
-% \begin{figure}[htb!]\centering
-% \begin{tikzpicture}[]
-% 	\function[] (0,0) -> (2,0);
-% 	\function[|-|=.6] (3,.5) fi-> (4,-.5);
-% 	\function[|-|-|] (5,.5) <- (5,-.5);
-% \end{tikzpicture}
-% \end{figure}
-
-% \subsection{Miscellaneous functions}
-
-% Following is a list of miscellaneous functions and environments provided for user convenience:\\
-
-% \hspace{1pt}\bookmark{\texttt{\string\textleftof\{node\}\{text\}}}
-
-% \hspace{1pt}\bookmark{\texttt{\string\textrightof\{node\}\{text\}}}
-
-% \hspace{1pt}\bookmark{\texttt{\string\textaboveof\{node\}\{text\}}}
-
-% \hspace{1pt}\bookmark{\texttt{\string\textbelowof\{node\}\{text\}}}
-
-
-% \subsection{Further customizing the environment}
-
-% The following commands can be used in the document preamble for changing environment variables.
-% \begin{lstlisting}
-% % Colors
-% \renewcommand{\defaultdrawcolor}{[color]}
-% \renewcommand{\defaultfillcolor}{[color]}
-% \definecolor{sycolor}{[coord sys]}{[color coord]}
-% \definecolor{ctcolor}{[coord sys]}{[color coord]}
-% \definecolor{decolor}{[coord sys]}{[color coord]}
-% \definecolor{sdfcolor}{[coord sys]}{[color coord]}
-% \definecolor{blackboxcolor}{[coord sys]}{[color coord]}}
-% % line widths
-% \pgfmathsetlength{\sepq}{[size]}           % small inter-node separation 
-% \renewcommand{\compositelinewidth}{[size]}
-% \renewcommand{\skeletonlinewidth}{[size]}  % parallel processes line width
-% \renewcommand{\signalpathlinewidth}{[size]}
-% \renewcommand{\functionpathlinewidth}{[size]}
-% \renewcommand{\vectorpathlinewidth}{[size]}
-% % sizes, etc.
-% \renewcommand{\tokensize}{[size]}
-% \renewcommand{\halftokensize}{[size]}
-% \renewcommand{\vectorportsize}{[size]}
-% \renewcommand{\signalportsize}{[size]}
-% \end{lstlisting}
+The following commands can be used in the document preamble for changing environment variables.
+\begin{lstlisting}
+% Colors
+\renewcommand{\defaultdrawcolor}{[color]}
+\renewcommand{\defaultfillcolor}{[color]}
+\definecolor{sycolor}{[coord sys]}{[color coord]}
+\definecolor{ctcolor}{[coord sys]}{[color coord]}
+\definecolor{decolor}{[coord sys]}{[color coord]}
+\definecolor{sdfcolor}{[coord sys]}{[color coord]}
+\definecolor{blackboxcolor}{[coord sys]}{[color coord]}}
+% line widths
+\renewcommand{\compositelinewidth}{[size]}
+\renewcommand{\skeletonlinewidth}{[size]} 
+\renewcommand{\signalpathlinewidth}{[size]}
+\renewcommand{\functionpathlinewidth}{[size]}
+\renewcommand{\vectorpathlinewidth}{[size]}
+% sizes, etc.
+\renewcommand{\tokensize}{[size]}
+\renewcommand{\halftokensize}{[size]}
+\renewcommand{\vectorportsize}{[size]}
+\renewcommand{\signalportsize}{[size]}
+\end{lstlisting}
 
 % \section{The \texttt{forsyde-pc} package}
 
