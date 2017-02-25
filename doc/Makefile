@@ -23,9 +23,11 @@
 MAIN        = refman
 STYDIR      = ../src
 FIGS_DIR    = figs
+INPS_DIR    = inputs
 
 TIKZ_FIGS   = $(patsubst $(FIGS_DIR)%.tex,$(FIGS_DIR)%.pdf,$(wildcard $(FIGS_DIR)/*.tex))
 TEXFILES    = $(wildcard ./*.tex)
+INPFILES    = $(wildcard $(INPS_DIR)/*.tex)
 STYFILES    = $(wildcard $(STYDIR)/*.tex) $(wildcard $(STYDIR)/*.sty)
 
 all: $(MAIN).pdf
@@ -33,7 +35,7 @@ all: $(MAIN).pdf
 view: $(MAIN).pdf
 	evince $(MAIN).pdf &
 
-$(MAIN).pdf : $(STYFILES) $(TEXFILES) $(TIKZ_FIGS) Makefile
+$(MAIN).pdf : $(STYFILES) $(INPFILES) $(TEXFILES) $(TIKZ_FIGS) Makefile
 	TEXINPUTS=:$(STYDIR)/ pdflatex --shell-escape $(MAIN)
 	@while ( grep "Rerun to get cross-references" 	\
 	$(MAIN).log > /dev/null ); do		\
