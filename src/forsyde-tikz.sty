@@ -12,7 +12,7 @@
 \usetikzlibrary{decorations.markings, shapes, positioning, calc, fit, backgrounds, intersections, arrows}
 
 \ProvidesPackage{forsyde-tikz}
-              [2015/05/20 v0.3 ForSyDe TikZ Library]
+              [2017/02/25 v0.4.0 ForSyDe TikZ Library]
 
 \usetikzlibrary{fkeys,fshapes,fpaths,fnodes}
 
@@ -106,58 +106,19 @@
 % SHAPES OF MAIN ELEMENTS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
-  primitive/.style ={%
-    shape=atom shape
-    },
-  primitiven/.style={%
-    shape=nary atom shape
-    },
-  leaf/.style={%
-    hasmoc,
-    shape=leaf shape,
-    },
-  leafn/.style={% 
-    hasmoc,
-    shape=leafn shape,
-    },
-  composite/.style={%
-    shape=comp shape
-    },
-  compositen/.style={%
-    shape=nary comp shape,
-    },
-  embed/.style={%
-    hasmoc,
-    shape=leaf shape,
-    inner sep=15pt,
-    },
-  farmstyle/.style={%
-    shape = dp shape,
-    inner xsep = 15pt,
-    inner ysep = 20pt,
-    },
-  pipestyle/.style={%
-    shape = pipe shape,
-    inner xsep = 15pt,
-    inner ysep = 20pt,
-    },
-  skeleton/.style={%
-    shape = generic skel shape,
-    inner xsep = 15pt,
-    inner ysep = 20pt,
-    },
-  transition/.code 2 args = {%
-    \edef\theshape{trans shape #1#2}
-    \tikzset{/forsyde keys/shape = \theshape}
-    },
-  transition/.default={v1}{v1},
-  zipx/.style = {%
-    transition={s1}{v1},
-    rotate shape=180,
-    type=zipx,
-    },
-  unzipx/.style = {%
-    transition={s1}{v1},
-    type=unzipx,
-    },    
+  primitive/.style  = {shape=atom shape},
+  primitiven/.style = {shape=nary atom shape},
+  leaf/.style       = {hasmoc, shape=leaf shape},
+  leafn/.style      = {hasmoc, shape=leafn shape},
+  composite/.style  = {shape=comp shape},
+  black box/.style  = {shape=leaf shape, moc=blackbox},
+  compositen/.style = {shape=nary comp shape},
+  embed/.style      = {hasmoc, shape=leaf shape, inner sep=15pt},
+  farmstyle/.style  = {shape = dp shape,inner xsep = 15pt,inner ysep = 20pt,},
+  pipestyle/.style  = {shape = pipe shape,inner xsep = 15pt,inner ysep = 20pt,},
+  skeleton/.style   = {shape = generic skel shape,inner xsep = 15pt,inner ysep = 20pt,},
+  zipx/.style       = {transition={s1}{v1},rotate shape=180,type=zipx,},
+  unzipx/.style     = {transition={s1}{v1},type=unzipx},
+  transition/.code 2 args = {\edef\theshape{trans shape #1#2}\tikzset{/forsyde keys/shape = \theshape}},
+  transition/.default     ={v1}{v1},
 }

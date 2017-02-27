@@ -1,0 +1,31 @@
+% A library with utilities for documents related to ForSyDe
+%
+% Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
+% Version: 0.1
+% Date: 2017/02/25
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{forsyde}[2017/02/25 v0.1 ForSyDe LaTeX Utilities Library]
+
+\RequirePackage{ifthen}
+\newboolean{load-tikz}
+\newboolean{load-math}
+\newboolean{load-legacy}
+
+\DeclareOption{tikz}{\setboolean{load-tikz}{true}}
+\DeclareOption{math}{\setboolean{load-math}{true}}
+
+\ExecuteOptions{}
+\ProcessOptions\relax
+
+% Generic packages so that they do not need to be loaded specifically
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% load packages as chosen in the options
+\ifthenelse{\boolean{load-tikz}}{\RequirePackage{forsyde-tikz}}{}
+\ifthenelse{\boolean{load-math}}{\RequirePackage{forsyde-math}}{}
+
+% General typeset commands and logo
+\def\ForSyDe{\textsc{ForSyDe}\ }
+\def\ForSyDeLaTeX{\mbox{\textsc{ForSyDe}--\LaTeX}\ }

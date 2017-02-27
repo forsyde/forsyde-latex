@@ -220,16 +220,6 @@
   \path[name path=#2-south] (#2.south west) -- (#2.south east);
 }
 
-% Helper for embedding another node into a cluster
-%
-% \embed[keys-cluster] [(name-cluster)] {embedded-node}
-\NewDocumentCommand\embed{O{} D(){} m}{%
-  \begin{scope}[local bounding box=tempInterior]
-    #3%
-  \end{scope}
-  \cluster[#1] (#2) <(tempInterior)> {};
-}
-
 % Draws conduit from ports
 % #1 = length
 % #2 = inner node

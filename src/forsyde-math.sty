@@ -85,6 +85,61 @@
 \newcommand{\mapM}{\mathbin{\mocOperator{\cdot}}} 
 \newcommand{\applM}{\mathbin{\mocOperator{*}} } 
 \newcommand{\preM}{\mathbin{\mocOperatorRaise[.14ex]{\scriptstyle\prec}} } 
-\newcommand{\phiM}{\mathbin{\mocOperatorRaise[.12ex]{\scriptstyle\phi}}} 
+\newcommand{\phiM}{\mathbin{\mocOperator{\scriptstyle\prec}}} 
 \newcommand{\delayM}{\mathbin{\mocOperatorRaise[.11ex]{\scriptstyle\triangle}} } 
-\newcommand{\combM}{\mathbin{\mocOperator{+}}} 
+\newcommand{\combM}{\mathbin{\mocOperator{+}}}
+
+
+\newcommand*{\threesim}{%
+  \mathrel{\vcenter{\offinterlineskip
+      \hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}}
+  }
+}
+
+
+\providecommand\barcirc{\mathpalette\@barred\ocircle}
+\def\@barred#1#2{\ooalign{\hfil$#1\scriptstyle\Phi$\hfil\cr\hfil$#1#2$\hfil\cr}}
+
+
+\newcommand\forsydeOPDefault[2]{{%
+   \setbox0\hbox{#1}%
+    \rlap{\hbox to \wd0{\hss#2\hss}}\box0%
+}}
+
+
+\newcommand\forsydeOP[4]{{%
+   \setbox0\hbox{#3}\setbox1\hbox{#4}%
+   \pgfmathsetmacro{\forsydeOPXshift}{\wd0+#1}\pgfmathsetmacro{\forsydeOPYshift}{\ht1+#2}%
+   {\vbox to \forsydeOPYshift pt{\vss\rlap{\hbox to \forsydeOPXshift pt{\hss\box1\hss}}\vss}}\box0%
+}}
+
+\def\BhSymb{$\boxempty$}
+\def\MoCSymb{$\ocircle$}
+\def\SkelSymb{\rotatebox[origin=c]{45}{$\Box$}}
+
+\newcommand{\BhNone}{\mathbin{\forsydeOPDefault   {\BhSymb}{}}} 
+\newcommand{\BhFun}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\cdot$}}} 
+\newcommand{\BhApp}{\mathbin{\forsydeOPDefault    {\BhSymb}{$*$}}} 
+\newcommand{\BhPhi}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\scriptstyle\Phi$}}} 
+\newcommand{\BhDef}{\mathbin{\forsydeOPDefault    {\BhSymb}{$+$}}}
+
+\newcommand{\MocNone}{\mathbin{\forsydeOPDefault  {\MoCSymb}{}}} 
+\newcommand{\MocFun}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$\cdot$}}} 
+\newcommand{\MocApp}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$*$}}} 
+\newcommand{\MocPre}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\prec$}}} 
+\newcommand{\MocPhi}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\phi$}}} 
+\newcommand{\MocDly}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\triangle$}}} 
+\newcommand{\MocCmb}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$+$}}} 
+
+
+\newcommand{\SkelNone}{\mathbin{\forsydeOPDefault{\SkelSymb}{}} }
+\newcommand{\SkelFun}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\cdot$}}} 
+\newcommand{\SkelApp}{\mathbin{\forsydeOPDefault{\SkelSymb}{$*$}}} 
+\newcommand{\SkelMap}{\mathbin{\forsydeOPDefault{\SkelSymb}{$+$}}}
+% \newcommand{\SkelRed}{\mathbin{\forsydeOP{.3ex}{-.1ex}{\SkelSymb}{$\Yright$}}}
+\newcommand{\SkelRed}{\mathbin{\forsydeOPDefault{\SkelSymb}{\rotatebox[origin=c]{-45}{$-$}}}}
+\newcommand{\SkelPip}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\scriptstyle -$}}}
+
+
+\newcommand{\context}[2]{{\scriptstyle #1 \vdash } #2}
+\newcommand{\optcontext}[2]{\fopt{#1\!\vdash} #2}

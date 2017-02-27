@@ -1,15 +1,5 @@
-\title{The \textsc{ForSyDe-\LaTeX} utilities}
-\author{
-        George Ungureanu \\
-                Department of Electronic Systems\\
-        KTH---Royal Institute of Technology\\
-        Stockholm, SWEDEN
-}
-\date{\today}
-
 \documentclass[10pt]{article}
 \usepackage[a4paper]{geometry}
-\usepackage{forsyde-pc}
 \usepackage[footnotesize]{caption}
 \usepackage{longtable}
 \usepackage{booktabs}
@@ -17,7 +7,17 @@
 \usepackage{enumitem}
 \usepackage{marginnote}
 \usepackage{listings}
-\pgfplotsset{compat=1.9}
+\usepackage[tikz,math]{forsyde}
+
+\title{The \ForSyDeLaTeX utilities}
+\author{
+  George Ungureanu \\
+  Department of Electronic Systems\\
+  KTH Royal Institute of Technology\\
+  Stockholm, SWEDEN
+}
+\date{\today}
+
 
 
 \newenvironment{optionslist}[0]{ 
@@ -52,12 +52,12 @@
 \reversemarginpar
 
 \begin{abstract}
-This is the reference manual for the \LaTeX\ utilities used in the context of \textsc{ForSyDe}. All packages and their API features are documented here.
+This is the reference manual for the \LaTeX\ utilities used in the context of \ForSyDe. All packages and their API features are documented here.
 \end{abstract}
 
 \section{Introduction}
 
-This library was developed as an effort to standardize symbols and graphical primitives in documents related to \textsc{ForSyDe}, but also to provide tools and utilities for user convenience. \textsc{ForSyDe} is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
+This library was developed as an effort to standardize symbols and graphical primitives in documents related to \textsc{ForSyDe}, but also to provide tools and utilities for user convenience. \ForSyDe is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
 
 The library contains the following main packages:
 \begin{itemize}
@@ -73,9 +73,9 @@ The library contains the following main packages:
   library.
 \end{itemize}
 
-\section{Installation}
+\section{Installation \& usage}
 
-There are three main alternatives to use the libraries:
+There are three main alternatives to install the libraries:
 
 \begin{enumerate}
 \item copy the contents of \texttt{forsyde-latex/src} under the \texttt{TEXMFHOME} path or any standard loading path, as specified by your \LaTeX\ compiler;
@@ -83,18 +83,38 @@ There are three main alternatives to use the libraries:
 \item copy the contents of \texttt{forsyde-latex/src} in the same folder as your document and compile normally.
 \end{enumerate}
 
+To include any of the packages enumerated in the introduction, you cal load the \texttt{forsyde} package with the appropriate option:
 
-\begin{figure}[htb]\centering
-\includegraphics[width=\textwidth]{figs/example-forsyde-tikz}
-\end{figure}
+\begin{verbatim}
+	\usepackage[option]{forsyde}
+\end{verbatim}
+where \texttt{option} is
+\begin{itemize}
+\item \texttt{tikz} for loading the \texttt{forsyde-tikz} library
+\item \texttt{math} for loading the \texttt{forsyde-math} library
+\item \texttt{plot} for loading the \texttt{forsyde-plot} library
+\item \texttt{legacy} for loading the \texttt{forsyde-legacy} library
+\end{itemize}
 
-\lstinputlisting{figs/example-forsyde-tikz.tex}
+When loaded without an option, this package only provides some general commands for typesetting and logos (TBA):
 
+\begin{longtable} { c | c }
+  \toprule
+  \textbf{Command}  & \textbf{Expands to} \\
+  \midrule
+  \texttt{\string\ForSyDe}      & \ForSyDe \\
+  \texttt{\string\ForSyDeLaTeX} & \ForSyDeLaTeX \\
+  \bottomrule
+\end{longtable}
+
+
+\newpage
 \tableofcontents
 \newpage
-
 \input{inputs/forsyde-tikz}
-
+\newpage
+\input{inputs/forsyde-math}
+\newpage
 \input{inputs/forsyde-legacy}
 
 
@@ -106,91 +126,6 @@ There are three main alternatives to use the libraries:
 % 	\usepackage{forsyde-pc}
 % \end{verbatim}
 
-% Following is a list with all process constructors including valid option keys:
-
-% \begin{lstlisting}
-% \delay    [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \delayn   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \map      [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \comb     [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \combII   [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \combIII  [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \combIV   [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \scanl    [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \scanlII  [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \scanlIII [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \scanld   [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \scanldII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \scanldIII[moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \moore    [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \mooreII  [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \mooreIII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \mealy    [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \mealyII  [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \mealyIII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
-% \source   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \filter   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-% \hold     [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
-% \fillS    [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
-
-% \zip     [moc=,reverse]{id}{pos}
-% \zipIII  [moc=,reverse]{id}{pos}
-% \zipIV   [moc=,reverse]{id}{pos}
-% \zipV    [moc=,reverse]{id}{pos}
-% \zipVI   [moc=,reverse]{id}{pos}
-% \unzip   [moc=,reverse]{id}{pos}
-% \unzipIII[moc=,reverse]{id}{pos}
-% \unzipIV [moc=,reverse]{id}{pos}
-% \unzipV  [moc=,reverse]{id}{pos}
-% \unzipVI [moc=,reverse]{id}{pos}
-
-% \domaininterface[moc=,reverse]          {id}{pos}
-% \mocinterface   [mocin=,mocout=,reverse]{id}{pos}
-
-% \composite[ni=,no=,inner xsep=,inner ysep=,reverse] {id}{included}{label}
-% \blackbox [ni=,no=,inner xsep=,inner ysep=,reverse] {id}{included}{label}
-
-% \farm     [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
-% \farmI    [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
-% \farmII   [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
-% \farmIII  [ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
-% \farmIV   [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
-% \pipe     [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
-% \pipeI    [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
-% \pipeII   [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
-% \pipeIII  [ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
-% \pipeIV   [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
-% \reduce   [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
-% \reduceI  [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
-% \reduceII [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
-% \reduceIII[ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
-% \reduceIV [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
-
-% \unzipx     [reverse]         {id}{position}
-% \zipx       [reverse]         {id}{position}
-% \unzipv     [reverse]         {id}{position}
-% \zipv       [reverse]         {id}{position}
-% \splitatv   [f1=,reverse]     {id}{position}
-% \catv       [reverse]         {id}{position}
-% \oddsv      [reverse]         {id}{position}
-% \evensv     [reverse]         {id}{position}
-% \reversev   [reverse]         {id}{position}
-% \groupv     [reverse]         {id}{position}
-% \concatv    [reverse]         {id}{position}
-% \filteridxv [f1=,reverse]     {id}{position}
-% \gatherv    [f1=,f2=,reverse] {id}{position}
-% \gatherAdpv [f1=,f2=,reverse] {id}{position}
-% \selectv    [reverse]         {id}{position}
-% \distributev[f1=,reverse]     {id}{position}
-% \filterv    [f1=,reverse]     {id}{position}
-% \getv       [f1=,reverse]     {id}{position}
-
-% \visualoddsv   [reverse]{id}{pos}
-% \visualevensv  [reverse]{id}{pos}
-% \visualreversev[reverse]{id}{pos}
-% \visualgroupv  [reverse]{id}{pos}
-% \visualconcatv [reverse]{id}{pos}
-% \end{lstlisting}
 
 % \newpage
 % \section
