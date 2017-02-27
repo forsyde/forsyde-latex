@@ -1,0 +1,7 @@
+font_identifier := "Beta10";
+font_size 10pt#;
+
+u#:=4/9pt#;
+s#:=1/4pt#;
+
+input beta
