@@ -11,19 +11,32 @@ echo "Installing ForSyDe LaTeX in $texmf ..."
 
 metafont=$texmf/fonts/source/public/typeface
 foundry=$texmf/fonts/tfm/foundry/typeface
-manual=$texmf/doc/forsyde-latex
-source=$texmf/tex/latex/forsyde-latex
+manual=$texmf/doc/forsyde
+source=$texmf/tex/latex/forsyde
 
 mkdir -p $metafont $foundry $manual $source
 
+# remove previous installations
+rm -f $metafont/forsyde* $foundry/forsyde* $manual/* $source/*
+
+# copy sources in their respective place
 cp -f src/*.sty $source
 cp -f src/*.tex $source
 cp -f fonts/*.mf $metafont
-
 cd fonts
 for file in *8.mf *10.mf *14.mf; do
-    mf '\mode:=ljfour; nonstopmode; input '"$file"''
-    mv ${file%.*}.tfm $foundry
+    if mf '\mode:=ljfour; nonstopmode; input '"$file"'' > /dev/null ; then
+	mv ${file%.*}.tfm $foundry
+    fi
 done
 rm *log; rm *gf
 
+# # compiling the documentation
+# cd ../doc
+# echo "Compiling reference manual..."
+# echo "Please be patient since it is also generating the font maps..."
+# make > /dev/null
+# cp refman.pdf $manual/
+
+
+echo "The ForSyDe-LaTeX utilities have been succesfully installed!"

@@ -1,0 +1,50 @@
+The \ForSyDe system which performs the the Fast Fourier Transform can be defined in terms of atoms as:
+\begin{align}
+  \ctrS{fft}\ k\ vs  =& \ctrS{bitrev} ((\id{stage} \SkelFun \id{kern}) \SkelPip vs)
+  \intertext{where the constructors}
+  \id{stage}\ wdt   =& \ctrS{concat} \circ (segment \SkelFun \id{twiddles}) \circ \ctrS{group}\ wdt  \\  
+  \id{segment}\ t   =& \ctrS{unduals} \circ (\id{butterfly}\ t\ \SkelFrm) \circ \ctrS{duals}  \\
+  \id{butterfly}\ w =& ((\lambda\ x_0\ x_1 \rightarrow x_0 + wx_1, x_0 - wx_1 )\ \BhDef)\ \MocCmb  \\
+  \intertext{are aided by the number generators}
+  \id{kern}         =& \ctrS{iterate}\ (\times 2)\ 2 \\ 
+  \id{twiddles}     =& (\ctrS{reverse} \circ \ctrS{bitrev} \circ \ctrS{take}\ (\ctrS{lgth}\ vs/2)) (\id{wgen} \SkelFun \SkelVect{1..})\\
+  \id{wgen}\ x      =& -\frac{2 \pi (x-1)}{\ctrS{lgth}\ vs}
+\end{align}
+
+\section{The \texttt{forsyde-math} package}
+\label{sec:forsyde-math-package}
+
+This package contains a set of math symbols and commands associated mainly with the \textsc{ForSyDe-Atom} framework.
+
+\def\makesymbolrow#1{{\tiny #1} & {\scriptsize #1} & {\footnotesize #1} & {\small #1} & {\normalsize #1} & {\large #1} & {\Large #1} & {\LARGE #1} & {\huge #1} & {\Huge #1}}
+\begin{longtable} { c | c c c c c c c c c c }
+  \toprule
+  \textbf{Command}  & \textbf{5pt} & \textbf{7pt} & \textbf{8pt} & \textbf{9pt} & \textbf{10pt} & \textbf{12pt} & \textbf{14.4pt} & \textbf{17.28pt} & \textbf{20.74pt} & \textbf{24.88pt} \\
+  \midrule
+  \texttt{\string\BhFun} & \makesymbolrow{\textBhFun} \\
+  \texttt{\string\BhApp} & \makesymbolrow{\textBhApp} \\
+  \texttt{\string\BhDef} & \makesymbolrow{\textBhDef} \\
+  \texttt{\string\BhPhi} & \makesymbolrow{\textBhPhi} \\
+  \midrule
+  \texttt{\string\MocFun} & \makesymbolrow{\textMocFun} \\
+  \texttt{\string\MocApp} & \makesymbolrow{\textMocApp} \\
+  \texttt{\string\MocCmb} & \makesymbolrow{\textMocCmb} \\
+  \texttt{\string\MocPre} & \makesymbolrow{\textMocPre} \\
+  \texttt{\string\MocPhi} & \makesymbolrow{\textMocPhi} \\
+  \texttt{\string\MocDel} & \makesymbolrow{\textMocDel} \\
+  \midrule
+  \texttt{\string\SkelFrm} & \makesymbolrow{\textSkelFrm} \\
+  \texttt{\string\SkelPip} & \makesymbolrow{\textSkelPip} \\
+  \texttt{\string\SkelFun} & \makesymbolrow{\textSkelFun} \\
+  \texttt{\string\SkelApp} & \makesymbolrow{\textSkelApp} \\
+  \texttt{\string\SkelRed} & \makesymbolrow{\textSkelRed} \\
+  \texttt{\string\SkelRec} & \makesymbolrow{\textSkelRec} \\
+  \bottomrule
+\end{longtable}
+
+
+%%% Local Variables:
+%%% TeX-command-default: "Make"
+%%% mode: latex
+%%% TeX-master: "../refman"
+%%% End:
