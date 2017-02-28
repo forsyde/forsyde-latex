@@ -1,17 +1,82 @@
 mode_setup;
 define_pixels(u,s);
 
-beginchar(31,14u#,14u#,0);"MoC layer plus";
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Behavior Layer operators %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+beginchar(16,14u#,14u#,0);"Behavior layer plus";
+  x1=u; x2=7u; x3=13u;
+  y1=y3=3u; y2=13u;
+  x4=x6=7u; x5=4u; x7=10u;
+  y5=y7=7u; y4=4u; y6=10u;
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z1;
+  draw z4..z6; draw z5..z7;
+  labels(range 1 thru 7);
+endchar;
+
+beginchar(17,14u#,14u#,0);"Behavior layer dot";
+  x1=u; x2=7u; x3=13u;
+  y1=y3=3u; y2=13u;
+  z5=(7u,7u);
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z1;
+  pickup pencircle scaled 3s;
+  drawdot z5;
+  labels(range 1 thru 7);
+endchar;
+
+beginchar(18,14u#,14u#,0);"Behavior layer asterisk";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z13=(7u,7u);
+  z5=1/3*(z1+z2+z13);  z6=1/3*(z2+z3+z13);
+  z7=1/3*(z3+z4+z13);  z8=1/3*(z4+z1+z13);
+  z9=.5(z1+z13); z10=.5(z2+z13);
+  z11=.5(z3+z13); z12=.5(z4+z13);
+  pickup pencircle scaled .6s;
+  draw z9..z11; draw z10..z12;
+  draw z6..z8; draw z5..z7;
+  x21=1u; x22=7u; x23=13u;
+  y21=y23=3u; y22=13u;
+  z25=(7u,7u);
+  pickup pencircle scaled s;
+  draw z21..z22; draw z22..z23; draw z23..z21;
+  labels(range 1 thru 12);
+endchar;
+
+beginchar(19,14u#,14u#,0);"Behavior layer phi";
+  x1=u; x2=7u; x3=13u;
+  y1=y3=3u; y2=13u;
+  z4=.5(z1+z3);
+  x5=x7=7u; x6=4u; x8=10u;
+  y6=y8=7u; y5=5u; y7=9u;
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z1;
+  pickup pencircle xscaled 1.4s yscaled .6s rotated 60;
+  draw z5..z6..z7..z8..cycle;
+  pickup pencircle scaled 1.2s;
+  draw z2..z4;
+  labels(range 1 thru 7);
+endchar;
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% MoC Layer operators %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+beginchar(32,14u#,14u#,0);"MoC layer plus";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   pickup pencircle scaled s;
   draw z1..z2..z3..z4..cycle;
-  draw z1..z3;
-  draw z2..z4;
+  draw z1..z3; draw z2..z4;
   labels(range 1 thru 4);
 endchar;
 
-beginchar(32,14u#,14u#,0);"MoC layer dot";
+beginchar(33,14u#,14u#,0);"MoC layer dot";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   z5=(7u,7u);
@@ -23,7 +88,7 @@ beginchar(32,14u#,14u#,0);"MoC layer dot";
 endchar;
 
 
-beginchar(33,14u#,14u#,0);"MoC layer asterisc";
+beginchar(34,14u#,14u#,0);"MoC layer asterisk";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   z13=(7u,7u);
@@ -40,7 +105,7 @@ beginchar(33,14u#,14u#,0);"MoC layer asterisc";
 endchar;
 
 
-beginchar(34,14u#,14u#,0);"MoC layer prec";
+beginchar(35,14u#,14u#,0);"MoC layer prec";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   x5=7u+6u*0.70710678; y5=7u+6u*0.70710678;
@@ -51,7 +116,7 @@ beginchar(34,14u#,14u#,0);"MoC layer prec";
   labels(range 1 thru 6);
 endchar;
 
-beginchar(35,14u#,14u#,0);"MoC layer phi";
+beginchar(36,14u#,14u#,0);"MoC layer phi";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   x5=x7=7u; x6=3u; x8=11u;
@@ -66,7 +131,7 @@ beginchar(35,14u#,14u#,0);"MoC layer phi";
 endchar;
 
 
-beginchar(36,14u#,14u#,0);"MoC layer Delta";
+beginchar(37,14u#,14u#,0);"MoC layer Delta";
   x1=x3=7u; x2=u; x4=13u;
   y2=y4=7u; y1=u; y3=13u;
   x5=7u+6u*0.866025404; y5=7u-6u*0.5;
@@ -78,5 +143,75 @@ beginchar(36,14u#,14u#,0);"MoC layer Delta";
   labels(range 1 thru 6);
 endchar;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Skeleton Layer operators %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+beginchar(48,14u#,14u#,0);"Skeleton layer plus";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  draw z1..z3;
+  draw z2..z4;
+  labels(range 1 thru 4);
+endchar;
+
+beginchar(49,14u#,14u#,0);"Skeleton layer minus";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  draw z2..z4;
+  labels(range 1 thru 4);
+endchar;
+
+beginchar(50,14u#,14u#,0);"Skeleton layer dot";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z5=(7u,7u);
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  pickup pencircle scaled 3s;
+  drawdot z5;
+  labels(range 1 thru 5);
+endchar;
+
+
+beginchar(51,14u#,14u#,0);"Skeleton layer asterisc";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z13=(7u,7u);
+  z5=1/3*(z1+z2+z13);  z6=1/3*(z2+z3+z13);
+  z7=1/3*(z3+z4+z13);  z8=1/3*(z4+z1+z13);
+  z9=.5(z1+z13); z10=.5(z2+z13);
+  z11=.5(z3+z13); z12=.5(z4+z13);
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  pickup pencircle scaled .6s;
+  draw z9..z11; draw z10..z12;
+  draw z6..z8; draw z5..z7;
+  labels(range 1 thru 12);
+endchar;
+
+beginchar(52,14u#,14u#,0);"Skeleton layer backslash";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z5=.5(z2+z3); z6=.5(z1+z4);
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  draw z5..z6;
+  labels(range 1 thru 4);
+endchar;
+
+beginchar(53,14u#,14u#,0);"Skeleton layer slash";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z5=.5(z1+z2); z6=.5(z3+z4);
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z4; draw z4..z1;
+  draw z5..z6;
+  labels(range 1 thru 4);
+endchar;
 
 end
