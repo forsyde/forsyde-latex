@@ -72,7 +72,7 @@ The library contains the following main packages:
 There are three main alternatives to install the libraries:
 
 \begin{enumerate}
-\item copy the contents of \texttt{forsyde-latex/src} in its appropriate path under the \texttt{TEXMFHOME} path or any standard loading path, as specified by your \LaTeX\ compiler;
+\item copy the contents of \texttt{forsyde-latex/src} in its appropriate path under the \texttt{TEXMFHOME} path or any standard loading path, as specified by your \LaTeX\ compiler. Refer to \url{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages} for more information.
 \item compile your document with the variable \texttt{TEXINPUTS} set to \texttt{/path/to/forsyde-latex/src/}; % and \texttt{TEXFONTS} set to \texttt{/path/to/forsyde-latex/fonts/}
 \item copy the contents of \texttt{forsyde-latex/src} in the same folder as your document and compile normally.
 \end{enumerate}
@@ -101,7 +101,6 @@ When loaded without an option, this package only provides some general commands 
   \bottomrule
 \end{longtable}
 
-
 \newpage
 \tableofcontents
 \newpage
@@ -110,46 +109,6 @@ When loaded without an option, this package only provides some general commands 
 \input{inputs/forsyde-math}
 \newpage
 \input{inputs/forsyde-legacy}
-
-
-% \section{The \texttt{forsyde-pc} package}
-
-% The \texttt{forsyde-pc} package includes \textsc{ForSyDe} process constructors, written as macros. For a detailed theoretical background in process constructors check the \textsc{ForSyDe} homepage. It is included with: 
-
-% \begin{verbatim}
-% 	\usepackage{forsyde-pc}
-% \end{verbatim}
-
-
-% \newpage
-% \section
-% \section{PGF nodes} \label{section_shapes}
-
-% All graphical elements in the \texttt{forsyde-tikz} package are created using custom PGF shapes defined in \texttt{tikzlibraryfshapes.code.tex}. You can create new elements by combining them, as can be seen in \texttt{tikzlibraryforsyde.code.tex}. Following is a list with these shapes:
-
-% \begin{optionslist}
-% \item \texttt{ports e[0..10]o[0..10]} : defines anchors for the input/output pwrts.
-% \item \texttt{func[0..4]} : defines boxes and anchors for the functions nodes.
-% \item \texttt{leaf shape} : the shape of a standard leaf process outer box.
-% \item \texttt{zip shape} : the shape of a custom zip process.
-% \item \texttt{interface shape 0} : the node shape of an interface process.
-% \item \texttt{interface shape 180} : the node shape of a reversed interface process.
-% \item \texttt{comp shape} : the shape of a composite process.
-% \item \texttt{dp shape} : the shape of a data-parallel pattern.
-% \item \texttt{pipe shape} : the shape of a time-parallel (pipelined) pattern.
-% \item \texttt{merge shape} : the shape of a merging (e.g. reduce) pattern.
-% \item \texttt{custom conduit i[2..8]o[2..8]} : the inner node depicting the conduit in a custom (visual) transition pattern.
-% \item \texttt{trans shape v[1..8]v[1..8]} : the outer box of a transition pattern, depicting vector(s) on one side and vector(s) on the other side.
-% \item \texttt{trans shape s1v1} : the outer box of a transition pattern, depicting a signal on one side and a vector on the other side.
-% \item \texttt{trans shape v1gv1} : the outer box of a transition pattern, depicting a vector on one side and a group of vectors on the other side.
-% \end{optionslist}
-
-
-% \begin{tikzpicture}[]
-% \newleaf[]{lc}{0,0}{hallo};  
-% \newleaf[ni=2, anchor=north]{l1}{2,0}{hallo1};
-% \basic[shape=primitive,nf=1] {u} {3,0} {q};
-% \end{tikzpicture}
 
 
 \end{document}

@@ -1,144 +1,152 @@
 % A library with graphical primitives for SDF process networks
 %
 % Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
-% Version: 0.1
-% Date: 2016/01/12
+% Version: 0.3
+% Date: 2017/02/27
 \NeedsTeXFormat{LaTeX2e}
-\RequirePackage{mathtools}
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{stmaryrd}
-\RequirePackage{graphicx}
-\RequirePackage{tikz}
-\RequirePackage{wasysym}
-\ProvidesPackage{forsyde-math}
-              [2016/10/05 v0.2 ForSyDe Math Library]
-
-\newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
-\newcommand\monecirc[3]{\tikz[baseline=(X.base)] 
-  \node (X) [draw, shape=circle, scale=.6, inner sep=0,
-             label={[scale=#3, shift={(#2,0pt)}]center:#1}] {\strut\phantom{#1}};}
-
-\newlength\myheight
-\newcommand*\ccircled[1]{\settowidth{\myheight}{#1}%
-    {\tikz[baseline=(char.base)]{%
-        \node[shape=circle, draw, ultra thin, inner sep=0pt, minimum size=0](char){#1};}}}
-
-\newcommand\vect[1]{\langle{#1}\rangle}
-\newcommand\pc[1]{\mathtt{#1}\ }
-\newcommand\wrapdf[1]{\overline{#1}}
+\ProvidesPackage{forsyde-math}[2017/02/27 v0.3 ForSyDe Math Library]
 
 
-\newcommand{\ostar}{\ensuremath{\mathbin{\ccircled{$\star$}}}}
-\newcommand{\fpre}{\ensuremath{\mathbin{\ccircled{\scriptsize$\prec$}}}}
-\newcommand{\fphi}{\ensuremath{\mathbin{\ccircled{\scriptsize$\phi$}}}}
-\newcommand{\funzip}{\ensuremath{\mathbin{\triangleleft}}}
-\newcommand{\fcomb}{\oplus}
-\newcommand{\fdelay}{\mathbin{\Delta}}
+\DeclareFontFamily{U}{forsydeatom}{}
+\DeclareFontShape{U}{forsydeatom}{m}{n}{
+  <-9>   forsydeatom8
+  <9-14> forsydeatom10
+  <14->  forsydeatom14
+}{}
+
+\newcommand{\MocFun}{{\usefont{U}{forsydeatom}{m}{n}\char32}}
+\newcommand{\MocCmb}{{\usefont{U}{forsydeatom}{m}{n}\char31}}
+\newcommand{\MocApp}{{\usefont{U}{forsydeatom}{m}{n}\char33}}
+\newcommand{\MocPre}{{\usefont{U}{forsydeatom}{m}{n}\char34}}
+\newcommand{\MocPhi}{{\usefont{U}{forsydeatom}{m}{n}\char35}}
+\newcommand{\MocDel}{{\usefont{U}{forsydeatom}{m}{n}\char36}}
 
 
-\newcommand{\ffilt}{\mathbin{\#}}
-\newcommand{\fresf}{\mathbin{\rho}}
+% \newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+% \newcommand\monecirc[3]{\tikz[baseline=(X.base)] 
+%   \node (X) [draw, shape=circle, scale=.6, inner sep=0,
+%              label={[scale=#3, shift={(#2,0pt)}]center:#1}] {\strut\phantom{#1}};}
+
+% \newlength\myheight
+% \newcommand*\ccircled[1]{\settowidth{\myheight}{#1}%
+%     {\tikz[baseline=(char.base)]{%
+%         \node[shape=circle, draw, ultra thin, inner sep=0pt, minimum size=0](char){#1};}}}
+
+% \newcommand\vect[1]{\langle{#1}\rangle}
+% \newcommand\pc[1]{\mathtt{#1}\ }
+% \newcommand\wrapdf[1]{\overline{#1}}
 
 
-\newcommand\finter[2]{\ensuremath{\mathbin{\monecirc{$#1$}{-2pt}{.4}\mkern-4mu\monecirc{$#2$}{2pt}{.4}}}}
-
-\newcommand{\fmap}{\mathbin{\rotatebox[origin=c]{45}{$\boxtimes$}}}
-\newcommand{\fpipe}{\mathbin{\rotatebox[origin=c]{45}{$\boxbslash$}}}
-\newcommand{\fred}{\mathbin{\rotatebox[origin=c]{45}{$\boxdot$}}}
-\newcommand{\fscan}{\mathbin{\rotatebox[origin=c]{45}{$\boxast$}}}
-\newcommand\fcat{\mdoubleplus}
-\newcommand\fsel{\mathrel{@}}
+% \newcommand{\ostar}{\ensuremath{\mathbin{\ccircled{$\star$}}}}
+% \newcommand{\fpre}{\ensuremath{\mathbin{\ccircled{\scriptsize$\prec$}}}}
+% \newcommand{\fphi}{\ensuremath{\mathbin{\ccircled{\scriptsize$\phi$}}}}
+% \newcommand{\funzip}{\ensuremath{\mathbin{\triangleleft}}}
+% \newcommand{\fcomb}{\oplus}
+% \newcommand{\fdelay}{\mathbin{\Delta}}
 
 
-% \newlength\forsydeOperatorInnerLength
-% \newlength\forsydeOperatorOuterLength
-% \newlength\forsydeOperatorDiffLength
-% \newcommand\mocOperator{\mathpalette\@incircbin}
-% \newcommand\@incircbin[2]{%
-% \mathbin{\ooalign{\hidewidth\raisebox{#1}{$#1#2$}\hidewidth\crcr$#1\ocircle$}}}
-
-% \newcommand\mocOperator[2][]{\topinset{$#2$}{$\ocircle$}{#1}{}}
+% \newcommand{\ffilt}{\mathbin{\#}}
+% \newcommand{\fresf}{\mathbin{\rho}}
 
 
-\newcommand{\mapS}{\mathbin{\rotatebox[origin=c]{45}{$\boxdot$}}}
-\newcommand{\applS}{\mathbin{\rotatebox[origin=c]{45}{$\boxast$}}}
-\newcommand{\redS}{\mathbin{\rotatebox[origin=c]{-45}{$\boxminus$}}}
-\newcommand{\pipeS}{\mathbin{\rotatebox[origin=c]{-45}{$\boxslash$}}}
-\newcommand{\fMapS}{\mathbin{\rotatebox[origin=c]{45}{$\boxtimes$}}}
-\newcommand{\scanS}{\mathbin{\rotatebox[origin=c]{45}{$\boxminus$}}}
-\newcommand{\catS}{\mdoubleplus}
+% \newcommand\finter[2]{\ensuremath{\mathbin{\monecirc{$#1$}{-2pt}{.4}\mkern-4mu\monecirc{$#2$}{2pt}{.4}}}}
 
-\newcommand\fopt[1]{\textcolor{black!35}{#1}}
-
-
-\newcommand\mocOperator[1]{{%
-    \setbox0\hbox{$\ocircle$}%
-    \rlap{\hbox to \wd0{\hss$#1$\hss}}\box0
-}}
-
-\newcommand\mocOperatorRaise[2][0ex]{{%
-    \setbox0\hbox{\raisebox{#1}{$#2$}}%
-    \rlap{\hbox to \wd0{\hss$\ocircle$\hss}}\box0
-}}
-
-\newcommand{\mapM}{\mathbin{\mocOperator{\cdot}}} 
-\newcommand{\applM}{\mathbin{\mocOperator{*}} } 
-\newcommand{\preM}{\mathbin{\mocOperatorRaise[.14ex]{\scriptstyle\prec}} } 
-\newcommand{\phiM}{\mathbin{\mocOperator{\scriptstyle\prec}}} 
-\newcommand{\delayM}{\mathbin{\mocOperatorRaise[.11ex]{\scriptstyle\triangle}} } 
-\newcommand{\combM}{\mathbin{\mocOperator{+}}}
+% \newcommand{\fmap}{\mathbin{\rotatebox[origin=c]{45}{$\boxtimes$}}}
+% \newcommand{\fpipe}{\mathbin{\rotatebox[origin=c]{45}{$\boxbslash$}}}
+% \newcommand{\fred}{\mathbin{\rotatebox[origin=c]{45}{$\boxdot$}}}
+% \newcommand{\fscan}{\mathbin{\rotatebox[origin=c]{45}{$\boxast$}}}
+% \newcommand\fcat{\mdoubleplus}
+% \newcommand\fsel{\mathrel{@}}
 
 
-\newcommand*{\threesim}{%
-  \mathrel{\vcenter{\offinterlineskip
-      \hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}}
-  }
-}
+% % \newlength\forsydeOperatorInnerLength
+% % \newlength\forsydeOperatorOuterLength
+% % \newlength\forsydeOperatorDiffLength
+% % \newcommand\mocOperator{\mathpalette\@incircbin}
+% % \newcommand\@incircbin[2]{%
+% % \mathbin{\ooalign{\hidewidth\raisebox{#1}{$#1#2$}\hidewidth\crcr$#1\ocircle$}}}
+
+% % \newcommand\mocOperator[2][]{\topinset{$#2$}{$\ocircle$}{#1}{}}
 
 
-\providecommand\barcirc{\mathpalette\@barred\ocircle}
-\def\@barred#1#2{\ooalign{\hfil$#1\scriptstyle\Phi$\hfil\cr\hfil$#1#2$\hfil\cr}}
+% \newcommand{\mapS}{\mathbin{\rotatebox[origin=c]{45}{$\boxdot$}}}
+% \newcommand{\applS}{\mathbin{\rotatebox[origin=c]{45}{$\boxast$}}}
+% \newcommand{\redS}{\mathbin{\rotatebox[origin=c]{-45}{$\boxminus$}}}
+% \newcommand{\pipeS}{\mathbin{\rotatebox[origin=c]{-45}{$\boxslash$}}}
+% \newcommand{\fMapS}{\mathbin{\rotatebox[origin=c]{45}{$\boxtimes$}}}
+% \newcommand{\scanS}{\mathbin{\rotatebox[origin=c]{45}{$\boxminus$}}}
+% \newcommand{\catS}{\mdoubleplus}
+
+% \newcommand\fopt[1]{\textcolor{black!35}{#1}}
 
 
-\newcommand\forsydeOPDefault[2]{{%
-   \setbox0\hbox{#1}%
-    \rlap{\hbox to \wd0{\hss#2\hss}}\box0%
-}}
+% \newcommand\mocOperator[1]{{%
+%     \setbox0\hbox{$\ocircle$}%
+%     \rlap{\hbox to \wd0{\hss$#1$\hss}}\box0
+% }}
+
+% \newcommand\mocOperatorRaise[2][0ex]{{%
+%     \setbox0\hbox{\raisebox{#1}{$#2$}}%
+%     \rlap{\hbox to \wd0{\hss$\ocircle$\hss}}\box0
+% }}
+
+% \newcommand{\mapM}{\mathbin{\mocOperator{\cdot}}} 
+% \newcommand{\applM}{\mathbin{\mocOperator{*}} } 
+% \newcommand{\preM}{\mathbin{\mocOperatorRaise[.14ex]{\scriptstyle\prec}} } 
+% \newcommand{\phiM}{\mathbin{\mocOperator{\scriptstyle\prec}}} 
+% \newcommand{\delayM}{\mathbin{\mocOperatorRaise[.11ex]{\scriptstyle\triangle}} } 
+% \newcommand{\combM}{\mathbin{\mocOperator{+}}}
 
 
-\newcommand\forsydeOP[4]{{%
-   \setbox0\hbox{#3}\setbox1\hbox{#4}%
-   \pgfmathsetmacro{\forsydeOPXshift}{\wd0+#1}\pgfmathsetmacro{\forsydeOPYshift}{\ht1+#2}%
-   {\vbox to \forsydeOPYshift pt{\vss\rlap{\hbox to \forsydeOPXshift pt{\hss\box1\hss}}\vss}}\box0%
-}}
-
-\def\BhSymb{$\boxempty$}
-\def\MoCSymb{$\ocircle$}
-\def\SkelSymb{\rotatebox[origin=c]{45}{$\Box$}}
-
-\newcommand{\BhNone}{\mathbin{\forsydeOPDefault   {\BhSymb}{}}} 
-\newcommand{\BhFun}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\cdot$}}} 
-\newcommand{\BhApp}{\mathbin{\forsydeOPDefault    {\BhSymb}{$*$}}} 
-\newcommand{\BhPhi}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\scriptstyle\Phi$}}} 
-\newcommand{\BhDef}{\mathbin{\forsydeOPDefault    {\BhSymb}{$+$}}}
-
-\newcommand{\MocNone}{\mathbin{\forsydeOPDefault  {\MoCSymb}{}}} 
-\newcommand{\MocFun}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$\cdot$}}} 
-\newcommand{\MocApp}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$*$}}} 
-\newcommand{\MocPre}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\prec$}}} 
-\newcommand{\MocPhi}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\phi$}}} 
-\newcommand{\MocDly}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\triangle$}}} 
-\newcommand{\MocCmb}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$+$}}} 
+% \newcommand*{\threesim}{%
+%   \mathrel{\vcenter{\offinterlineskip
+%       \hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}\vskip-.35ex\hbox{$\sim$}}
+%   }
+% }
 
 
-\newcommand{\SkelNone}{\mathbin{\forsydeOPDefault{\SkelSymb}{}} }
-\newcommand{\SkelFun}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\cdot$}}} 
-\newcommand{\SkelApp}{\mathbin{\forsydeOPDefault{\SkelSymb}{$*$}}} 
-\newcommand{\SkelMap}{\mathbin{\forsydeOPDefault{\SkelSymb}{$+$}}}
-% \newcommand{\SkelRed}{\mathbin{\forsydeOP{.3ex}{-.1ex}{\SkelSymb}{$\Yright$}}}
-\newcommand{\SkelRed}{\mathbin{\forsydeOPDefault{\SkelSymb}{\rotatebox[origin=c]{-45}{$-$}}}}
-\newcommand{\SkelPip}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\scriptstyle -$}}}
+% \providecommand\barcirc{\mathpalette\@barred\ocircle}
+% \def\@barred#1#2{\ooalign{\hfil$#1\scriptstyle\Phi$\hfil\cr\hfil$#1#2$\hfil\cr}}
+
+
+% \newcommand\forsydeOPDefault[2]{{%
+%    \setbox0\hbox{#1}%
+%     \rlap{\hbox to \wd0{\hss#2\hss}}\box0%
+% }}
+
+
+% \newcommand\forsydeOP[4]{{%
+%    \setbox0\hbox{#3}\setbox1\hbox{#4}%
+%    \pgfmathsetmacro{\forsydeOPXshift}{\wd0+#1}\pgfmathsetmacro{\forsydeOPYshift}{\ht1+#2}%
+%    {\vbox to \forsydeOPYshift pt{\vss\rlap{\hbox to \forsydeOPXshift pt{\hss\box1\hss}}\vss}}\box0%
+% }}
+
+% \def\BhSymb{$\boxempty$}
+% \def\MoCSymb{$\ocircle$}
+% \def\SkelSymb{\rotatebox[origin=c]{45}{$\Box$}}
+
+% \newcommand{\BhNone}{\mathbin{\forsydeOPDefault   {\BhSymb}{}}} 
+% \newcommand{\BhFun}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\cdot$}}} 
+% \newcommand{\BhApp}{\mathbin{\forsydeOPDefault    {\BhSymb}{$*$}}} 
+% \newcommand{\BhPhi}{\mathbin{\forsydeOPDefault    {\BhSymb}{$\scriptstyle\Phi$}}} 
+% \newcommand{\BhDef}{\mathbin{\forsydeOPDefault    {\BhSymb}{$+$}}}
+
+% \newcommand{\MocNone}{\mathbin{\forsydeOPDefault  {\MoCSymb}{}}} 
+% \newcommand{\MocFun}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$\cdot$}}} 
+% \newcommand{\MocApp}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$*$}}} 
+% \newcommand{\MocPre}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\prec$}}} 
+% \newcommand{\MocPhi}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\phi$}}} 
+% \newcommand{\MocDly}{\mathbin{\forsydeOP{0ex}{0ex}{\MoCSymb}{$\scriptstyle\triangle$}}} 
+% \newcommand{\MocCmb}{\mathbin{\forsydeOPDefault   {\MoCSymb}{$+$}}} 
+
+
+% \newcommand{\SkelNone}{\mathbin{\forsydeOPDefault{\SkelSymb}{}} }
+% \newcommand{\SkelFun}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\cdot$}}} 
+% \newcommand{\SkelApp}{\mathbin{\forsydeOPDefault{\SkelSymb}{$*$}}} 
+% \newcommand{\SkelMap}{\mathbin{\forsydeOPDefault{\SkelSymb}{$+$}}}
+% % \newcommand{\SkelRed}{\mathbin{\forsydeOP{.3ex}{-.1ex}{\SkelSymb}{$\Yright$}}}
+% \newcommand{\SkelRed}{\mathbin{\forsydeOPDefault{\SkelSymb}{\rotatebox[origin=c]{-45}{$-$}}}}
+% \newcommand{\SkelPip}{\mathbin{\forsydeOPDefault{\SkelSymb}{$\scriptstyle -$}}}
 
 
 \newcommand{\context}[2]{{\scriptstyle #1 \vdash } #2}

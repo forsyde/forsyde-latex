@@ -1,7 +1,0 @@
-font_identifier := "Beta12";
-font_size 12pt#;
-
-u#:=24/45pt#;
-s#:=1/3pt#;
-
-input beta

@@ -1,0 +1,82 @@
+mode_setup;
+define_pixels(u,s);
+
+beginchar(31,14u#,14u#,0);"MoC layer plus";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  draw z1..z3;
+  draw z2..z4;
+  labels(range 1 thru 4);
+endchar;
+
+beginchar(32,14u#,14u#,0);"MoC layer dot";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z5=(7u,7u);
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  pickup pencircle scaled 3s;
+  drawdot z5;
+  labels(range 1 thru 5);
+endchar;
+
+
+beginchar(33,14u#,14u#,0);"MoC layer asterisc";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  z13=(7u,7u);
+  z5=1/3*(z1+z2+z13);  z6=1/3*(z2+z3+z13);
+  z7=1/3*(z3+z4+z13);  z8=1/3*(z4+z1+z13);
+  z9=.5(z1+z13); z10=.5(z2+z13);
+  z11=.5(z3+z13); z12=.5(z4+z13);
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  pickup pencircle scaled .6s;
+  draw z9..z11; draw z10..z12;
+  draw z6..z8; draw z5..z7;
+  labels(range 1 thru 12);
+endchar;
+
+
+beginchar(34,14u#,14u#,0);"MoC layer prec";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  x5=7u+6u*0.70710678; y5=7u+6u*0.70710678;
+  x6=7u+6u*0.70710678; y6=7u-6u*0.70710678;
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  draw z5{dir 235}..z2{dir 180}; draw z6{dir 125}..z2{dir 180};
+  labels(range 1 thru 6);
+endchar;
+
+beginchar(35,14u#,14u#,0);"MoC layer phi";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  x5=x7=7u; x6=3u; x8=11u;
+  y6=y8=7u; y5=4.5u; y7=9.5u;
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  pickup pencircle scaled 1.2s;
+  draw z1..z3;
+  pickup pencircle xscaled 1.4s yscaled .6s rotated 60;
+  draw z5..z6..z7..z8..cycle;
+  labels(range 1 thru 8);
+endchar;
+
+
+beginchar(36,14u#,14u#,0);"MoC layer Delta";
+  x1=x3=7u; x2=u; x4=13u;
+  y2=y4=7u; y1=u; y3=13u;
+  x5=7u+6u*0.866025404; y5=7u-6u*0.5;
+  x6=7u-6u*0.866025404; y6=7u-6u*0.5;
+  pickup pencircle scaled s;
+  draw z1..z2..z3..z4..cycle;
+  pickup pencircle xscaled 1.4s yscaled .6s rotated 135;
+  draw z3..z5; draw z5..z6; draw z6..z3;
+  labels(range 1 thru 6);
+endchar;
+
+
+end
