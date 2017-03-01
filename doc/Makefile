@@ -24,18 +24,20 @@ MAIN        = refman
 STYDIR      = ../src
 FIGS_DIR    = figs
 INPS_DIR    = inputs
+FONT_MAP    = $(FIGS_DIR)/testfont.pdf
 
 TIKZ_FIGS   = $(patsubst $(FIGS_DIR)%.tex,$(FIGS_DIR)%.pdf,$(wildcard $(FIGS_DIR)/*.tex))
 TEXFILES    = $(wildcard ./*.tex)
 INPFILES    = $(wildcard $(INPS_DIR)/*.tex)
 STYFILES    = $(wildcard $(STYDIR)/*.tex) $(wildcard $(STYDIR)/*.sty)
 
+
 all: $(MAIN).pdf
 
 view: $(MAIN).pdf
 	evince $(MAIN).pdf &
 
-$(MAIN).pdf : $(STYFILES) $(INPFILES) $(TEXFILES) $(TIKZ_FIGS) Makefile
+$(MAIN).pdf : $(STYFILES) $(INPFILES) $(TEXFILES) $(TIKZ_FIGS) $(FONT_MAP) Makefile
 	TEXINPUTS=:$(STYDIR)/ pdflatex --shell-escape $(MAIN)
 	@while ( grep "Rerun to get cross-references" 	\
 	$(MAIN).log > /dev/null ); do		\
@@ -50,7 +52,6 @@ clean:
 	find . -name "*.ps" -type f -delete
 	find . -name "*.gz" -type f -delete
 	find . -name "*.dvi" -type f -delete
-	find . -name "*.pdf" -type f -delete
 	find . -name "*.bbl" -type f -delete
 	find . -name "*.tmp" -type f -delete
 	find . -name "*.thm" -type f -delete
@@ -61,6 +62,10 @@ clean:
 	find . -name "comment.cut" -type f -delete
 	find . -name "auto" -type d -exec rm -rf "{}" \;
 
+superclean: clean
+	find . -name "*.pdf" -type f -delete
+
+
 # Rules for Tikz and LaTeX figures
 $(TIKZ_FIGS): figs/%.pdf: figs/%.tex
 	@echo $(@F)
@@ -68,3 +73,8 @@ $(TIKZ_FIGS): figs/%.pdf: figs/%.tex
 	mv $(@F) $@ 
 	rm *.log
 	rm *.aux
+
+# Rule for font map
+$(FONT_MAP):
+	echo 'forsydeatom10\n\\table\n\\bye' | tex testfont
+	dvipdf testfont.dvi $(FONT_MAP)
