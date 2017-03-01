@@ -1,20 +1,26 @@
-The \ForSyDe system which performs the the Fast Fourier Transform can be defined in terms of atoms as:
-\begin{align}
-  \ctrS{fft}\ k\ vs  =& \ctrS{bitrev} ((\id{stage} \SkelFun \id{kern}) \SkelPip vs)
-  \intertext{where the constructors}
-  \id{stage}\ wdt   =& \ctrS{concat} \circ (segment \SkelFun \id{twiddles}) \circ \ctrS{group}\ wdt  \\  
-  \id{segment}\ t   =& \ctrS{unduals} \circ (\id{butterfly}\ t\ \SkelFrm) \circ \ctrS{duals}  \\
-  \id{butterfly}\ w =& ((\lambda\ x_0\ x_1 \rightarrow x_0 + wx_1, x_0 - wx_1 )\ \BhDef)\ \MocCmb  \\
-  \intertext{are aided by the number generators}
-  \id{kern}         =& \ctrS{iterate}\ (\times 2)\ 2 \\ 
-  \id{twiddles}     =& (\ctrS{reverse} \circ \ctrS{bitrev} \circ \ctrS{take}\ (\ctrS{lgth}\ vs/2)) (\id{wgen} \SkelFun \SkelVect{1..})\\
-  \id{wgen}\ x      =& -\frac{2 \pi (x-1)}{\ctrS{lgth}\ vs}
-\end{align}
+\vfill
+\begin{figure}[htb]\centering
+  {%
+    \setlength{\fboxsep}{7pt}%
+    \setlength{\fboxrule}{1pt}%
+    \fbox{\includegraphics[width=.9\textwidth]{figs/example-forsyde-math}}
+  }
+\end{figure}
+\lstinputlisting{figs/example-forsyde-math.tex}
+\vfill
+\newpage
 
 \section{The \texttt{forsyde-math} package}
 \label{sec:forsyde-math-package}
 
-This package contains a set of math symbols and commands associated mainly with the \textsc{ForSyDe-Atom} framework.
+This package provides a set of symbols and commands for writing equations mainly for the \ForSyDeAtom\ theoretical framework.
+
+\subsection{Symbol Fonts}
+\label{sec:fonts}
+
+All \ForSyDeAtom\ operators have been bundled in a font family called \texttt{forsydeatom}, which can be used imported in accordance to the \LaTeXe\ standard. The math symbol font is called \texttt{atomoperators} and it is based on the \texttt{forsydeatom} font family.
+
+The \texttt{forsyde-math} imports these fonts and provides macros for typing them in math or texst environments.
 
 \def\makesymbolrow#1{{\tiny #1} & {\scriptsize #1} & {\footnotesize #1} & {\small #1} & {\normalsize #1} & {\large #1} & {\Large #1} & {\LARGE #1} & {\huge #1} & {\Huge #1}}
 \begin{longtable} { c | c c c c c c c c c c }

@@ -5,6 +5,7 @@
 % Date: 2017/02/27
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{amsmath}  % for convenience
+\RequirePackage{mathtools}  % for convenience
 \ProvidesPackage{forsyde-math}[2017/02/27 v0.3 ForSyDe Math Library]
 
 %%%%%%%%%%%%%%%%
@@ -66,10 +67,10 @@
 % Miscellaneous %
 %%%%%%%%%%%%%%%%%
 
-\newcommand\ctr[2]{\mathtt{#1}_{#2}}
-\newcommand\ctrS[1]{\mathtt{#1}_{S}}
-\newcommand\ctrM[1]{\mathtt{#1}_{M}}
-\newcommand\ctrB[1]{\mathtt{#1}_{B}}
+\newcommand\Constructor[2]{\mathtt{#1}_{#2}}
+\newcommand\SkelCons[1]{\mathtt{#1}_{S}}
+\newcommand\MocCons[1]{\mathtt{#1}_{M}}
+\newcommand\BhCons[1]{\mathtt{#1}_{B}}
 
 \newcommand\id[1]{\mathit{#1}}
 

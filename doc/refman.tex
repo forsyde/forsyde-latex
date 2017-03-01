@@ -6,10 +6,11 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{marginnote}
+\usepackage{mathtools}
 \usepackage{listings}
 \usepackage[tikz,math]{forsyde}
 
-\title{The \ForSyDeLaTeX utilities}
+\title{The \ForSyDeLaTeX\ utilities}
 \author{
   George Ungureanu \\
   Department of Electronic Systems\\
@@ -57,13 +58,13 @@ This is the reference manual for the \LaTeX\ utilities used in the context of \F
 
 \section{Introduction}
 
-This library was developed as an effort to standardize symbols and graphical primitives in documents related to \textsc{ForSyDe}, but also to provide tools and utilities for user convenience. \ForSyDe is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
+This library was developed as an effort to standardize symbols and graphical primitives in documents related to \ForSyDe, but also to provide tools and utilities for user convenience. \ForSyDe is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
 
 The library contains the following main packages:
 \begin{itemize}
-\item \texttt{forsyde-tikz} : is a collection of \textsc{PGF} and \textsc{TikZ} styles, graphical primitives and commands for drawing \textsc{ForSyDe} process networks;
-\item \texttt{forsyde-math} : is a collection of math symbols used in the \textsc{ForSyDe} formal notation. It is mainly focused on the ongoing \textsc{ForSyDe-Atom} methodology;
-\item \texttt{forsyde-plot} : provides utilities for plotting \textsc{ForSyDe} signals;
+\item \texttt{forsyde-tikz} : is a collection of \textsc{PGF} and \textsc{TikZ} styles, graphical primitives and commands for drawing \ForSyDe process networks;
+\item \texttt{forsyde-math} : is a collection of math symbols used in the \ForSyDe formal notation. It is mainly focused on the ongoing \ForSyDeAtom methodology;
+\item \texttt{forsyde-plot} : provides utilities for plotting \ForSyDe signals;
 \item \texttt{forsyde-legacy} : API for the previous versions of this library.
 \end{itemize}
 
@@ -72,9 +73,9 @@ The library contains the following main packages:
 There are three main alternatives to install the libraries:
 
 \begin{enumerate}
-\item copy the contents of \texttt{forsyde-latex/src} in its appropriate path under the \texttt{TEXMFHOME} path or any standard loading path, as specified by your \LaTeX\ compiler. Refer to \url{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages} for more information.
-\item compile your document with the variable \texttt{TEXINPUTS} set to \texttt{/path/to/forsyde-latex/src/}; % and \texttt{TEXFONTS} set to \texttt{/path/to/forsyde-latex/fonts/}
-\item copy the contents of \texttt{forsyde-latex/src} in the same folder as your document and compile normally.
+\item copy the contents of \texttt{forsyde-latex/src} and \texttt{forsyde-latex/fonts} in their appropriate path under \texttt{TEXMFHOME} or any standard loading path, as specified by your \LaTeX\ compiler. Refer to \url{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages} for more information.
+\item compile your document with the variable \texttt{TEXINPUTS} set to \texttt{/path/to/forsyde-latex/src/}. If you intend to use \texttt{forsyde-math} characters, you need to generate the fonts under \texttt{forsyde-latex/fonts} using a \texttt{METAFONT} tool suite, and afterwards compile your document with the variable \texttt{TEXFONTS} set to \texttt{/path/to/forsyde-latex/fonts/};
+\item copy the contents of \texttt{forsyde-latex/src} and \texttt{forsyde-latex/fonts} in the same folder as your document and compile normally.
 \end{enumerate}
 
 To include any of the packages enumerated in the introduction, you cal load the \texttt{forsyde} package with the appropriate option:
@@ -98,6 +99,7 @@ When loaded without an option, this package only provides some general commands 
   \midrule
   \texttt{\string\ForSyDe}      & \ForSyDe \\
   \texttt{\string\ForSyDeLaTeX} & \ForSyDeLaTeX \\
+  \texttt{\string\ForSyDeAtom} & \ForSyDeAtom \\
   \bottomrule
 \end{longtable}
 
