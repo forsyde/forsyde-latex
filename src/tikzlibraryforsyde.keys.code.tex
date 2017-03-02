@@ -1,18 +1,10 @@
 %%%%%%%%%%%%%%%
 % ENVIRONMENT %
 %%%%%%%%%%%%%%%
-\tikzset{global scale/.style={
-    scale=#1, globsc=#1,
-    every node/.style={scale=#1}
-  }
-}
-
 
 \newif\ifnolabel
 \newif\ifnocolor
 \pgfkeys{
-  /tikz/globsc/.store in = \globScale,
-  /tikz/globsc = 1,
   /tikz/no moc color/.is if=nocolor,
   /tikz/no moc label/.is if=nolabel,
   /tikz/type style/.store in = \typeStyle,

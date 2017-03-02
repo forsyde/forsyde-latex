@@ -30,8 +30,9 @@ Using \texttt{forsyde-tikz}, process networks are drawn using a combination of c
 \subsubsection{Draw commands}
 \label{sec:draw-commands}
 
-Inside the \texttt{tikzpicture} environment, one can use a set of draw commands which are used as templates for placing shapes and information provided as arguments. In the following listing, the \opt{gray}\man{} arguments are optional while the \man{black} ones are mandatory. 
-The library also provide as set of helper styles for setting several options at once, presented in \ref{sec:helper-options}.\\
+Inside the \texttt{tikzpicture} environment, one can use a set of draw commands\footnote{All draw commands are defined in the \texttt{forsyde.nodes} \textsc{TikZ} library, which is loaded by default by the \texttt{forsyde-tikz} package, but can also be loaded independently using the command \texttt{\string\usetikzlibrary\{forsyde.nodes\}} in the document preamble.} which are used as templates for placing shapes and information provided as arguments. In the following listing, the \opt{gray}\man{} arguments are optional while the \man{black} ones are mandatory. 
+The library also provide as set of helper styles for setting several options at once, presented in \ref{sec:helper-options}.
+
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-basic}
@@ -184,7 +185,7 @@ The library also provide as set of helper styles for setting several options at 
 \subsubsection{Shapes}
 \label{sec:provided-shapes}
 \bookmark{node shapes}
-\textsc{ForSyDe-TikZ} provides a collection of raw shapes either as \textsc{TikZ} styles or as low-level \textsc{PGF} drawings. They are often used as arguments for drawing commands. Below is a list with them and their usage:
+\textsc{ForSyDe-TikZ} provides a collection of raw shapes\footnote{All shapes are defined in the \texttt{forsyde.shapes} \textsc{TikZ} library, which is loaded by default by the \texttt{forsyde-tikz} package, but can also be loaded independently using the command \texttt{\string\usetikzlibrary\{forsyde.shapes\}} in the document preamble.} either as \textsc{TikZ} styles or as low-level \textsc{PGF} drawings. They are often used as arguments for drawing commands. Below is a list with them and their usage:
 
 
 \begin{longtable} { | p{3cm} | c | p{9cm} | }
@@ -258,7 +259,7 @@ The library also provide as set of helper styles for setting several options at 
 \label{sec:helper-options}
 
 \bookmark{node helper keys}
-The \texttt{forsyde-tikz} library provides a large set of styles or function keys that can be used for user convenience as options in the draw commands shown in section \ref{sec:draw-commands}. 
+The \texttt{forsyde-tikz} library provides a large set of styles or function keys\footnote{The helpers are defined in the \texttt{forsyde-tikz} package itself, separated from the \textsc{TikZ} libraries.} that can be used for user convenience as options in the draw commands shown in section \ref{sec:draw-commands}. 
 
 \begin{longtable} { r|p{11cm} }
   \toprule
@@ -290,7 +291,7 @@ The \texttt{forsyde-tikz} library provides a large set of styles or function key
 
 \subsection{Paths}
 
-Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between components. These are regular \textsc{TikZ} paths, customized with a series of keys provided by the library. There are obvious advantages for using the \textsc{TikZ} infrastructure, such as being able to further customize paths outside the scope of this library, or reuse existing keys (e.g. the arrow tips, shapes). The custom port or function anchors presented in the previous section come in handy when considering port-to-port connections. 
+Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between components. These are regular \textsc{TikZ} paths\footnote{All paths are defined in the \texttt{forsyde.paths} \textsc{TikZ} library, which is loaded by default by the \texttt{forsyde-tikz} package, but can also be loaded independently using the command \texttt{\string\usetikzlibrary\{forsyde.paths\}} in the document preamble.}, customized with a series of keys provided by the library. There are obvious advantages for using the \textsc{TikZ} infrastructure, such as being able to further customize paths outside the scope of this library, or reuse existing keys (e.g. the arrow tips, shapes). The custom port or function anchors presented in the previous section come in handy when considering port-to-port connections. 
 
 
 \begin{figure}[htb]\centering

@@ -4,6 +4,76 @@
 % This file contains macros for drawing all nodes
 
 
+%%%%%%%% 
+% KEYS %
+%%%%%%%%
+\newif\ifnolabel
+\newif\ifnocolor
+\pgfkeys{
+  /tikz/no moc color/.is if=nocolor,
+  /tikz/no moc label/.is if=nolabel,
+  /tikz/type style/.store in = \typeStyle,
+  /tikz/type style = \scriptsize\texttt,
+  /tikz/label style/.store in = \labelStyle,
+  /tikz/label style = \textbf,
+  /tikz/function style/.store in = \funcStyle,
+  /tikz/function style = \scriptsize,
+}
+
+\pgfkeys{/forsyde keys/.is family, /forsyde keys,
+  %shape & color  
+  hasmoc/.is toggle,
+  class/.estore in = \fsdClass,
+  type/.estore in  = \fsdType,
+  shape/.estore in = \fsdShape,
+  moc/.style       = {hasmoc, class=#1},
+  % separation
+  inner xsep/.estore in = \fsdInnerXSep,
+  inner ysep/.estore in = \fsdInnerYSep,
+  inner sep/.style      = {inner xsep = #1, inner ysep = #1 },
+  % position
+  anchor/.estore in = \fsdAnchor,
+  xshift/.estore in = \fsdXShift,
+  yshift/.estore in = \fsdYShift,
+  at/.estore in     = \fsdAtInit,
+  left of/.style  = {at={#1.east}, xshift=1cm, anchor=west},
+  right of/.style = {at={#1.west}, xshift=-1cm, anchor=east},
+  above of/.style = {at={#1.north}, yshift=1cm, anchor=south},
+  below of/.style = {at={#1.south}, yshift=-1cm, anchor=north},
+  % rotation
+  rotate shape/.estore in = \fsdRotateShape,
+  rotate/.estore in       = \fsdRotate,
+  % ports & functions
+  npw/.estore in = \fsdNPortLeft,
+  npe/.estore in = \fsdNPortRight,
+  nf/.estore in  = \fsdNFunctions,
+  f1/.estore in  = \fsdFunA,
+  f2/.estore in  = \fsdFunB,
+  f3/.estore in  = \fsdFunC,
+  f4/.estore in  = \fsdFunD,
+  ni/.style      = {npw = #1 },
+  no/.style      = {npe = #1 },
+  f/.code        = {\makeFunctions{#1}}, %defined below
+  f/.default=$f_1$,
+  % default values
+  default/.style = {
+    hasmoc        = false,
+    moc           = none,
+    type          =,
+    shape         = rectangle,
+    anchor        = center,
+    inner ysep    = 3pt,
+    inner xsep    = 5pt,
+    rotate        = 0,
+    rotate shape  = 0,
+    xshift        = 0pt,
+    yshift        = 0pt,
+    at            = {0,0},
+    npw=1, npe=1, nf=0, 
+    f1=$ f_1 $, f2=$ f_2 $, f3=$ f_3 $, f4=$ f_4 $,
+  }
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%
 % GLOBAL DECLARATIONS %
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -12,6 +82,15 @@
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{backbackground,background,main,foreground}
+
+\newcommand\addcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
+\newcommand\makeswitch[2][]{%
+  \newcommand#2[1]{%
+    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
+  }%
+}
 
 \makeswitch[]\getmoclabel
 \addcase\getmoclabel{sy}{SY}
@@ -39,6 +118,8 @@
   \ifnum #1>2 \nodepart{fc} #4\else\fi%
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
 }
+
+
 
 %%%%%%%%%%%%%%%%%% 
 % DRAW FUNCTIONS %
@@ -230,3 +311,36 @@
   \foreach \i in {1,...,#4} { \draw[line width=.3pt] (#2.e\i) -- +(#1,0); }
 }
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STRING PARSER FOR FUNCTIONS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ExplSyntaxOn
+\NewDocumentCommand{\makeFunctions}{m} {%
+  \yourb_count_char:nn { ; } { #1 }  
+  \pgfmathtruncatemacro{\nFunc}{\l_yourb_count_char_int + 1};
+  \def\nnnnFunc{\nFunc}
+  \tikzset{/forsyde\space keys/nf = \nFunc}
+  \pgfmathtruncatemacro{\countFun}{0};
+  \setFunctions{ #1 }
+}
+\int_new:N \l_yourb_count_char_int
+\cs_new_protected:Npn \yourb_count_char:nn #1 #2 {
+  \regex_count:nnN { #1 } { #2 } \l_yourb_count_char_int
+}
+\NewDocumentCommand{\setFunctions}{ >{ \SplitList { ; } } m } {
+  \ProcessList { #1 } { \davs__tokens_setfun_rec:n }
+}   
+\cs_new_protected:Nn \davs__tokens_setfun_rec:n {
+  \def\currentfunckey{/forsyde\space keys/f\countFun}
+  \pgfmathtruncatemacro{\countFun}{\countFun + 1}
+  \tikzset{\currentfunckey = {#1}}
+}
+
+
+\NewDocumentCommand{\listKeys}{ >{ \SplitList { , } } m } {
+  \ProcessList { #1 } { /tikz/#1, }
+}
+\ExplSyntaxOff

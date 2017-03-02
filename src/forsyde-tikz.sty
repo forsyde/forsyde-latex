@@ -14,7 +14,7 @@
 \ProvidesPackage{forsyde-tikz}
               [2017/02/25 v0.4.0 ForSyDe TikZ Library]
 
-\usetikzlibrary{fkeys,fshapes,fpaths,fnodes}
+\usetikzlibrary{forsyde.shapes,forsyde.paths,forsyde.nodes}
 
 
 %%%%%%%%%%%%%
@@ -108,11 +108,11 @@
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
   primitive/.style  = {shape=atom shape},
   primitiven/.style = {shape=nary atom shape},
-  leaf/.style       = {hasmoc, shape=leaf shape},
-  leafn/.style      = {hasmoc, shape=leafn shape},
+  process/.style    = {hasmoc, shape=leaf shape},
+  processn/.style   = {hasmoc, shape=leafn shape},
   composite/.style  = {shape=comp shape},
-  black box/.style  = {shape=leaf shape, moc=blackbox},
   compositen/.style = {shape=nary comp shape},
+  black box/.style  = {shape=leaf shape, moc=blackbox},
   embed/.style      = {hasmoc, shape=leaf shape, inner sep=15pt},
   farmstyle/.style  = {shape = dp shape,inner xsep = 15pt,inner ysep = 20pt,},
   pipestyle/.style  = {shape = pipe shape,inner xsep = 15pt,inner ysep = 20pt,},

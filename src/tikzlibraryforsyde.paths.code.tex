@@ -10,6 +10,18 @@
 \newlength{\lTemp}
 \newlength{\startFunc}
 
+% Global keys used in this library
+\pgfkeys{
+  /tikz/token pos/.store in = \tokPos,
+  /tikz/token pos = 0.5,
+  /tikz/deviate/.store in = \pDeviate,
+  /tikz/deviate = 0pt,
+  /tikz/alwaystrue/.is toggle,
+  /tikz/alwaystrue = true,
+  /tikz/as/.store in = \pIntName,
+  /tikz/as = int,
+}
+
 % Parser for decorating paths with token representation. It parses
 % strings "scalar-vector-(vector)" and draws the corresponding
 % symbols.
@@ -27,11 +39,11 @@
 }
 % Splits the string into individual tokens and draws them
 \NewDocumentCommand{\drawtokens}{ >{ \SplitList { - } } m } {%
- \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
  \pgfmathsetlength{\lTemp}{\tokensize + 0.3pt}
  \setlength{\inTemp}{\halftokensize}
  \ProcessList { #1 } { \davs__tokens_drawbox_rec:n }
- \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize * \globScale}
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
  \setlength{\inTemp}{\halftokensize}
  \ProcessList { #1 } { \davs__tokens_drawtok_rec:n }
 }
@@ -39,26 +51,36 @@
 % around the respective tokens.
 \cs_new_protected:Nn \davs__tokens_drawbox_rec:n {%
   \IfSubStr { #1 } { ( } % beginning of functions
-    { \pgfmathsetlength{\startFunc}{ \xTemp - 0.3pt - \tokensize * \globScale  } }
+    { \pgfmathsetlength{\startFunc}{ \xTemp - 0.3pt - \tokensize  } }
     {  }
   \IfSubStr { #1 } { ) } % end of function
-    { \pgfmathsetlength{\inTemp}{ \xTemp + 0.3pt + \tokensize * \globScale }
+    { \pgfmathsetlength{\inTemp}{ \xTemp + 0.3pt + \tokensize }
       \pgfsetlinewidth{0.2pt}
       \draw[ fill=\defaultfillcolor] (\startFunc,-\lTemp) rectangle (\inTemp,\lTemp); }
     {  }
-  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \tokensize}
 }
 % Draws a symbol for each token
 \cs_new_protected:Nn \davs__tokens_drawtok_rec:n {%
   \drawTokenSymbol{#1} % the actual drawing function as case switch
-  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \globScale * \tokensize}
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \tokensize}
 }
 \ExplSyntaxOff
+
+% also defined in forsyde.nodes, but we want to keep the libraries modular.
+\newcommand\pathaddcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
+\newcommand\pathmakeswitch[2][]{%
+  \newcommand#2[1]{%
+    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
+  }%
+}
 % Case switch for drawing symbols
-\makeswitch[]\drawTokenSymbol
-\addcase\drawTokenSymbol{scalar}{\node[scalartokenshape, draw] at (\xTemp,0) {};}
-\addcase\drawTokenSymbol{vector}{\node[vectortokenshape, draw] at (\xTemp,0) {};}
-\addcase\drawTokenSymbol{function}{\node[functiontokenshape, draw] at (\xTemp,0){};}
+\pathmakeswitch[]\drawTokenSymbol
+\pathaddcase\drawTokenSymbol{scalar}{\node[scalartokenshape, draw] at (\xTemp,0) {};}
+\pathaddcase\drawTokenSymbol{vector}{\node[vectortokenshape, draw] at (\xTemp,0) {};}
+\pathaddcase\drawTokenSymbol{function}{\node[functiontokenshape, draw] at (\xTemp,0){};}
 
 % Collection for tikz draw functions for paths.
 \tikzset{%
