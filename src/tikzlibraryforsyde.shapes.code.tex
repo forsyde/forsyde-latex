@@ -1,0 +1,860 @@
+% Author: George Ungureanu <ugeorge@kth.se>
+% Date: 25.01.2015
+
+
+%%%%%%%%%%%%%%%
+% TikZ SHAPES %
+%%%%%%%%%%%%%%%
+
+\tikzset{
+  atom shape/.style      ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor},
+  nary atom shape/.style ={draw,circle,inner sep=0pt, minimum size=15pt, fill=\defaultfillcolor, double distance=1pt, outer sep=.6pt},
+  leaf shape/.style      ={draw, rectangle, rounded corners=3pt, inner sep=0pt},
+  nary leaf shape/.style ={draw, rectangle, rounded corners=3pt, inner sep=0pt, double distance=1pt, outer sep=.6pt},
+  comp shape/.style      ={draw, rectangle, dashed, fill opacity=0},
+  nary comp shape/.style ={draw, rectangle, dashed, fill opacity=0, double distance=1pt, outer sep=.6pt},
+  connector/.style       ={draw, circle, fill=\defaultdrawcolor, inner sep=2pt, outer sep=0},
+}
+
+%%%%%%%%%%%%%%
+% PGF SHAPES %
+%%%%%%%%%%%%%%
+
+
+% Temporary variables. I will use them A LOT!
+\newlength{\foo}
+\newlength{\baz}
+\newlength{\twd}
+\newlength{\tht}
+\newlength{\tdp}
+
+\def\anchorsfromrectangle{%
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchorborder[from=rectangle]
+  \foreach \anchor in {north,north west,north east,center,west,east,mid, mid west,mid east,base,base west,base east,south,south west,south east}{ \inheritanchor[from=rectangle]{\anchor}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%
+% I/O ANCHOR LAYER %
+%%%%%%%%%%%%%%%%%%%%
+\gdef\portlist{}
+\newcommand\makeioanchors[2]{
+  \anchorsfromrectangle
+  \xdef\portlist{}
+  \ifnum #1=0 \xdef\portlist{1/0}
+  \else \foreach \i in {1,...,#1} {%
+    \pgfmathparse{1-\i*(1/#1)+.5/(#1)} \xdef\portlist{\portlist \i/\pgfmathresult,}%
+    }
+  \fi
+  \foreach \i/\n in \portlist {
+    \xdef\doanchor{
+      \noexpand\anchor{w\i}{%
+        \noexpand\northeast \noexpand\setlength{\noexpand\baz}{\noexpand\pgf@y}
+        \noexpand\southwest \noexpand\pgfmathsetlength{\baz}{\noexpand\baz-\noexpand\pgf@y}
+        \noexpand\pgfmathsetlength{\foo}{\noexpand\pgf@y+\n\baz} \noexpand\pgf@y=\noexpand\foo
+      }
+    }\doanchor
+  }
+  \ifnum #2=0 \xdef\portlist{1/0}
+        \else \foreach \i in {1,...,#2} {\pgfmathparse{\i*(1/#2)-.5/(#2)} \xdef\portlist{\portlist \i/\pgfmathresult,}}
+        \fi
+  \foreach \i/\n in \portlist {
+    \xdef\doanchor{
+      \noexpand\anchor{e\i}{
+        \noexpand\southwest \noexpand\setlength{\noexpand\baz}{\noexpand\pgf@y}
+        \noexpand\northeast \noexpand\pgfmathsetlength{\baz}{-\noexpand\baz+\noexpand\pgf@y}
+        \noexpand\pgfmathsetlength{\foo}{\noexpand\pgf@y-\n\baz} \noexpand\pgf@y=\noexpand\foo
+      }
+    }\doanchor
+  }
+}
+% One separate shape for each case... Dynamic shapes are out of the question...
+\pgfdeclareshape{ports e0w0}{\makeioanchors{0}{0}}
+\pgfdeclareshape{ports e0w1}{\makeioanchors{0}{1}}
+\pgfdeclareshape{ports e0w2}{\makeioanchors{0}{2}}
+\pgfdeclareshape{ports e0w3}{\makeioanchors{0}{3}}
+\pgfdeclareshape{ports e0w4}{\makeioanchors{0}{4}}
+\pgfdeclareshape{ports e0w5}{\makeioanchors{0}{5}}
+\pgfdeclareshape{ports e0w6}{\makeioanchors{0}{6}}
+\pgfdeclareshape{ports e0w7}{\makeioanchors{0}{7}}
+\pgfdeclareshape{ports e0w8}{\makeioanchors{0}{8}}
+\pgfdeclareshape{ports e0w9}{\makeioanchors{0}{9}}
+\pgfdeclareshape{ports e0w10}{\makeioanchors{0}{10}}
+\pgfdeclareshape{ports e1w0}{\makeioanchors{1}{0}}
+\pgfdeclareshape{ports e1w1}{\makeioanchors{1}{1}}
+\pgfdeclareshape{ports e1w2}{\makeioanchors{1}{2}}
+\pgfdeclareshape{ports e1w3}{\makeioanchors{1}{3}}
+\pgfdeclareshape{ports e1w4}{\makeioanchors{1}{4}}
+\pgfdeclareshape{ports e1w5}{\makeioanchors{1}{5}}
+\pgfdeclareshape{ports e1w6}{\makeioanchors{1}{6}}
+\pgfdeclareshape{ports e1w7}{\makeioanchors{1}{7}}
+\pgfdeclareshape{ports e1w8}{\makeioanchors{1}{8}}
+\pgfdeclareshape{ports e1w9}{\makeioanchors{1}{9}}
+\pgfdeclareshape{ports e1w10}{\makeioanchors{1}{10}}
+\pgfdeclareshape{ports e2w0}{\makeioanchors{2}{0}}
+\pgfdeclareshape{ports e2w1}{\makeioanchors{2}{1}}
+\pgfdeclareshape{ports e2w2}{\makeioanchors{2}{2}}
+\pgfdeclareshape{ports e2w3}{\makeioanchors{2}{3}}
+\pgfdeclareshape{ports e2w4}{\makeioanchors{2}{4}}
+\pgfdeclareshape{ports e2w5}{\makeioanchors{2}{5}}
+\pgfdeclareshape{ports e2w6}{\makeioanchors{2}{6}}
+\pgfdeclareshape{ports e2w7}{\makeioanchors{2}{7}}
+\pgfdeclareshape{ports e2w8}{\makeioanchors{2}{8}}
+\pgfdeclareshape{ports e2w9}{\makeioanchors{2}{9}}
+\pgfdeclareshape{ports e2w10}{\makeioanchors{2}{10}}
+\pgfdeclareshape{ports e3w0}{\makeioanchors{3}{0}}
+\pgfdeclareshape{ports e3w1}{\makeioanchors{3}{1}}
+\pgfdeclareshape{ports e3w2}{\makeioanchors{3}{2}}
+\pgfdeclareshape{ports e3w3}{\makeioanchors{3}{3}}
+\pgfdeclareshape{ports e3w4}{\makeioanchors{3}{4}}
+\pgfdeclareshape{ports e3w5}{\makeioanchors{3}{5}}
+\pgfdeclareshape{ports e3w6}{\makeioanchors{3}{6}}
+\pgfdeclareshape{ports e3w7}{\makeioanchors{3}{7}}
+\pgfdeclareshape{ports e3w8}{\makeioanchors{3}{8}}
+\pgfdeclareshape{ports e3w9}{\makeioanchors{3}{9}}
+\pgfdeclareshape{ports e3w10}{\makeioanchors{3}{10}}
+\pgfdeclareshape{ports e4w0}{\makeioanchors{4}{0}}
+\pgfdeclareshape{ports e4w1}{\makeioanchors{4}{1}}
+\pgfdeclareshape{ports e4w2}{\makeioanchors{4}{2}}
+\pgfdeclareshape{ports e4w3}{\makeioanchors{4}{3}}
+\pgfdeclareshape{ports e4w4}{\makeioanchors{4}{4}}
+\pgfdeclareshape{ports e4w5}{\makeioanchors{4}{5}}
+\pgfdeclareshape{ports e4w6}{\makeioanchors{4}{6}}
+\pgfdeclareshape{ports e4w7}{\makeioanchors{4}{7}}
+\pgfdeclareshape{ports e4w8}{\makeioanchors{4}{8}}
+\pgfdeclareshape{ports e4w9}{\makeioanchors{4}{9}}
+\pgfdeclareshape{ports e4w10}{\makeioanchors{4}{10}}
+\pgfdeclareshape{ports e5w0}{\makeioanchors{5}{0}}
+\pgfdeclareshape{ports e5w1}{\makeioanchors{5}{1}}
+\pgfdeclareshape{ports e5w2}{\makeioanchors{5}{2}}
+\pgfdeclareshape{ports e5w3}{\makeioanchors{5}{3}}
+\pgfdeclareshape{ports e5w4}{\makeioanchors{5}{4}}
+\pgfdeclareshape{ports e5w5}{\makeioanchors{5}{5}}
+\pgfdeclareshape{ports e5w6}{\makeioanchors{5}{6}}
+\pgfdeclareshape{ports e5w7}{\makeioanchors{5}{7}}
+\pgfdeclareshape{ports e5w8}{\makeioanchors{5}{8}}
+\pgfdeclareshape{ports e5w9}{\makeioanchors{5}{9}}
+\pgfdeclareshape{ports e5w10}{\makeioanchors{5}{10}}
+\pgfdeclareshape{ports e6w0}{\makeioanchors{6}{0}}
+\pgfdeclareshape{ports e6w1}{\makeioanchors{6}{1}}
+\pgfdeclareshape{ports e6w2}{\makeioanchors{6}{2}}
+\pgfdeclareshape{ports e6w3}{\makeioanchors{6}{3}}
+\pgfdeclareshape{ports e6w4}{\makeioanchors{6}{4}}
+\pgfdeclareshape{ports e6w5}{\makeioanchors{6}{5}}
+\pgfdeclareshape{ports e6w6}{\makeioanchors{6}{6}}
+\pgfdeclareshape{ports e6w7}{\makeioanchors{6}{7}}
+\pgfdeclareshape{ports e6w8}{\makeioanchors{6}{8}}
+\pgfdeclareshape{ports e6w9}{\makeioanchors{6}{9}}
+\pgfdeclareshape{ports e6w10}{\makeioanchors{6}{10}}
+\pgfdeclareshape{ports e7w0}{\makeioanchors{7}{0}}
+\pgfdeclareshape{ports e7w1}{\makeioanchors{7}{1}}
+\pgfdeclareshape{ports e7w2}{\makeioanchors{7}{2}}
+\pgfdeclareshape{ports e7w3}{\makeioanchors{7}{3}}
+\pgfdeclareshape{ports e7w4}{\makeioanchors{7}{4}}
+\pgfdeclareshape{ports e7w5}{\makeioanchors{7}{5}}
+\pgfdeclareshape{ports e7w6}{\makeioanchors{7}{6}}
+\pgfdeclareshape{ports e7w7}{\makeioanchors{7}{7}}
+\pgfdeclareshape{ports e7w8}{\makeioanchors{7}{8}}
+\pgfdeclareshape{ports e7w9}{\makeioanchors{7}{9}}
+\pgfdeclareshape{ports e7w10}{\makeioanchors{7}{10}}
+\pgfdeclareshape{ports e8w0}{\makeioanchors{8}{0}}
+\pgfdeclareshape{ports e8w1}{\makeioanchors{8}{1}}
+\pgfdeclareshape{ports e8w2}{\makeioanchors{8}{2}}
+\pgfdeclareshape{ports e8w3}{\makeioanchors{8}{3}}
+\pgfdeclareshape{ports e8w4}{\makeioanchors{8}{4}}
+\pgfdeclareshape{ports e8w5}{\makeioanchors{8}{5}}
+\pgfdeclareshape{ports e8w6}{\makeioanchors{8}{6}}
+\pgfdeclareshape{ports e8w7}{\makeioanchors{8}{7}}
+\pgfdeclareshape{ports e8w8}{\makeioanchors{8}{8}}
+\pgfdeclareshape{ports e8w9}{\makeioanchors{8}{9}}
+\pgfdeclareshape{ports e8w10}{\makeioanchors{8}{10}}
+\pgfdeclareshape{ports e9w0}{\makeioanchors{9}{0}}
+\pgfdeclareshape{ports e9w1}{\makeioanchors{9}{1}}
+\pgfdeclareshape{ports e9w2}{\makeioanchors{9}{2}}
+\pgfdeclareshape{ports e9w3}{\makeioanchors{9}{3}}
+\pgfdeclareshape{ports e9w4}{\makeioanchors{9}{4}}
+\pgfdeclareshape{ports e9w5}{\makeioanchors{9}{5}}
+\pgfdeclareshape{ports e9w6}{\makeioanchors{9}{6}}
+\pgfdeclareshape{ports e9w7}{\makeioanchors{9}{7}}
+\pgfdeclareshape{ports e9w8}{\makeioanchors{9}{8}}
+\pgfdeclareshape{ports e9w9}{\makeioanchors{9}{9}}
+\pgfdeclareshape{ports e9w10}{\makeioanchors{9}{10}}
+\pgfdeclareshape{ports e10w0}{\makeioanchors{10}{0}}
+\pgfdeclareshape{ports e10w1}{\makeioanchors{10}{1}}
+\pgfdeclareshape{ports e10w2}{\makeioanchors{10}{2}}
+\pgfdeclareshape{ports e10w3}{\makeioanchors{10}{3}}
+\pgfdeclareshape{ports e10w4}{\makeioanchors{10}{4}}
+\pgfdeclareshape{ports e10w5}{\makeioanchors{10}{5}}
+\pgfdeclareshape{ports e10w6}{\makeioanchors{10}{6}}
+\pgfdeclareshape{ports e10w7}{\makeioanchors{10}{7}}
+\pgfdeclareshape{ports e10w8}{\makeioanchors{10}{8}}
+\pgfdeclareshape{ports e10w9}{\makeioanchors{10}{9}}
+\pgfdeclareshape{ports e10w10}{\makeioanchors{10}{10}}
+
+
+%%%%%%%%%%%%%%%%%
+% FUNCTION NODE %
+%%%%%%%%%%%%%%%%%
+% new boxes for storing function names
+\newbox\pgfnodepartfabox
+\newbox\pgfnodepartfbbox
+\newbox\pgfnodepartfcbox
+\newbox\pgfnodepartfdbox
+% macros
+\def\onefuncwd{\wd\pgfnodepartfabox}
+\def\twofuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+6pt}
+\def\threefuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+\wd\pgfnodepartfcbox+12pt}
+\def\fourfuncwd{\wd\pgfnodepartfabox+\wd\pgfnodepartfbbox+\wd\pgfnodepartfcbox+\wd\pgfnodepartfdbox+18pt}
+\def\advancemaxht{%
+  \pgfmathsetlength{\tht}{%
+    max(\ht\pgfnodepartfabox+\dp\pgfnodepartfabox,%
+        \ht\pgfnodepartfbbox+\dp\pgfnodepartfbbox,%
+        \ht\pgfnodepartfcbox+\dp\pgfnodepartfcbox,%
+  \ht\pgfnodepartfdbox+\dp\pgfnodepartfdbox)}
+  \advance\pgf@y by \tht
+  \advance\pgf@y by 2\sepq
+}
+\def\advancemaxdp{%
+  \pgfmathsetlength{\tdp}{%
+    max(\dp\pgfnodepartfabox,%
+  \dp\pgfnodepartfbbox,%
+  \dp\pgfnodepartfcbox,%
+  \dp\pgfnodepartfdbox)}
+  \advance\pgf@y by \tdp
+  \advance\pgf@y by \sepq
+}
+
+
+% set the common anchors first
+\newcommand\makecommonanchors[1]{
+  \anchorsfromrectangle
+  \savedanchor\northeast{
+    \pgfmathsetlength{\twd}{.5*(#1)}
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 2\sepq
+    \pgf@y=0pt \advancemaxht
+  }
+  \savedanchor\centerpoint{%
+    \pgf@x=0pt%
+    \pgf@y=0pt%
+  }
+  \savedanchor\southwest{
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by -2\sepq
+    \pgf@y=0pt
+  }
+}
+% make anchors for function A
+\newcommand\makefaanchors[1]{
+  \savedanchor\faanchor{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt \advancemaxdp
+    \pgf@x=0pt \advance\pgf@x by\twd
+  }
+  \savedanchor\faif{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt  \advancemaxht
+    \pgf@x=0pt \advance\pgf@x by\twd
+    \advance\pgf@x by.5\wd\pgfnodepartfabox  
+  }
+  \savedanchor\faifi{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt
+    \pgf@x=0pt \advance\pgf@x by\twd
+    \advance\pgf@x by.5\wd\pgfnodepartfabox  
+  }
+  \anchor{fa}{\faanchor} \anchor{n1}{\faif} \anchor{s1}{\faifi}
+}
+% make anchors for function B
+\newcommand\makefbanchors[1]{
+  \savedanchor\fbanchor{%
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt \advancemaxdp
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 3\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox  
+  }
+  \savedanchor\fbif{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt  \advancemaxht
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 3\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by.5\wd\pgfnodepartfbbox  
+  }
+  \savedanchor\fbifi{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 3\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by.5\wd\pgfnodepartfbbox  
+  }
+  \anchor{fb}{\fbanchor} \anchor{n2}{\fbif} \anchor{s2}{\fbifi}
+}
+% make anchors for function C
+\newcommand\makefcanchors[1]{
+  \savedanchor\fcanchor{%
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt \advancemaxdp
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 6\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox  
+  }
+  \savedanchor\fcif{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt  \advancemaxht
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 6\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox
+    \advance\pgf@x by.5\wd\pgfnodepartfcbox    
+  }
+  \savedanchor\fcifi{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 6\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox
+    \advance\pgf@x by.5\wd\pgfnodepartfcbox    
+  }
+  \anchor{fc}{\fcanchor} \anchor{n3}{\fcif} \anchor{s3}{\fcifi}
+}
+% make anchors for function D
+\newcommand\makefdanchors[1]{
+  \savedanchor\fdanchor{%
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt \advancemaxdp
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 9\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox  \advance\pgf@x by\wd\pgfnodepartfcbox  
+  }
+  \savedanchor\fdif{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt  \advancemaxht
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 9\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox  
+    \advance\pgf@x by\wd\pgfnodepartfcbox \advance\pgf@x by.5\wd\pgfnodepartfdbox    
+  }
+  \savedanchor\fdifi{%  
+    \pgfmathsetlength{\twd}{-.5*(#1)}
+    \pgf@y=0pt
+    \pgf@x=0pt \advance\pgf@x by\twd \advance\pgf@x by 9\sepq 
+    \advance\pgf@x by\wd\pgfnodepartfabox \advance\pgf@x by\wd\pgfnodepartfbbox  
+    \advance\pgf@x by\wd\pgfnodepartfcbox \advance\pgf@x by.5\wd\pgfnodepartfdbox    
+  }
+  \anchor{fd}{\fdanchor} \anchor{n4}{\fdif} \anchor{s4}{\fdifi}
+}
+% draw function A
+\newcommand\drawfa{
+  \faanchor \pgf@xa=\pgf@x \pgf@xb=\pgf@x 
+  \southwest \pgf@ya=\pgf@y
+  \northeast \pgf@yb=\pgf@y 
+  \advance\pgf@xa by-\sepq
+  \advance\pgf@xb by\wd\pgfnodepartfabox \advance\pgf@xb by\sepq
+  \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+  \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+  \pgfpathclose
+  \pgfsetfillcolor{\defaultfillcolor}\pgfusepath{fill,stroke}
+}
+% draw function B
+\newcommand\drawfb{
+  \fbanchor \pgf@xa=\pgf@x \pgf@xb=\pgf@x 
+  \southwest \pgf@ya=\pgf@y
+  \northeast \pgf@yb=\pgf@y 
+  \advance\pgf@xa by-\sepq
+  \advance\pgf@xb by\wd\pgfnodepartfbbox \advance\pgf@xb by\sepq
+  \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+  \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+  \pgfpathclose
+  \pgfsetfillcolor{\defaultfillcolor}\pgfusepath{fill,stroke}
+}
+% draw function C
+\newcommand\drawfc{
+  \fcanchor \pgf@xa=\pgf@x \pgf@xb=\pgf@x 
+  \southwest \pgf@ya=\pgf@y
+  \northeast \pgf@yb=\pgf@y 
+  \advance\pgf@xa by-\sepq
+  \advance\pgf@xb by\wd\pgfnodepartfcbox \advance\pgf@xb by\sepq
+  \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+  \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+  \pgfpathclose
+  \pgfsetfillcolor{\defaultfillcolor}\pgfusepath{fill,stroke}
+}
+% draw function D
+\newcommand\drawfd{
+  \fdanchor \pgf@xa=\pgf@x \pgf@xb=\pgf@x 
+  \southwest \pgf@ya=\pgf@y
+  \northeast \pgf@yb=\pgf@y 
+  \advance\pgf@xa by-\sepq
+  \advance\pgf@xb by\wd\pgfnodepartfdbox \advance\pgf@xb by\sepq
+  \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+  \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+  \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+  \pgfpathclose
+  \pgfsetfillcolor{\defaultfillcolor}\pgfusepath{fill,stroke}
+}
+
+% FINALLY, I am declaring he shapes
+\pgfdeclareshape{func0}{%
+  \anchorsfromrectangle
+}
+\pgfdeclareshape{func1}{%
+  \nodeparts{fa}%
+  \makecommonanchors{\onefuncwd}
+  \makefaanchors{\onefuncwd}
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{0pt}{0pt}} 
+    \drawfa 
+  }%
+}
+\pgfdeclareshape{func2}{%
+  \nodeparts{fa,fb}%
+  \makecommonanchors{\twofuncwd}
+  \makefaanchors{\twofuncwd} \makefbanchors{\twofuncwd}
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{0pt}{0pt}} 
+    \drawfa \drawfb
+  }%
+}
+\pgfdeclareshape{func3}{%
+  \nodeparts{fa,fb,fc}%
+  \makecommonanchors{\threefuncwd}
+  \makefaanchors{\threefuncwd} 
+  \makefbanchors{\threefuncwd} 
+  \makefcanchors{\threefuncwd}
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{0pt}{0pt}} 
+    \drawfa \drawfb \drawfc
+  }%
+}
+\pgfdeclareshape{func4}{%
+  \nodeparts{fa,fb,fc,fd}%
+  \makecommonanchors{\fourfuncwd}
+  \makefaanchors{\fourfuncwd} 
+  \makefbanchors{\fourfuncwd} 
+  \makefcanchors{\fourfuncwd} 
+  \makefdanchors{\fourfuncwd}
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{0pt}{0pt}} 
+    \drawfa \drawfb \drawfc \drawfd
+  }%
+}
+
+
+%%%%%%%%%%%%%%%%%%%
+% ZIP/UNZIP SHAPE %
+%%%%%%%%%%%%%%%%%%%
+\pgfdeclareshape{zip shape}{
+  \anchorsfromrectangle
+  \savedanchor\northeast{
+    \pgf@x=4pt%
+    \pgfmathsetlength\pgf@y{\pgfkeysvalueof{/pgf/inner ysep}}%
+  }
+  \savedanchor\centerpoint{%
+    \pgf@x=0pt%
+    \pgf@y=0pt%
+  }
+  \savedanchor\southwest{
+    \pgf@x=-4pt%
+    \pgfmathsetlength\pgf@y{-\pgfkeysvalueof{/pgf/inner ysep}}%
+  }
+  \backgroundpath{%
+    \northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}   
+    \pgfpathlineto{\pgfpoint{.5pt}{\pgf@yb}} 
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{0pt}}
+    \pgfpathlineto{\pgfpoint{.5pt}{\pgf@ya}}   
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose \setmocbackground{\MoC} \pgfusepath{fill,stroke} 
+  }%
+}
+
+%%%%%%%%%%%%%%%%%%%
+% PATTERNS SHAPES %
+%%%%%%%%%%%%%%%%%%%
+\pgfdeclareshape{dp shape}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{3pt}{3pt}} 
+    \pgfsetlinewidth{\skeletonlinewidth} 
+    
+    \northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose \pgfusepath{stroke}
+
+    \northeast \pgf@xa=\pgf@x 
+    \pgfmathsetlength{\pgf@ya}{\pgf@y-4pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+3pt}
+    \southwest \pgf@xb=\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfusepath{stroke} 
+
+    \northeast \pgf@xa=\pgf@x 
+    \pgfmathsetlength{\pgf@ya}{\pgf@y-4pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+6pt}
+    \southwest \pgf@xb=\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@ya}} 
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfusepath{stroke} 
+  }
+}
+\pgfdeclareshape{pipe shape}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
+    \pgfsetlinewidth{\skeletonlinewidth} 
+
+    \northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}} 
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose \pgfusepath{stroke} 
+
+    \northeast \pgf@ya=\pgf@y 
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-4pt}
+    \pgfmathsetlength{\pgf@xb}{\pgf@x+3pt}
+    \southwest \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfusepath{stroke} 
+
+    \northeast \pgf@ya=\pgf@y 
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-4pt}
+    \pgfmathsetlength{\pgf@xb}{\pgf@x+6pt}
+    \southwest \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfusepath{stroke}   
+  }
+}
+\pgfdeclareshape{merge shape}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
+    \pgfsetlinewidth{\skeletonlinewidth} 
+
+    \northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}  
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose \pgfusepath{stroke}
+
+    \northeast \pgf@ya=\pgf@y 
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-3pt}
+    \pgfmathsetlength{\pgf@yc}{\pgf@y+3pt}
+    \southwest \pgf@xb=\pgf@x
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+3pt}
+    \pgfmathsetlength{\pgf@xc}{\pgf@x-3pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke} 
+
+    \northeast \pgf@yc=\pgf@y
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-3pt}
+    \southwest \pgf@ya=\pgf@y 
+    \pgfmathsetlength{\pgf@xb}{\pgf@x-3pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y-3pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+    \pgfusepath{stroke} 
+
+    \northeast
+    \pgfmathsetlength{\pgf@ya}{\pgf@y+3pt}
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-6pt}
+    \pgfmathsetlength{\pgf@yc}{\pgf@y+6pt}
+    \southwest 
+    \pgfmathsetlength{\pgf@xb}{\pgf@x-3pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+6pt}
+    \pgfmathsetlength{\pgf@xc}{\pgf@x-6pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke} 
+
+    \northeast
+    \pgfmathsetlength{\pgf@yc}{\pgf@y-3pt}
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-6pt}
+    \southwest 
+    \pgfmathsetlength{\pgf@ya}{\pgf@y-3pt}
+    \pgfmathsetlength{\pgf@xb}{\pgf@x-6pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y-6pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+    \pgfusepath{stroke} 
+  }
+}
+
+\pgfdeclareshape{generic skel shape}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetcornersarced{\pgfpoint{3pt}{3pt}}
+    \pgfsetlinewidth{\skeletonlinewidth} 
+
+    \northeast \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \southwest \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}  
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose \pgfusepath{stroke}
+
+    \northeast \pgf@ya=\pgf@y 
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-3pt}
+    \pgfmathsetlength{\pgf@yc}{\pgf@y+3pt}
+    \southwest \pgf@xb=\pgf@x
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+3pt}
+    \pgfmathsetlength{\pgf@xc}{\pgf@x-3pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke} 
+
+    \northeast
+    \pgfmathsetlength{\pgf@ya}{\pgf@y+3pt}
+    \pgfmathsetlength{\pgf@xa}{\pgf@x-6pt}
+    \pgfmathsetlength{\pgf@yc}{\pgf@y+6pt}
+    \southwest 
+    \pgfmathsetlength{\pgf@xb}{\pgf@x-3pt}
+    \pgfmathsetlength{\pgf@yb}{\pgf@y+6pt}
+    \pgfmathsetlength{\pgf@xc}{\pgf@x-6pt}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke} 
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TRANSITION PATTERNS SHAPES %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\maketransvvshape}[2]{
+  \anchorsfromrectangle
+  \backgroundpath{%
+  \pgfsetlinewidth{1.5pt}
+  \northeast\pgf@ya=\pgf@y\southwest\pgf@yb=\pgf@y
+  \pgfmathsetlength{\baz}{\pgf@ya-\pgf@yb}
+    \foreach \i in {1,...,#1} {
+      \pgfmathsetmacro\start{\i / #1}
+      \pgfmathsetmacro\stopp{(\i - 1) / #1} 
+      \southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x
+      \northeast 
+  \pgfmathsetlength{\pgf@ya}{\pgf@y-\start*\baz} 
+  \pgfmathsetlength{\pgf@yb}{\pgf@y-\stopp*\baz}
+      \advance\pgf@ya by 1pt \advance\pgf@yb by -1pt 
+      \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+      \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+      \pgfusepath{stroke}
+    }
+    \foreach \i in {1,...,#2} {
+      \pgfmathsetmacro\start{\i / #2}
+      \pgfmathsetmacro\stopp{(\i - 1) / #2} 
+      \northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x
+      \northeast 
+  \pgfmathsetlength{\pgf@ya}{\pgf@y-\start*\baz} 
+  \pgfmathsetlength{\pgf@yb}{\pgf@y-\stopp*\baz}
+      \advance\pgf@ya by 1pt \advance\pgf@yb by -1pt 
+      \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+      \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+      \pgfusepath{stroke}
+    }
+  }
+}
+
+\pgfdeclareshape{trans shape v1v1}{\maketransvvshape{1}{1}}
+\pgfdeclareshape{trans shape v1v2}{\maketransvvshape{1}{2}}
+\pgfdeclareshape{trans shape v1v3}{\maketransvvshape{1}{3}}
+\pgfdeclareshape{trans shape v1v4}{\maketransvvshape{1}{4}}
+\pgfdeclareshape{trans shape v1v5}{\maketransvvshape{1}{5}}
+\pgfdeclareshape{trans shape v1v6}{\maketransvvshape{1}{6}}
+\pgfdeclareshape{trans shape v1v7}{\maketransvvshape{1}{7}}
+\pgfdeclareshape{trans shape v1v8}{\maketransvvshape{1}{8}}
+\pgfdeclareshape{trans shape v2v1}{\maketransvvshape{2}{1}}
+\pgfdeclareshape{trans shape v2v2}{\maketransvvshape{2}{2}}
+\pgfdeclareshape{trans shape v2v3}{\maketransvvshape{2}{3}}
+\pgfdeclareshape{trans shape v2v4}{\maketransvvshape{2}{4}}
+\pgfdeclareshape{trans shape v2v5}{\maketransvvshape{2}{5}}
+\pgfdeclareshape{trans shape v2v6}{\maketransvvshape{2}{6}}
+\pgfdeclareshape{trans shape v2v7}{\maketransvvshape{2}{7}}
+\pgfdeclareshape{trans shape v2v8}{\maketransvvshape{2}{8}}
+\pgfdeclareshape{trans shape v3v1}{\maketransvvshape{3}{1}}
+\pgfdeclareshape{trans shape v3v2}{\maketransvvshape{3}{2}}
+\pgfdeclareshape{trans shape v3v3}{\maketransvvshape{3}{3}}
+\pgfdeclareshape{trans shape v3v4}{\maketransvvshape{3}{4}}
+\pgfdeclareshape{trans shape v3v5}{\maketransvvshape{3}{5}}
+\pgfdeclareshape{trans shape v3v6}{\maketransvvshape{3}{6}}
+\pgfdeclareshape{trans shape v3v7}{\maketransvvshape{3}{7}}
+\pgfdeclareshape{trans shape v3v8}{\maketransvvshape{3}{8}}
+\pgfdeclareshape{trans shape v4v1}{\maketransvvshape{4}{1}}
+\pgfdeclareshape{trans shape v4v2}{\maketransvvshape{4}{2}}
+\pgfdeclareshape{trans shape v4v3}{\maketransvvshape{4}{3}}
+\pgfdeclareshape{trans shape v4v4}{\maketransvvshape{4}{4}}
+\pgfdeclareshape{trans shape v4v5}{\maketransvvshape{4}{5}}
+\pgfdeclareshape{trans shape v4v6}{\maketransvvshape{4}{6}}
+\pgfdeclareshape{trans shape v4v7}{\maketransvvshape{4}{7}}
+\pgfdeclareshape{trans shape v4v8}{\maketransvvshape{4}{8}}
+\pgfdeclareshape{trans shape v5v1}{\maketransvvshape{5}{1}}
+\pgfdeclareshape{trans shape v5v2}{\maketransvvshape{5}{2}}
+\pgfdeclareshape{trans shape v5v3}{\maketransvvshape{5}{3}}
+\pgfdeclareshape{trans shape v5v4}{\maketransvvshape{5}{4}}
+\pgfdeclareshape{trans shape v5v5}{\maketransvvshape{5}{5}}
+\pgfdeclareshape{trans shape v5v6}{\maketransvvshape{5}{6}}
+\pgfdeclareshape{trans shape v5v7}{\maketransvvshape{5}{7}}
+\pgfdeclareshape{trans shape v5v8}{\maketransvvshape{5}{8}}
+\pgfdeclareshape{trans shape v6v1}{\maketransvvshape{6}{1}}
+\pgfdeclareshape{trans shape v6v2}{\maketransvvshape{6}{2}}
+\pgfdeclareshape{trans shape v6v3}{\maketransvvshape{6}{3}}
+\pgfdeclareshape{trans shape v6v4}{\maketransvvshape{6}{4}}
+\pgfdeclareshape{trans shape v6v5}{\maketransvvshape{6}{5}}
+\pgfdeclareshape{trans shape v6v6}{\maketransvvshape{6}{6}}
+\pgfdeclareshape{trans shape v6v7}{\maketransvvshape{6}{7}}
+\pgfdeclareshape{trans shape v6v8}{\maketransvvshape{6}{8}}
+\pgfdeclareshape{trans shape v7v1}{\maketransvvshape{7}{1}}
+\pgfdeclareshape{trans shape v7v2}{\maketransvvshape{7}{2}}
+\pgfdeclareshape{trans shape v7v3}{\maketransvvshape{7}{3}}
+\pgfdeclareshape{trans shape v7v4}{\maketransvvshape{7}{4}}
+\pgfdeclareshape{trans shape v7v5}{\maketransvvshape{7}{5}}
+\pgfdeclareshape{trans shape v7v6}{\maketransvvshape{7}{6}}
+\pgfdeclareshape{trans shape v7v7}{\maketransvvshape{7}{7}}
+\pgfdeclareshape{trans shape v7v8}{\maketransvvshape{7}{8}}
+\pgfdeclareshape{trans shape v8v1}{\maketransvvshape{8}{1}}
+\pgfdeclareshape{trans shape v8v2}{\maketransvvshape{8}{2}}
+\pgfdeclareshape{trans shape v8v3}{\maketransvvshape{8}{3}}
+\pgfdeclareshape{trans shape v8v4}{\maketransvvshape{8}{4}}
+\pgfdeclareshape{trans shape v8v5}{\maketransvvshape{8}{5}}
+\pgfdeclareshape{trans shape v8v6}{\maketransvvshape{8}{6}}
+\pgfdeclareshape{trans shape v8v7}{\maketransvvshape{8}{7}}
+\pgfdeclareshape{trans shape v8v8}{\maketransvvshape{8}{8}}
+
+\pgfdeclareshape{trans shape s1v1}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetlinewidth{.5pt} 
+    \northeast \pgf@ya=\pgf@y
+    \southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfsnakesegmentamplitude=3pt
+    \advance\pgf@xa by3pt  \advance\pgf@xb by3pt
+    \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathsnaketo{brace}{\pgfpoint{\pgf@xa}{\pgf@ya}} 
+    \pgfusepath{stroke}
+  
+    \pgfsetlinewidth{1.5pt} 
+    \southwest \pgf@ya=\pgf@y
+    \northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke}  
+  }  
+}
+\pgfdeclareshape{trans shape v1gv1}{%
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetlinewidth{1.5pt} 
+    \northeast \pgf@ya=\pgf@y
+    \southwest \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}} 
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke}
+  
+    \southwest \pgf@ya=\pgf@y
+    \northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke}   
+
+    \southwest \pgf@ya=\pgf@y
+    \northeast \pgf@xa=\pgf@x \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \advance\pgf@xa by-1.4pt\advance\pgf@xb by-1.4pt
+    \pgfsetdash{{8pt}{4pt}{7pt}{4pt}{7pt}{4pt}}{0pt} 
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfusepath{stroke} 
+  }  
+}
+
+
+%%%%%%%%%%%%%%%%
+% TOKEN SHAPES %
+%%%%%%%%%%%%%%%%
+\pgfdeclareshape{scalartokenshape}{ %
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetdash{{1pt}{0pt}}{0pt}
+    \pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+    \pgfpathcircle{\pgfpoint{0pt}{0pt}}{\tokensize} \pgfusepath{fill,stroke} 
+  }%  
+}   
+\pgfdeclareshape{vectortokenshape}{ %
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+    \pgfpathmoveto{\pgfpoint{-\tokensize}{0}}
+    \pgfpathlineto{\pgfpoint{0}{\tokensize}}
+    \pgfpathlineto{\pgfpoint{\tokensize}{0}}
+    \pgfpathlineto{\pgfpoint{0}{-\tokensize}}
+    \pgfpathclose \pgfusepath{fill,stroke} 
+  }%  
+}   
+\pgfdeclareshape{functiontokenshape}{ %
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetlinewidth{0.4pt} \pgfsetstrokecolor{\defaultdrawcolor} \pgfsetfillcolor{\defaultfillcolor}
+    \pgfpathmoveto{\pgfpoint{-\halftokensize}{-\halftokensize}}
+    \pgfpathlineto{\pgfpoint{-\halftokensize}{\halftokensize}}
+    \pgfpathlineto{\pgfpoint{\halftokensize}{\halftokensize}}
+    \pgfpathlineto{\pgfpoint{\halftokensize}{-\halftokensize}}
+    \pgfpathclose \pgfusepath{fill,stroke}  
+  }%  
+}   
+\pgfdeclareshape{aetokenshape}{ %
+  \anchorsfromrectangle
+  \backgroundpath{%
+    \pgfsetlinewidth{0.5pt} \pgfsetstrokecolor{\defaultdrawcolor} 
+    \pgfpathmoveto{\pgfpoint{0pt}{\halftokensize}}
+    \pgfpathlineto{\pgfpoint{0pt}{-\halftokensize}}
+    \pgfusepathqstroke
+    \pgfpathmoveto{\pgfpoint{-\halftokensize}{-\halftokensize}}
+    \pgfpathlineto{\pgfpoint{\halftokensize}{-\halftokensize}}
+    \pgfusepathqstroke
+  }%  
+}   
+
+\tikzset{% 
+    noinner/.style={draw=none, inner sep=0pt, minimum height=30pt, minimum width=3pt},
+    funcbox/.style={draw=none, fill=\defaultfillcolor, font=\scriptsize, rotate=90, minimum width=30pt, minimum height=7pt},
+    invbox/.style={draw=none, fill=\defaultfillcolor, rotate=180, minimum height=30pt, minimum width=7pt},
+}
+
+
+
+
+\endinput

@@ -1,0 +1,29 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \node[draw] (n1) at (0,0) {n1};
+  \node[draw] (n2) at (2,1) {n2};
+  \cluster[shape=generic skel shape, ni=4, no=5, type=mesh, nf=4, f1=$+1$, f3=$\sin$, inner sep=15pt] (clus) <(n1)(n2)> {Cluster};
+  \foreach \i in {1,...,4} {
+    \node[anch] (a) at (clus-f.n\i) {}; \node[label, anchor=west, rotate=90] (l) at (a.east) {\texttt{clus-f.n\i}};
+    \node[anch] (a) at (clus-f.s\i) {}; \node[label, anchor=east, rotate=90] (l) at (a.west) {\texttt{clus-f.s\i}};
+  }
+  \foreach \i in {1,...,4} {
+    \node[anch] (a) at (clus.w\i) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{clus.w\i}};
+  }
+  \foreach \i in {1,...,5} {
+    \node[anch] (a) at (clus.e\i) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{clus.e\i}};
+  }
+  \draw [ultra thick, blue, shorten >=5pt ,shorten <=5pt] (clus.north east) -- (clus.north west);
+  \draw [ultra thick, blue, shorten >=5pt ,shorten <=5pt] (clus.south east) -- (clus.south west);
+  \draw [ultra thick, blue, shorten >=5pt ,shorten <=5pt] (clus.north west) -- (clus.south west);
+  \draw [ultra thick, blue, shorten >=5pt ,shorten <=5pt] (clus.north east) -- (clus.south east);
+  \node [text=blue, anchor=north east, xshift=-5pt] at (clus.north east) {\tiny\texttt{clus-north}};
+  \node [text=blue, anchor=south, xshift=-10pt] at (clus.south) {\tiny\texttt{clus-south}};
+  \node [text=blue, anchor=north, yshift=-15pt,rotate=90] at (clus.west) {\tiny\texttt{clus-west}};
+  \node [text=blue, anchor=south ,rotate=90] at (clus.east) {\tiny\texttt{clus-east}};
+\end{tikzpicture}
+\end{document}
+
+

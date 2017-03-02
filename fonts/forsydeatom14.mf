@@ -1,0 +1,7 @@
+font_identifier := "ForSyDe-Atom14";
+font_size 14pt#;
+
+u#:=28/45pt#;
+s#:=4/10pt#;
+
+input forsydeatom

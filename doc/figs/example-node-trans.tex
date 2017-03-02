@@ -1,0 +1,13 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \trans[shape=trans shape v1v3, ni=1, no=3, nf=1, f1=n, type=splitevery, inner ysep=5pt] (tran) <0,0> {};
+  \node[anch] (a) at (tran-f.n1) {}; \node[label, anchor=west, rotate=30] (l) at (a.east) {\texttt{tran-f.n1}};
+  \node[anch] (a) at (tran.e1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{tran.e1}};
+  \node[anch] (a) at (tran.e2) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{tran.e2}};
+  \node[anch] (a) at (tran.e3) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{tran.e3}};
+  \node[anch] (a) at (tran.w1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{tran.w1}};
+  % \node[anch] (a) at (tran-f.o1) {}; \node[label, anchor=east,rotate=30] (l) at (a.west) {\texttt{tran-f.o1}};
+\end{tikzpicture}
+\end{document}

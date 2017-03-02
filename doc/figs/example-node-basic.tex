@@ -1,0 +1,9 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \basic[shape=atom shape, nf=1, f1=$+1$] (bas) <0,0> {$\oplus$};
+  \node[anch] (a) at (bas-f.n1) {}; \node[label, anchor=west, rotate=30] (l) at (a.east) {\texttt{bas-f.n1}};
+  \node[anch] (a) at (bas-f.s1) {}; \node[label, anchor=east,rotate=30] (l) at (a.west) {\texttt{bas-f.s1}};
+\end{tikzpicture}
+\end{document}
