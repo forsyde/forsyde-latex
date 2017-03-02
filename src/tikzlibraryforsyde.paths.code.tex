@@ -1,0 +1,213 @@
+% pgf/tikz library
+% for ForSyDe signals
+%
+% Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
+% Version: 0.4
+% Date: 2017/01/28
+
+\newlength{\xTemp}
+\newlength{\inTemp}
+\newlength{\lTemp}
+\newlength{\startFunc}
+
+% Global keys used in this library
+\pgfkeys{
+  /tikz/token pos/.store in = \tokPos,
+  /tikz/token pos = 0.5,
+  /tikz/deviate/.store in = \pDeviate,
+  /tikz/deviate = 0pt,
+  /tikz/alwaystrue/.is toggle,
+  /tikz/alwaystrue = true,
+  /tikz/as/.store in = \pIntName,
+  /tikz/as = int,
+}
+
+% Parser for decorating paths with token representation. It parses
+% strings "scalar-vector-(vector)" and draws the corresponding
+% symbols.
+\ExplSyntaxOn
+
+% Main parser function. First counts the tokens then draws them.
+% #1 = delimiter character, #2 = string
+\NewDocumentCommand{\tokens}{m} {%
+  \youra_count_char:nn { - } { #1 }
+  \drawtokens{ #1 }
+}
+\int_new:N \l_youra_count_char_int
+\cs_new_protected:Npn \youra_count_char:nn #1 #2 {%
+  \regex_count:nnN { #1 } { #2 } \l_youra_count_char_int
+}
+% Splits the string into individual tokens and draws them
+\NewDocumentCommand{\drawtokens}{ >{ \SplitList { - } } m } {%
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
+ \pgfmathsetlength{\lTemp}{\tokensize + 0.3pt}
+ \setlength{\inTemp}{\halftokensize}
+ \ProcessList { #1 } { \davs__tokens_drawbox_rec:n }
+ \pgfmathsetlength{\xTemp}{-\l_youra_count_char_int * \tokensize}
+ \setlength{\inTemp}{\halftokensize}
+ \ProcessList { #1 } { \davs__tokens_drawtok_rec:n }
+}
+% Checks whether the token is wrapped as a function and draws boxes
+% around the respective tokens.
+\cs_new_protected:Nn \davs__tokens_drawbox_rec:n {%
+  \IfSubStr { #1 } { ( } % beginning of functions
+    { \pgfmathsetlength{\startFunc}{ \xTemp - 0.3pt - \tokensize  } }
+    {  }
+  \IfSubStr { #1 } { ) } % end of function
+    { \pgfmathsetlength{\inTemp}{ \xTemp + 0.3pt + \tokensize }
+      \pgfsetlinewidth{0.2pt}
+      \draw[ fill=\defaultfillcolor] (\startFunc,-\lTemp) rectangle (\inTemp,\lTemp); }
+    {  }
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \tokensize}
+}
+% Draws a symbol for each token
+\cs_new_protected:Nn \davs__tokens_drawtok_rec:n {%
+  \drawTokenSymbol{#1} % the actual drawing function as case switch
+  \pgfmathsetlength{\xTemp}{\xTemp+ 2 * \tokensize}
+}
+\ExplSyntaxOff
+
+% also defined in forsyde.nodes, but we want to keep the libraries modular.
+\newcommand\pathaddcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
+\newcommand\pathmakeswitch[2][]{%
+  \newcommand#2[1]{%
+    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
+  }%
+}
+% Case switch for drawing symbols
+\pathmakeswitch[]\drawTokenSymbol
+\pathaddcase\drawTokenSymbol{scalar}{\node[scalartokenshape, draw] at (\xTemp,0) {};}
+\pathaddcase\drawTokenSymbol{vector}{\node[vectortokenshape, draw] at (\xTemp,0) {};}
+\pathaddcase\drawTokenSymbol{function}{\node[functiontokenshape, draw] at (\xTemp,0){};}
+
+% Collection for tikz draw functions for paths.
+\tikzset{%
+  % simple switch for color, but as a pgf .code key
+  getsignalmoc/.code={%
+    \ifnocolor \defaultdrawcolor \else
+    \ifstrequal{#1}{sy}{\tikzset{sycolor}}{%
+      \ifstrequal{#1}{de}{\tikzset{decolor}}{%
+        \ifstrequal{#1}{ct}{\tikzset{ctcolor}}{%
+          \ifstrequal{#1}{sdf}{\tikzset{sdfcolor}}{}}}}
+    \fi
+  },%
+  % path styles: s=signal, sn=n-arry signal,
+  s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stealth},
+  sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stealth, double distance=1.3pt},
+  % path styles: v=vector, vn=n-arry vector,
+  v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stealth},
+  vn/.style args = {#1}{getsignalmoc={#1}, line width=2, double distance=2pt, >= stealth, double},
+  % path styles: f=function, fn=n-arry function
+  f/.style       = {line width=\functionpathlinewidth, >= open triangle 90, dotted},
+  fn/.style      = {line width=.4, >= open triangle 90, dotted, double distance=1pt, double},
+  % source port node (as decoration)
+  srcport/.style={%
+    shorten <=2pt,%
+    decoration={%
+      name=markings,
+      mark=at position 0 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+    },%
+    postaction=decorate,
+  },
+  % destination port node (as decoration)
+  dstport/.style={%
+    shorten >=2pt,%
+    decoration={%
+      name=markings,
+      mark=at position 1 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+    },%
+    postaction=decorate,
+  },
+  % token funcion. the token parser with its argument
+  token/.style={%
+    decoration={%
+      name=markings,
+      mark=at position \tokPos with {\tokens{#1}}%
+    },
+    postaction=decorate,
+  },
+  % Intersection between this path and a named line, named with the
+  % "as" option (see fkeys). If no "as" mentioned, the default name
+  % currently is "int".
+  intersect/.style = {%
+    decoration={show path construction, lineto code={
+      \path[name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
+      \path[name intersections={of=this path and #1,by={\pIntName}}];%
+      }
+    },
+    decorate,
+  },%
+  % Helper function for drawing a transition from one path style to
+  % another base on the intersection with a line. Basically saves the
+  % user from naming the intersection and to explicitly draw the paths
+  % herself.
+  trans/.style n args={3}{%
+    decoration={show path construction, lineto code={
+      \path[draw opacity=0, name path=this path] (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast); 
+      \path[name intersections={of=this path and #2,by={int-1}}];%
+      \path (\tikzinputsegmentfirst) edge[#1] (int-1)
+            (int-1) edge[#3] (\tikzinputsegmentlast); 
+      }
+    },
+    decorate,
+  },%
+  % Helpers for drawing spline paths. Character '|' represent
+  % vertical path (turn) and character '-' represents horisontal path
+  % (turn). Some are affected by the "deviate" key (see code).
+  -|/.style={ to path={ (\tikztostart) -| (\tikztotarget) \tikztonodes }},
+  |-/.style={ to path={ (\tikztostart) |- (\tikztotarget) \tikztonodes }},
+  -|-/.style={ to path={ (\tikztostart) 
+	-| ([xshift=\pDeviate]$(\tikztostart)!#1!(\tikztotarget)$) 
+	|- (\tikztotarget) 
+	\tikztonodes }
+  }, -|-/.default=0.5,
+  |-|/.style={to path={ (\tikztostart) 
+	|- ($(\tikztostart)!#1!(\tikztotarget)$) 
+	-| (\tikztotarget)
+    \tikztonodes }
+  }, |-|/.default=0.5,
+  -|-|/.style args = {#1}{ to path={ (\tikztostart) 
+	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
+	|- ([yshift=\pDeviate]\tikztotarget) 
+	-| (\tikztotarget) 
+	\tikztonodes }
+  }, -|-|/.default=0.5,
+  -|-|-/.style args = {#1:#2}{ to path={ (\tikztostart) 
+	-| ($(\tikztostart)!#1!(\tikztotarget)$) 
+	|- ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
+	-| ([yshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
+	|- (\tikztotarget) 
+	\tikztonodes }
+  }, -|-|-/.default=0.3:0.7,
+  |-|-|/.style args = {#1:#2}{ to path={ (\tikztostart) 
+	|- ($(\tikztostart)!#1!(\tikztotarget)$) 
+	-| ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$) 
+	|- ([xshift=\pDeviate]$(\tikztostart)!#2!(\tikztotarget)$)
+	-| (\tikztotarget) 
+	\tikztonodes }
+  }, |-|-|/.default=0.3:0.7,
+}
+
+% Some edge drawing helpers (not very pretty, since the argument syntax is strict).
+\def\signal[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, s=\MoC,] (#4);
+}
+\def\signaln[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, sn=\MoC,] (#4);
+}
+\def\vector[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, v=\MoC,] (#4);
+}
+\def\vectorn[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, vn=\MoC,] (#4);
+}
+\def\function[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, f,] (#4);
+}
+\def\functionn[#1] (#2) #3 (#4);{
+        \draw (#2) edge[#1, #3, fn,] (#4);
+}
+
+\endinput

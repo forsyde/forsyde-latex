@@ -1,0 +1,37 @@
+% A library with utilities for documents related to ForSyDe
+%
+% Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
+% Version: 0.1
+% Date: 2017/02/25
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{forsyde}[2017/02/25 v0.1 ForSyDe LaTeX Utilities Library]
+
+\RequirePackage{ifthen}
+\newboolean{load-tikz}
+\newboolean{load-math}
+\newboolean{load-plot}
+\newboolean{load-legacy}
+
+\DeclareOption{tikz}{\setboolean{load-tikz}{true}}
+\DeclareOption{math}{\setboolean{load-math}{true}}
+\DeclareOption{plot}{\setboolean{load-plot}{true}}
+\DeclareOption{legacy}{\setboolean{load-legacy}{true}}
+
+\ExecuteOptions{}
+\ProcessOptions\relax
+
+% Generic packages so that they do not need to be loaded specifically
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% load packages as chosen in the options
+\ifthenelse{\boolean{load-tikz}}{\RequirePackage{forsyde-tikz}}{}
+\ifthenelse{\boolean{load-math}}{\RequirePackage{forsyde-math}}{}
+\ifthenelse{\boolean{load-plot}}{\RequirePackage{forsyde-plot}}{}
+\ifthenelse{\boolean{load-legacy}}{\RequirePackage{forsyde-legacy}}{}
+
+% General typeset commands and logo
+\def\ForSyDe{\textsc{ForSyDe}\ }
+\def\ForSyDeLaTeX{\mbox{\textsc{ForSyDe}--\LaTeX}}
+\def\ForSyDeAtom{\mbox{\textsc{ForSyDe--Atom}}}

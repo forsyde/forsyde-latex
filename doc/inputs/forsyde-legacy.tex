@@ -1,0 +1,117 @@
+\section{The \texttt{forsyde-legacy} package}
+\label{sec:legacy-package}
+
+This package offers an API for the legacy commands defined in older versions of the \ForSyDeLaTeX utilities. This way, documents compiled with old commands can be compiled with the newer versions of their respective library.
+
+\subsection{\texttt{forsyde-tikz v0.3} or prior}
+\label{sec:forsyde-tikz-v0.3}
+
+Although from \texttt{v0.4} onward the draw commands have been heavily modified, the old commands could be mapped to the new API.
+
+\begin{lstlisting}
+\primitive[keys]         {id}{pos}{label}
+\primitiven[keys]        {id}{pos}{label}
+\leafstd[keys]           {id}{pos}{label}
+\leafcustom[keys]        {id}{pos}
+\compositestd[keys]      {id}{clustered nodes}{label}
+\compositebbox[keys]     {id}{pos}{label}
+\patterncluster[keys]    {id}{clustered nodes}{label}
+\patternnodestd[keys]    {id}{pos}
+\patternnodecustom[keys] {id}{pos}
+\end{lstlisting}
+
+\subsection{\texttt{forsyde-pc v0.3} or prior}
+\label{sec:forsyde-pc-v0.3}
+
+This package is obsolete and used to hold helpers associated to some \ForSyDe process constructors.
+
+\begin{lstlisting}
+\delay    [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\delayn   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\map      [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\comb     [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\combII   [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\combIII  [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\combIV   [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\scanl    [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\scanlII  [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\scanlIII [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\scanld   [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\scanldII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\scanldIII[moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\moore    [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\mooreII  [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\mooreIII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\mealy    [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\mealyII  [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\mealyIII [moc=,f1=,f2=,f3=,inner sep=,reverse]{id}{pos}{label}
+\source   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\filter   [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+\hold     [moc=,f1=,inner sep=,reverse]        {id}{pos}{label}
+\fillS    [moc=,f1=,f2=,inner sep=,reverse]    {id}{pos}{label}
+
+\zip     [moc=,reverse]{id}{pos}
+\zipIII  [moc=,reverse]{id}{pos}
+\zipIV   [moc=,reverse]{id}{pos}
+\zipV    [moc=,reverse]{id}{pos}
+\zipVI   [moc=,reverse]{id}{pos}
+\unzip   [moc=,reverse]{id}{pos}
+\unzipIII[moc=,reverse]{id}{pos}
+\unzipIV [moc=,reverse]{id}{pos}
+\unzipV  [moc=,reverse]{id}{pos}
+\unzipVI [moc=,reverse]{id}{pos}
+
+\domaininterface[moc=,reverse]          {id}{pos}
+\mocinterface   [mocin=,mocout=,reverse]{id}{pos}
+
+\composite[ni=,no=,inner xsep=,inner ysep=,reverse] {id}{included}{label}
+\blackbox [ni=,no=,inner xsep=,inner ysep=,reverse] {id}{included}{label}
+
+\farm     [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
+\farmI    [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
+\farmII   [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
+\farmIII  [ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
+\farmIV   [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
+\pipe     [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
+\pipeI    [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
+\pipeII   [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
+\pipeIII  [ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
+\pipeIV   [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
+\reduce   [ni=,no=,inner xsep=,inner ysep=,reverse]                {id}{included}{label}
+\reduceI  [ni=,no=,f1=,inner xsep=,inner ysep=,reverse]            {id}{included}{label}
+\reduceII [ni=,no=,f1=,f2=,inner xsep=,inner ysep=,reverse]        {id}{included}{label}
+\reduceIII[ni=,no=,f1=,f2=,f3=,inner xsep=,inner ysep=,reverse]    {id}{included}{label}
+\reduceIV [ni=,no=,f1=,f2=,f3=,f4=,inner xsep=,inner ysep=,reverse]{id}{included}{label}
+
+\unzipx     [reverse]         {id}{position}
+\zipx       [reverse]         {id}{position}
+\unzipv     [reverse]         {id}{position}
+\zipv       [reverse]         {id}{position}
+\splitatv   [f1=,reverse]     {id}{position}
+\catv       [reverse]         {id}{position}
+\oddsv      [reverse]         {id}{position}
+\evensv     [reverse]         {id}{position}
+\reversev   [reverse]         {id}{position}
+\groupv     [reverse]         {id}{position}
+\concatv    [reverse]         {id}{position}
+\filteridxv [f1=,reverse]     {id}{position}
+\gatherv    [f1=,f2=,reverse] {id}{position}
+\gatherAdpv [f1=,f2=,reverse] {id}{position}
+\selectv    [reverse]         {id}{position}
+\distributev[f1=,reverse]     {id}{position}
+\filterv    [f1=,reverse]     {id}{position}
+\getv       [f1=,reverse]     {id}{position}
+
+\visualoddsv   [reverse]{id}{pos}
+\visualevensv  [reverse]{id}{pos}
+\visualreversev[reverse]{id}{pos}
+\visualgroupv  [reverse]{id}{pos}
+\visualconcatv [reverse]{id}{pos}
+\end{lstlisting}
+
+
+%%% Local Variables:
+%%% TeX-command-default: "Make"
+%%% mode: latex
+%%% TeX-master: "../refman"
+%%% End:

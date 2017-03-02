@@ -1,0 +1,9 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \interface[] (if) <0,0> {sy}{sdf};
+  \node[anch] (a) at (if.e1) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{if.e1}};
+  \node[anch] (a) at (if.w1) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{if.w1}};
+\end{tikzpicture}
+\end{document}

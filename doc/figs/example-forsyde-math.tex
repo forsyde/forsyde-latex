@@ -1,0 +1,23 @@
+\documentclass[preview]{standalone}
+\usepackage[math]{forsyde}
+
+\begin{document}
+The \ForSyDe system which performs the the Fast Fourier Transform can
+be defined in terms of atoms as:
+
+\begin{align}
+  \SkelCons{fft}\ k\ vs =&\ \SkelCons{bitrev} ((\id{stage} \SkelFun \id{kern}) \SkelPip vs)
+  \intertext{where the constructors}
+  \id{stage}\ wdt   =&\ \SkelCons{concat} \circ (segment \SkelFun \id{twiddles}) 
+                       \circ \SkelCons{group}\ wdt  \\  
+  \id{segment}\ t   =&\ \SkelCons{unduals} \circ (\id{butterfly}\ t\ \SkelFrm)
+                       \circ \SkelCons{duals}  \\
+  \id{butterfly}\ w =&\ ((\lambda\ x_0\ x_1 \rightarrow x_0 + wx_1, x_0 - wx_1 )\ \BhDef)\
+                       \MocCmb \\
+  \intertext{are aided by the number generators}
+  \id{kern}         =&\ \SkelCons{iterate}\ (\times 2)\ 2 \\ 
+  \id{twiddles}     =&\ (\SkelCons{reverse} \circ \SkelCons{bitrev} \circ \SkelCons{take}\
+                       (\SkelCons{lgth}\ vs/2)) (\id{wgen} \SkelFun \SkelVec{1..}) \\
+  \id{wgen}\ x      =&\ -\frac{2 \pi (x-1)}{\SkelCons{lgth}\ vs}
+\end{align}
+\end{document}
