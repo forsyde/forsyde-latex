@@ -164,7 +164,7 @@
   ] (#2) at ($(globalPos) + (\fsdAtInit)$) {%
     \begin{tikzpicture}
       % a label should be in the center, controlled with \labelStyle
-      \node[] (#2-l) at (0,0) {\labelStyle{#4}};
+      \node[inner xsep=\fsdInnerXSep] (#2-l) at (0,0) {\labelStyle{#4}};
       % the functions are inside the scope, above the label
       \node[func\fsdNFunctions, font=\funcStyle,yshift=\fsdInnerYSep, anchor=south]
       (#2-f) at (#2-l.north) {%

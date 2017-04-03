@@ -93,6 +93,8 @@
           \ifstrequal{#1}{sdf}{\tikzset{sdfcolor}}{}}}}
     \fi
   },%
+  % port shape
+  port/.style    = {fill=\defaultdrawcolor,inner sep=2pt},
   % path styles: s=signal, sn=n-arry signal,
   s/.style args  = {#1}{getsignalmoc={#1}, line width=\signalpathlinewidth, >= stealth},
   sn/.style args = {#1}{getsignalmoc={#1}, line width=.5,  >= stealth, double distance=1.3pt},
@@ -100,14 +102,14 @@
   v/.style args  = {#1}{getsignalmoc={#1}, line width=\vectorpathlinewidth, >= stealth},
   vn/.style args = {#1}{getsignalmoc={#1}, line width=2, double distance=2pt, >= stealth, double},
   % path styles: f=function, fn=n-arry function
-  f/.style       = {line width=\functionpathlinewidth, >= open triangle 90, dotted},
-  fn/.style      = {line width=.4, >= open triangle 90, dotted, double distance=1pt, double},
+  f/.style       = {line width=\functionpathlinewidth, >= open triangle 90, densely dotted},
+  fn/.style      = {line width=.4, >= open triangle 90, densely dotted, double distance=1pt, double},
   % source port node (as decoration)
   srcport/.style={%
     shorten <=2pt,%
     decoration={%
       name=markings,
-      mark=at position 0 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+      mark=at position 0 with {\node[port]{};}%
     },%
     postaction=decorate,
   },
@@ -116,7 +118,7 @@
     shorten >=2pt,%
     decoration={%
       name=markings,
-      mark=at position 1 with {\node[fill=\defaultdrawcolor,inner sep=2pt]{};}%
+      mark=at position 1 with {\node[port]{};}%
     },%
     postaction=decorate,
   },
