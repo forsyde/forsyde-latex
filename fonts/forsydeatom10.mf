@@ -1,7 +1,7 @@
 font_identifier := "ForSyDe-Atom10";
 font_size 10pt#;
 
-u#:=4/9pt#;
+u#:=5/9pt#;
 s#:=3/10pt#;
 
 input forsydeatom

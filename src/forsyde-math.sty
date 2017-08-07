@@ -6,6 +6,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{amsmath}  % for convenience
 \RequirePackage{mathtools}  % for convenience
+\RequirePackage{xparse}
+\RequirePackage{xcolor}
 \ProvidesPackage{forsyde-math}[2017/02/27 v0.3 ForSyDe Math Library]
 
 %%%%%%%%%%%%%%%%
@@ -23,6 +25,7 @@
 \newcommand{\textBhFun}{{\usefont{U}{forsydeatom}{m}{n}\char17}}
 \newcommand{\textBhApp}{{\usefont{U}{forsydeatom}{m}{n}\char18}}
 \newcommand{\textBhPhi}{{\usefont{U}{forsydeatom}{m}{n}\char19}}
+\newcommand{\textBhDeg}{{\usefont{U}{forsydeatom}{m}{n}\char20}}
 
 \newcommand{\textMocCmb}{{\usefont{U}{forsydeatom}{m}{n}\char32}}
 \newcommand{\textMocFun}{{\usefont{U}{forsydeatom}{m}{n}\char33}}
@@ -48,6 +51,7 @@
 \DeclareMathSymbol{\BhFun}{\mathbin}{atomoperators}{17}
 \DeclareMathSymbol{\BhApp}{\mathbin}{atomoperators}{18}
 \DeclareMathSymbol{\BhPhi}{\mathbin}{atomoperators}{19}
+\DeclareMathSymbol{\BhDeg}{\mathbin}{atomoperators}{20}
 
 \DeclareMathSymbol{\MocCmb}{\mathbin}{atomoperators}{32}
 \DeclareMathSymbol{\MocFun}{\mathbin}{atomoperators}{33}
@@ -77,7 +81,12 @@
 
 \newcommand\SkelVec[1]{\langle{#1}\rangle}
 % \newcommand\wrapdf[1]{\overline{#1}}
-% \newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand\doubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
 
-\newcommand{\context}[2]{{\scriptstyle #1 \vdash } #2}
+% \newcommand{\context}[3]{{\scriptstyle #1 \vdash } #2}
 % \newcommand{\optcontext}[2]{\fopt{#1\!\vdash} #2}
+
+
+\NewDocumentCommand\context{ s m m }{%
+  \IfBooleanTF#1{{\color{black!50}\scriptstyle #2 \vdash } #3}{{\scriptstyle #2 \vdash } #3}%
+}

@@ -1,0 +1,20 @@
+% A library with graphical primitives for ForSyDe process networks
+%
+% Author: George Ungureanu, KTH - Royal Institute of Technology, Sweden
+% Version: 0.3
+% Date: 2015/05/20
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{tikz}
+\RequirePackage{xparse}
+\RequirePackage[tikz]{forsyde}
+\RequirePackage{calc}
+\RequirePackage[alpine]{ifsym}
+\usetikzlibrary{arrows,calc,shapes,fit,decorations.text,through,intersections}
+
+\ProvidesPackage{forsyde-pictures} [2017/03/14 v0.3 ForSyDe pictures library]
+
+
+\DeclareOption{layered}{\usetikzlibrary{forsyde.pictures.layered}}
+
+\ExecuteOptions{}
+\ProcessOptions\relax

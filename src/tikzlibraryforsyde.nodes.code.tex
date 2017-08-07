@@ -3,6 +3,7 @@
 %
 % This file contains macros for drawing all nodes
 
+\usetikzlibrary{forsyde.utils}
 
 %%%%%%%% 
 % KEYS %
@@ -82,15 +83,6 @@
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{backbackground,background,main,foreground}
-
-\newcommand\addcase[3]{%
-  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
-}
-\newcommand\makeswitch[2][]{%
-  \newcommand#2[1]{%
-    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
-  }%
-}
 
 \makeswitch[]\getmoclabel
 \addcase\getmoclabel{sy}{SY}
@@ -174,7 +166,7 @@
       % the type (constructor) is positioned below the label
       \node[yshift=-\fsdInnerYSep,inner sep=2pt, anchor=north]
       (#2-t) at (#2-l.south){%
-        \typeStyle{\fsdType \ifnolabel\else\getmoclabel{\fsdClass}\fi}
+        \typeStyle{\ifnolabel\else\getmoclabel{\fsdClass}.\fi\fsdType}
       };
       % The main shape is behind any other graphical element.
       \begin{pgfonlayer}{background}

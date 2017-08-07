@@ -5,121 +5,163 @@
 % Version: 0.1
 % Date: 2016/08/13
 \NeedsTeXFormat{LaTeX2e}
-\RequirePackage{graphicx}
 \RequirePackage{tikz}
 \RequirePackage{pgfplots}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
-\usetikzlibrary{arrows,automata} 
 
-\ProvidesPackage{forsyde-plot}
-              [2016/01/12 v0.1 SDF TikZ Library]
+\ProvidesPackage{forsyde-plot} [2017/05/20 v0.2 Signal Plot Library]
+\usetikzlibrary{forsyde.shapes, forsyde.utils}
 
+%%%%%%%%%%%%%%%%%%%%%%%
+% SYNCHRONOUS SIGNALS %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \inputSY[*][node keys] [<input port>] {events};
+\NewDocumentCommand\inputSY{s O{} D<>{0,0} m}{%
+  \node[anchor=south east, xshift=-.5cm, #2] (insig) at (#3) {#4};%
+  \IfBooleanTF#1{\path[s,-|-=.9,->] (insig.south west) edge (#3);}{}%
+}
+
+% \outputSY[*][node keys] [<input port>] {events};
+\NewDocumentCommand\outputSY{s O{} D<>{0,0} m}{%
+  \node[anchor=south west, xshift=.5cm, #2] (outsig) at (#3) {#4};%
+  \IfBooleanTF#1{\path[s,-|-=.9,<-] (outsig.south east) edge (#3);}{}%
+}
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % DISCRETE EVENT SIGNALS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcounter{signum}
-\setlength{\unitlength}{.5cm}
-
-% % advance clock one cycle
-% \newcommand*{\clki}{
-%   \draw (t_cur) %
-%     -- ++(0,.3) -- ++(.5,0) -- ++(0,-.6) -- ++(.5,0) -- ++(0,.3) %
-%   node[time] (t_cur) {};
-% }
-
-% Plots an event of known duration at the current time
-% #1 draw options
-% #2 duration
-% #3 value
-\newcommand*{\event}[3][]{
-  \pgfmathsetmacro\duration{#2*\deScale}
-  \draw[#1] (t_cur) %
-    -- ++( .05, .3) -- ++(\duration-.1,0) -- ++(.05, -.3) %
-    -- ++(-.05,-.3) -- ++(.1-\duration,0) -- cycle; %
-  \path (t_cur) -- node[anchor=\dePos] {#3} ++(\duration,0) node[time] (t_cur) {};
-}
-\newcommand*{\infinity}{
-  \draw[white, fill=white] (t_cur) -- ++(0, 0.3) -- ++(-0.05, 0) 
-     -- ++(0, -0.6)  -- ++(0.05, 0)  -- cycle;
-     
-}
-
-% environment that plots a signal as a tikz picture
-% #1 keys
-% #2 name
-% #2 time span
 \newif\ifgrid
 \newif\iftimestamp
-\pgfkeys{/de signal keys/.is family, /de signal keys,
+\newif\ifdrawinputs
+\newif\ifdrawoutputs
+\newif\ifoverlap
+\pgfkeys{/signal plot keys/.is family, /signal plot keys,
   show grid/.is if=grid,
   show timestamps/.is if=timestamp,
-  value pos/.estore  in = \dePos,
-  tag step/.estore   in = \deGridSize,
-  tag scale/.estore  in = \deScale,
+  draw inputs/.is if=drawinputs,
+  draw outputs/.is if=drawoutputs,
+  overlap/.is if=overlap,
+  label pos/.estore in  = \dePos,
+  step/.estore in       = \deGridSize,
+  xscale/.estore in     = \xdeScale,
+  yscale/.estore in     = \ydeScale,
+  xshift/.estore in     = \xdeShift,
+  yshift/.estore in     = \ydeShift,
   signal sep/.estore in = \deSep,
-  grid/.style           ={show grid, tag step = {#1}, },
-  timestamps/.style     ={show timestamps, tag step = {#1}, },
+  at/.estore in         = \deAt,
+  anchor/.estore in     = \deAnchor,
+  grid/.style           ={show grid, step = {#1}, },
+  timestamps/.style     ={show timestamps, step = {#1}, },
+  inputs/.style         ={draw inputs, at={#1}, anchor=east, xshift=-.5cm},
+  outputs/.style        ={draw outputs, at={#1}, anchor=west, xshift=.5cm},
   default/.style = {
-    value pos=mid, 
-    tag step=1,
-    tag scale=1,
+    label pos=mid, 
+    step=5,
+    xscale=.5,
+    yscale=.5,
+    xshift=0pt,
+    yshift=0pt,
     signal sep=1,
+    at={0,0},
+    anchor=mid,
   }
 }
-% \begin{de-signal}{clock_cycles}
-\newenvironment{de-signal}[2][remember picture]{
-  \pgfkeys{/de signal keys, default, #1}%
-  \begin{tikzpicture}[draw=black, yscale=.7]
-    \tikzstyle{time}=[coordinate]
-    \pgfmathsetmacro\span{\deScale*#2}
-    \pgfmathsetmacro\step{\deScale*\deGridSize}
-    \setcounter{signum}{0}
-}{
+  
+%% \inputDE[*][node keys] [<position>] {span};
+\NewDocumentEnvironment{signalsDE}{O{} m}{%
+  \pgfkeys{/signal plot keys, default, #1}%
+  \setcounter{signum}{0}
+  \def\lastTag{#2}
+  \ifdrawinputs\def\deCoordinate{\deAt.west}
+  \else\ifdrawoutputs\def\deCoordinate{\deAt.east}
+  \else\def\deCoordinate{\deAt}
+  \fi\fi
+  \node[%
+  xshift=\xdeShift, yshift=\ydeShift,
+  inner sep=1.5pt, anchor=\deAnchor,
+  ] (sigdrawing) at (\deCoordinate) \bgroup
+  \begin{tikzpicture}[%
+    draw=black,xscale=\xdeScale, yscale=\ydeScale] %
+    \tikzstyle{time}=[coordinate]%
+  }{%
     \ifgrid
-      \pgfmathsetmacro\ymin{\deSep*(\thesignum+1)-0.6}
-      \foreach \x [count=\i] in {0,\step,...,\span} {
-        \draw[black!60, dashed,line width=0.2pt] (\x,0.5) -- (\x,\ymin);
-      }
+    \pgfmathsetmacro\ymin{-\deSep*\thesignum + 0.5}
+    \foreach \x [count=\i] in {0,\deGridSize,...,\lastTag} {
+      \draw[black!60, dashed,line width=0.2pt]
+      (\x,0.5) -- (\x,\ymin);
+    }
     \else
-    \fi
-    \iftimestamp
-      \foreach \x [count=\i] in {0,\step,...,\span} {
-        \pgfmathtruncatemacro\timestamp{(\i-1)*\deGridSize}
-        \node[anchor=south] at (\x,.5) {\textbf{\timestamp}};
-      }
-    \else
-    \fi
+    \fi%
   \end{tikzpicture}%
+  \egroup;
+  \node[ports e\thesignum w\thesignum, inner sep=0pt,
+    fit=(sigdrawing)] (sigplot) {};
+  \iftimestamp
+  \node[anchor=south west, inner sep=0] at (sigplot.north west) {%
+    \begin{tikzpicture}[%
+      draw=black, %
+      xscale=\xdeScale, yscale=\ydeScale,
+      ] %
+      \foreach \x [count=\i] in {0,\deGridSize,...,\lastTag} {
+        \pgfmathsetmacro\timestamp{(\i-1)*\deGridSize}
+        \node[anchor=south] at (\x,0.5) {%
+          \textbf{\scriptsize\timestamp}};
+      }
+    \end{tikzpicture}
+  };
+  \else\fi
+  \ifdrawinputs
+  \foreach \i in {1,...,\thesignum} {
+    \path (sigplot.e\i) edge[s,-|-,->] (\deAt.w\i);
+  }
+  \else\fi
+  \ifdrawoutputs
+  \foreach \i in {1,...,\thesignum} {
+    \path (sigplot.w\i) edge[s,-|-,<-] (\deAt.e\i);
+  }
+  \else\fi
 }
 
-% \nextsignal{name}
-\newcommand{\designal}[1]{
-  \pgfmathsetmacro\y{\deSep*\thesignum}
-  \path (0,\y) node[left] {#1} node[time] (t_cur) {};
-  \addtocounter{signum}{-1}
+\NewDocumentCommand{\signalDE}{>{ \SplitList {,} } m}{%
+  \pgfmathsetmacro{\deYPos}{-\thesignum * \deSep}
+  \path (0,\deYPos) node[left] {} node[time] (t_cur) {};
+  \ProcessList { #1 } {\deDrawEvents}%
+  \deLastEvent{}{\lastTag}%
+  \firstitemtrue%
+  \stepcounter{signum}
 }
 
+\newif\iffirstitem
+\firstitemtrue   
 
-% plots a known present value
-% #1 options  
-% #2 duration
-% #3 value
-\newcommand*{\present}[3][]{
-    \event[fill=white, #1]{#2}{#3}
+\NewDocumentCommand{\deDrawEvents}{ > {\SplitArgument{1}{:}} m }{%
+  \iffirstitem\firstitemfalse\deFirstEvent #1
+  \else\deEvent #1
+  \fi
+} 
+
+\NewDocumentCommand{\deFirstEvent}{m m} {%
+  \def\dePrevValue{#1}%
 }
-% plots an undefined value
-% #1 keys
-% #2 duration
-\newcommand*{\undefined}[2][]{
-    \event[#1, fill=black!20]{#2}{?}
+\NewDocumentCommand{\deEvent}{m m} {%
+  \draw (t_cur) %
+  -- ++( .05, .3) -- (#2-.05,.3+\deYPos) -- ++(.05,-.3) %
+  -- ++(-.05,-.3) -- ($(t_cur)+(.05,-.3)$) -- cycle; %
+  \path (t_cur)
+  -- node[anchor=\dePos] {\scriptsize\dePrevValue}
+  (#2,\deYPos) node[time] (t_cur) {};
+  \def\dePrevValue{#1}  
 }
-% plots an absent event
-% #1 keys
-% #2 duration
-\newcommand*{\absent}[2][]{
-    \event[#1, draw=black!20, dashed, fill=white]{#2}{}
+\NewDocumentCommand{\deLastEvent}{m m} {%
+  \draw (t_cur) -- ++( .05, .3) -- (#2,.3+\deYPos);
+  \draw (t_cur) -- ++( .05, -.3) -- (#2,-.3+\deYPos);
+  \path (t_cur)
+  -- node[anchor=\dePos] {\scriptsize\dePrevValue}
+  (#2,\deYPos) node[time] (signal-\thesignum) {};
 }
 
 
@@ -127,63 +169,135 @@
 % CONTINUOUS TIME SIGNALS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\pgfplotsset{samples=50}
-% environment that plots a CT signal as a tikz picture
-% #1 keys
-% #2 width / height ratio
-\newenvironment{ct-plot}[2][remember picture]{
-  \pgfmathsetmacro\lllh{#2*4}
-  \begin{tikzpicture}[]
-    \setcounter{signum}{0}
-    \begin{axis}[
-      height=4cm, width=\lllh cm,
-      xlabel={$t$}, ylabel={$v$},
-      grid=major,
-      x label style={
-        at={(axis description cs:1.1,0)},anchor=west},
-      y label style={
-        at={(axis description cs:-.1,.5)}},
-      legend style={at={(1.05,1)}, anchor=north west},
-      #1,
-      ]
-}{
-    \end{axis} 
-  \end{tikzpicture}
+\newcommand{\Colors}{{%
+"E41A1C",%
+"377EB8",%
+"4DAF4A",%
+"984EA3",%
+"FF7F00",%
+"FFFF33",%
+"A65628",%
+"F781BF"
+}}
+
+\def\ctPlotWidth{4}
+%% \inputDE[*][node keys] [<position>] {span};
+\NewDocumentEnvironment{signalsCT}{O{} O{0} m}{%
+  \pgfkeys{/signal plot keys, default, #1}%
+  \setcounter{signum}{0}
+  \pgfmathsetmacro{\firstTag}{#2}
+  \pgfmathsetmacro{\lastTag}{#3 - #2}
+  \ifdrawinputs\def\deCoordinate{\deAt.west}
+  \else\ifdrawoutputs\def\deCoordinate{\deAt.east}
+  \else\def\deCoordinate{\deAt}
+  \fi\fi
+  \node[%
+  xshift=\xdeShift, yshift=\ydeShift,
+  inner sep=1.5pt, anchor=\deAnchor,
+  ] (sigdrawing) at (\deCoordinate) \bgroup
+  \begin{tikzpicture}[%
+    draw=black,xscale=\xdeScale, yscale=\ydeScale] %
+    \tikzstyle{time}=[coordinate]%
+  }{%
+    \ifgrid
+    \pgfmathsetmacro\ymin{-\deSep*(\thesignum - 1) * 1.5 - .5}
+    \pgfmathsetmacro\gridstep{\ctPlotWidth / \lastTag * \deGridSize }
+    \foreach \x [count=\i] in {0,\gridstep,...,\ctPlotWidth} {
+      \draw[black!60, dashed,line width=0.2pt]
+      (\x,0.5) -- (\x,\ymin);
+    }
+    \else
+    \fi%
+  \end{tikzpicture}%
+  \egroup;
+  \node[ports e\thesignum w\thesignum,inner sep=0pt,
+    fit=(sigdrawing)] (sigplot) {};
+  \iftimestamp
+  \pgfmathsetmacro\gridstep{\ctPlotWidth / \lastTag * \deGridSize }
+  \node[anchor=south east, inner sep=0] at (sigplot.north east) {%
+    \begin{tikzpicture}[%
+      draw=black, %
+      xscale=\xdeScale, yscale=\ydeScale,
+      ] %
+      \foreach \x [count=\i] in {0,\gridstep,...,\ctPlotWidth} {
+        \pgfmathsetmacro\timestamp{(\i-1)*\deGridSize}
+        \node[anchor=south,gray] at (\x,0.5) {%
+          \tiny\pgfmathprintnumber{\timestamp}};
+      }
+    \end{tikzpicture}
+  };
+  \else\fi
+  \ifdrawinputs
+  \foreach \i in {1,...,\thesignum} {
+    \path (sigplot.e\i) edge[s,-|-,->] (\deAt.w\i);
+  }
+  \else\fi
+  \ifdrawoutputs
+  \foreach \i in {1,...,\thesignum} {
+    \path (sigplot.w\i) edge[s,-|-,<-] (\deAt.e\i);
+  }
+  \else\fi
 }
 
-\def\ctsignal#1{\def\signalname{#1}}
 
-% \def\signalname{}
-% % \def\forsydeplotprevx{0}
-% % \def\forsydeplotprevy{0}
-% \def\ctsignal{% 
-%   % \def\signalname{#1}%
-%   \noexpand\pgfmathsetmacro{\noexpand\forsydeplotprevx}{0}
-%   \noexpand\pgfmathsetmacro{\noexpand\forsydeplotprevy}{0}
-%   % \edef\temp{\noexpand\forsydeplotprevx{0}}
-%   % \edef\forsydeplotprevy{0}
-%   % \noexpand\edef\setx{\noexpand\def\forsydeplotprevx{0}}%
-%   % \noexpand\edef\sety{\noexpand\def\forsydeplotprevy{0}}%
-%   % \noexpand\setx\noexpand\sety
-% }
+\newif\ifdrawordinate
+\newif\ifdrawoutline
+\pgfkeys{/ct signal keys/.is family, /ct signal keys,
+  draw ordinate/.is if=drawordinate,
+  outline/.is if=drawoutline,
+  step/.estore in         = \plotSamp,
+  ordinate pos/.estore in = \plotOrdPos,
+  ordinate/.style  ={draw ordinate, ordinate pos={#1}},
+  default/.style = {
+    outline=false,
+    step=.1,
+    ordinate pos=0,
+  }
+}
+\NewDocumentCommand{\signalCT}{O{} m m >{ \SplitList {,} } m}{%
+  \pgfkeys{/ct signal keys, default, #1}%
+  % determine the Y position
+  \ifoverlap\pgfmathsetmacro{\deYPos}{0}
+  \else\pgfmathsetmacro{\deYPos}{-\thesignum * \deSep * 1.5}\fi
+  % determine the scale
+  \pgfmathsetmacro{\plotYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
+  \pgfmathsetmacro{\plotScale}{1/(\plotYMax - \plotYMin)}
+  \pgfmathsetmacro{\plotShift}{(\plotYMax + \plotYMin)/2}
+  \pgfmathsetmacro{\plotStep}{\ctPlotWidth / \lastTag * \plotSamp}
+  % determine the color
+  \pgfmathsetmacro{\thecurrentcolor}{\Colors[\value{signum}]}
+  \definecolor{currentcolor}{HTML}{\thecurrentcolor}
+  % start plotting
+  \pgfmathsetmacro{\deXPos}{0}
+  \path (0,\deYPos) node[left] {} node[time] (t_start) {};
+  \ProcessList { #4 } {\ctDrawEvents};%
+  \ifdrawordinate
+    \pgfmathsetmacro{\ordYPos}{(\plotOrdPos - \plotShift) *\plotScale +\deYPos}
+    \draw[->,line width=.1pt]%
+    (0,\ordYPos) node[left] {\tiny\pgfmathprintnumber{\plotOrdPos}}
+    -- (\ctPlotWidth,\ordYPos);
+  \else\fi
+  \ifdrawoutline
+    \draw[ultra thin, gray] (0,\deYPos)
+    --++(0,.5) node[left] {\tiny\pgfmathprintnumber{\plotYMax}}
+    --++(\ctPlotWidth,0) ++(0,-1)
+    --++(-\ctPlotWidth,0) node[left] {\tiny\pgfmathprintnumber{\plotYMin}}
+    --++(0,.5);
+  \else\fi
+  % update state
+  \firstitemtrue%
+  \stepcounter{signum}
+}
 
-% \newcommand{\ctct}[3]{%
-%   \addplot+[mark=none,forget plot] coordinates {(\forsydeplotprevx,\forsydeplotprevy) (#1,#3)};
-%   \addplot+[mark=none,forget plot] coordinates {(#1,#3) (#2,#3)};
-%   % \def\prevposval{#2,#3}
-%   \protect\renewcommand{\forsydeplotprevx}{#2}
-%   \protect\renewcommand{\forsydeplotprevy}{#3}
-% }
-
-% \newcommand{\ctf}[3]{%
-%   \addplot+[mark=none,forget plot] coordinates {(\forsydeplotprevx,\forsydeplotprevy) (#1,{#3(#1)})};
-%   \addplot+[domain=#1:#2,mark=none,forget plot] {#3(x)};
-%   % \def\prevposval{#2,{#3(#2)}}
-%   \protect\renewcommand{\forsydeplotprevx}{#2}
-%   \protect\renewcommand{\forsydeplotprevy}{#3(#2)}
-% }
-
-% \newcommand{\ctend}{%
-%   \addplot+[mark=none] coordinates {(\forsydeplotprevx,\forsydeplotprevy) (\forsydeplotprevx,\forsydeplotprevy)};
-%   % \addlegendentry{\signalname}
-% }
+\NewDocumentCommand{\ctDrawEvents}{ m }{%
+  \pgfmathsetmacro{\plotYPos}{(#1 -\plotShift) * \plotScale + \deYPos}
+  \iffirstitem\firstitemfalse%
+    \node[time] (t_cur) at (\deXPos,\plotYPos){};
+  \else%
+    \ifdim\deXPos pt<\ctPlotWidth pt% 
+    \draw[color=currentcolor, thin]
+    (t_cur) -- (\deXPos,\plotYPos) node[time] (t_cur) {};
+    \else\fi
+  \fi
+  \pgfmathsetmacro{\deXPos}{\deXPos + \plotStep}
+} 

@@ -17,7 +17,8 @@ source=$texmf/tex/latex/forsyde
 mkdir -p $metafont $foundry $manual $source
 
 # remove previous installations
-rm -f $metafont/forsyde* $foundry/forsyde* $manual/* $source/*
+rm -f $manual/* $source/*
+find $texmf/fonts/ -name "forsyde*" -type f -delete
 
 # copy sources in their respective place
 cp -f src/*.sty $source
@@ -25,7 +26,7 @@ cp -f src/*.tex $source
 cp -f fonts/*.mf $metafont
 cd fonts
 for file in *8.mf *10.mf *14.mf; do
-    if mf '\mode:=ljfour; nonstopmode; input '"$file"'' > /dev/null ; then
+    if mf '\mode:=ljfour; nonstopmode; input '"$file"'' ; then
 	mv ${file%.*}.tfm $foundry
     fi
 done

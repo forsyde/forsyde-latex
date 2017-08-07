@@ -63,6 +63,22 @@ beginchar(19,14u#,14u#,0);"Behavior layer phi";
   labels(range 1 thru 7);
 endchar;
 
+beginchar(20,14u#,14u#,0);"Behavior layer !";
+  x1=u; x2=7u; x3=13u;
+  y1=y3=3u; y2=13u;
+  z4=.5(z1+z3);
+  x5=x6=x7=7u; y5=4.5u; y6=6u; y7=11u;
+  pickup pencircle scaled s;
+  draw z1..z2; draw z2..z3; draw z3..z1;
+  pickup pencircle scaled 1.8s;
+  drawdot z5;
+  pickup pencircle xscaled s yscaled 1.5s;
+  draw z7{left}..tension 3..z6{down};
+  draw z7{right}..tension 3..z6{down};
+  labels(range 1 thru 7);
+endchar;
+
+
 %%%%%%%%%%%%%%%%%%%%%%%
 % MoC Layer operators %
 %%%%%%%%%%%%%%%%%%%%%%%

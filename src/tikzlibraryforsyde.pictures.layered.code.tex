@@ -1,0 +1,169 @@
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\newlength{\currentradius}
+\newlength{\layerArrowHalf}
+\newlength{\layerArrowQuarter}
+
+
+% \newcommand{\gettikzx}[2]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+% }
+% % Get y-coordinate of node
+% \newcommand{\gettikzy}[2]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@y}%
+% }
+% % Get x- and y- coordinate of node
+% \newcommand{\gettikzxy}[3]{%
+%   \tikz@scan@one@point\pgfutil@firstofone#1\relax
+%   \edef#2{\the\pgf@x}%
+%   \edef#3{\the\pgf@y}%
+% }
+
+\pgfkeys{
+  /forsyde-atom layer keys/.is family, 
+  /forsyde-atom layer keys/left indent/.store in  = \layerLeftIndent,
+  /forsyde-atom layer keys/right indent/.store in = \layerRightIndent,
+  /forsyde-atom layer keys/label shift/.store in  = \layerLabelShift,
+  /forsyde-atom layer keys/layer radius/.store in = \layerRadius,
+  /forsyde-atom layer keys/default/.style = {
+    left indent=  3pt,
+    right indent= 0pt,
+    label shift= -4ex,
+    layer radius= 2cm,
+  },
+  /forsyde-atom arrow keys/.is family, 
+  /forsyde-atom arrow keys/width/.store in  = \layerArrowWidth,
+  /forsyde-atom arrow keys/height/.store in = \layerArrowHeight,
+  /forsyde-atom arrow keys/length/.store in = \layerArrowLength,
+  /forsyde-atom arrow keys/default/.style = {
+    width  = 3.8cm,
+    height = 1.8cm,
+    length = 1cm,
+  }  
+}
+\newcommand\forsydeAtomSignalArrow[2][]{%
+  \pgfkeys{/forsyde-atom arrow keys, default, #1}%
+  \setlength{\layerArrowHalf}{\layerArrowHeight}
+  \setlength{\layerArrowHalf}{.5\layerArrowHalf}
+  \setlength{\layerArrowQuarter}{\layerArrowHeight}
+  \setlength{\layerArrowQuarter}{.25\layerArrowQuarter}
+  \draw[fill=white]
+  ($(#2)+(-\layerArrowQuarter,\layerArrowHeight)-(0,\layerArrowQuarter)$) coordinate (arrow-base)
+  --++(\layerArrowQuarter,\layerArrowQuarter)
+  --++(0,-\layerArrowHeight)--++(-\layerArrowHeight,0)
+  --++(\layerArrowQuarter,\layerArrowQuarter)
+  --++(-\layerArrowLength,\layerArrowLength) coordinate (arrow-south east)
+  --++(-\layerArrowWidth,0)  coordinate (arrow-south west)
+  --++(0,\layerArrowHeight)  coordinate (arrow-north west)
+  --++(\layerArrowWidth,0)   coordinate (arrow-north east)
+  --cycle;
+  \coordinate (arrow-south)  at ($(arrow-south west)!.5!(arrow-south east)$);
+  \coordinate (arrow-north)  at ($(arrow-north west)!.5!(arrow-north east)$);
+  \coordinate (arrow-east)   at ($(arrow-south west)!.5!(arrow-north west)$);
+  \coordinate (arrow-west)   at ($(arrow-north east)!.5!(arrow-south east)$);
+  \coordinate (arrow-center) at ($(arrow-south)!.5!(arrow-north)$);
+}
+
+% obligatory AFTER \forsydeAtomSignalArrow
+\newcommand\forsydeAtomSignalVector[1]{
+  \coordinate[xshift=2pt,yshift=2pt] (vector-north east1) at (arrow-north east);
+  \coordinate[xshift=4pt,yshift=4pt] (vector-north east2) at (arrow-north east);
+  \path [name path=vector1] (vector-north east1) -- ($(arrow-base)+(2pt,2pt)$);
+  \path [name path=vector2] (vector-north east2) -- ($(arrow-base)+(4pt,4pt)$);
+  \path [name intersections={of=vector1 and #1,by={vector-south east1}}];
+  \path [name intersections={of=vector2 and #1,by={vector-south east2}}];
+  \draw ($(arrow-north west)+(2pt,0)$) --++(0,2pt) -- (vector-north east1) -- (vector-south east1);
+  \draw ($(arrow-north west)+(4pt,2pt)$) --++(0,2pt) -- (vector-north east2) -- (vector-south east2);
+}
+
+\NewDocumentCommand{\forsydeAtomMakeLayers}{O{} >{ \SplitList { , } } m} {%
+  \pgfkeys{/forsyde-atom layer keys, default, #1}%
+  \setlength{\currentradius}{\layerRadius}
+  \setlength{\currentradius}{.7\currentradius+\currentradius}
+  \pgfmathtruncatemacro{\currentLayer}{1}
+  \ProcessList { #2 } { \forsydeAtomSetLayer }
+  \setlength{\currentradius}{\layerRadius}
+  \setlength{\currentradius}{.7\currentradius}
+  \coordinate (layer0-center) at (135:\currentradius);
+  \coordinate (layer0-left) at (0,0);
+  \coordinate (layer0-right) at (0,0);
+}
+\NewDocumentCommand{\forsydeAtomSetLayer}{ >{ \SplitArgument { 1 } { : } } m } {%
+  \forsydeAtomDrawLayer #1
+  \setlength{\currentradius}{\currentradius+\layerRadius}%
+  \pgfmathtruncatemacro{\currentLayer}{\currentLayer + 1}
+}
+\NewDocumentCommand{\forsydeAtomDrawLayer} {m m} {
+  \def\myshift#1{\raisebox{\layerLabelShift}}
+  \draw[name path=layer\currentLayer -rightpath,
+      postaction={decorate, decoration={%
+      text along path, reverse path, raise={\layerLabelShift},
+      text align={align=right, right indent=\layerRightIndent},
+      text={|\sffamily\LARGE|#1}}}]
+  ([shift=(90:\currentradius)]0,0) coordinate (layer\currentLayer -right)
+       arc (85:135:\currentradius) coordinate (layer\currentLayer -center);%
+  \draw[name path=layer\currentLayer -leftpath,
+      postaction={decorate, decoration={%
+      text along path,
+      text align={left,left indent=\layerLeftIndent}, reverse path, raise={1.5ex},
+      text={|\sffamily\it|#2}}}]
+  (layer\currentLayer -center) arc
+      (135:180:\currentradius) coordinate  (layer\currentLayer -left);
+}
+
+\newcommand\forsydeAtomHighlightLayer[1]{
+  \pgfmathtruncatemacro{\nextLayer}{#1 + 1}
+  \gettikzy{(layer#1-right)}{\firstlayerrad}
+  \gettikzy{(layer\nextLayer -right)}{\nextlayerrad}
+  \coordinate (layer1r) at (layer#1-right);
+  \begin{pgfonlayer}{background}
+    \fill[red]
+    ([shift=(90:\firstlayerrad)]0,0) arc (85:180:\firstlayerrad)
+    -- (layer\nextLayer -left) --  (layer\nextLayer -right) --
+    (layer\nextLayer -left) arc (180:85:\nextlayerrad)
+    --cycle;
+  \end{pgfonlayer} 
+}
+
+\newsavebox{\forsydeAtomValue}
+\newsavebox{\forsydeAtomExtValue}
+\newsavebox{\forsydeAtomTagExtValue}
+
+\savebox{\forsydeAtomExtValue}{
+  \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
+    \node [el, draw, inner sep=2pt] (v) {$v$};
+    \node [anchor=south, yshift=-1pt] at (v.north) {$\bot$};
+    \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
+    \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
+  \end{tikzpicture}
+}
+
+\savebox{\forsydeAtomTagExtValue}{
+  \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
+    \node [el, draw, inner sep=2pt] (v) {$v$};
+    \node [anchor=south, yshift=-1pt] at (v.north) {$\bot$};
+    \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
+    \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
+    \node [anchor=west,inner sep=2pt] (d1) at (ve.east) {};
+    \node [anchor=east,inner sep=2pt] (d2) at (ve.west) {};
+    \node [anchor=south] (t) at (ve.north) {$t$};
+    \node [el, fit=(ve)(t)(d1)(d2), inner sep=-5pt] {}; 
+  \end{tikzpicture}
+}
+
+\savebox{\forsydeAtomValue}{
+  \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
+  \node [el, inner sep=2pt] (value) {$v$};%
+  \end{tikzpicture}
+}
+
+\endinput
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "forsyde-pictures.sty"
+%%% End:
