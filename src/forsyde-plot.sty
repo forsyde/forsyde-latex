@@ -248,10 +248,12 @@
   step/.estore in         = \plotSamp,
   ordinate pos/.estore in = \plotOrdPos,
   ordinate/.style  ={draw ordinate, ordinate pos={#1}},
+  line style/.estore in   = \lineStyle,
   default/.style = {
     outline=false,
     step=.1,
     ordinate pos=0,
+    line style=
   }
 }
 \NewDocumentCommand{\signalCT}{O{} m m >{ \SplitList {,} } m}{%
@@ -295,7 +297,7 @@
     \node[time] (t_cur) at (\deXPos,\plotYPos){};
   \else%
     \ifdim\deXPos pt<\ctPlotWidth pt% 
-    \draw[color=currentcolor, thin]
+    \draw[color=currentcolor, thin, \lineStyle]
     (t_cur) -- (\deXPos,\plotYPos) node[time] (t_cur) {};
     \else\fi
   \fi
