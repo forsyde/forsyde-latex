@@ -132,12 +132,22 @@
 
 \newsavebox{\forsydeAtomValue}
 \newsavebox{\forsydeAtomExtValue}
+\newsavebox{\forsydeAtomTagValue}
 \newsavebox{\forsydeAtomTagExtValue}
 
 \savebox{\forsydeAtomExtValue}{
   \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
     \node [el, draw, inner sep=2pt] (v) {$v$};
     \node [anchor=south, yshift=-1pt] at (v.north) {$\bot$};
+    \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
+    \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
+  \end{tikzpicture}
+}
+
+\savebox{\forsydeAtomTagValue}{
+  \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
+    \node [el, draw, inner sep=2pt] (v) {$v$};
+    \node [anchor=south, yshift=-1pt] at (v.north) {$t$};
     \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
     \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
   \end{tikzpicture}

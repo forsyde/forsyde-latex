@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.1.5)  25 JUN 2017 14:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.23)  10 OCT 2017 12:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -430,22 +430,160 @@ File: tikzlibraryplotmarks.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.co
 de.tex
 File: pgflibraryplotmarks.code.tex 2015/08/03 v3.0.1a (rcs-revision 1.14)
-))) (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+))) (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty (/usr
+/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2016/01/19 v6377 L3 programming layer (loader) 
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3-code.tex
+Package: expl3 2016/01/19 v6377 L3 programming layer (code)
+L3 Module: l3bootstrap 2016/01/01 v6339 L3 Bootstrap code
+L3 Module: l3names 2015/12/21 v6328 L3 Namespace for primitives
+L3 Module: l3basics 2015/11/22 v6315 L3 Basic definitions
+L3 Module: l3expan 2015/09/10 v5983 L3 Argument expansion
+L3 Module: l3tl 2015/09/29 v6121 L3 Token lists
+L3 Module: l3str 2016/01/03 v6357 L3 Strings
+L3 Module: l3seq 2015/08/05 v5777 L3 Sequences and stacks
+L3 Module: l3int 2016/01/05 v6366 L3 Integers
+\c_max_int=\count107
+\l_tmpa_int=\count108
+\l_tmpb_int=\count109
+\g_tmpa_int=\count110
+\g_tmpb_int=\count111
+L3 Module: l3quark 2015/08/17 v5855 L3 Quarks
+L3 Module: l3prg 2015/11/01 v6216 L3 Control structures
+\g__prg_map_int=\count112
+L3 Module: l3clist 2015/09/02 v5901 L3 Comma separated lists
+L3 Module: l3token 2015/11/11 v6249 L3 Experimental token manipulation
+L3 Module: l3prop 2016/01/05 v6366 L3 Property lists
+L3 Module: l3msg 2015/09/28 v6113 L3 Messages
+L3 Module: l3file 2015/12/03 v6317 L3 File and I/O operations
+\l_iow_line_count_int=\count113
+\l__iow_target_count_int=\count114
+\l__iow_current_line_int=\count115
+\l__iow_current_word_int=\count116
+\l__iow_current_indentation_int=\count117
+L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
+\c_zero_dim=\dimen164
+\c_max_dim=\dimen165
+\l_tmpa_dim=\dimen166
+\l_tmpb_dim=\dimen167
+\g_tmpa_dim=\dimen168
+\g_tmpb_dim=\dimen169
+\c_zero_skip=\skip41
+\c_max_skip=\skip42
+\l_tmpa_skip=\skip43
+\l_tmpb_skip=\skip44
+\g_tmpa_skip=\skip45
+\g_tmpb_skip=\skip46
+\c_zero_muskip=\muskip10
+\c_max_muskip=\muskip11
+\l_tmpa_muskip=\muskip12
+\l_tmpb_muskip=\muskip13
+\g_tmpa_muskip=\muskip14
+\g_tmpb_muskip=\muskip15
+L3 Module: l3keys 2015/11/17 v6284 L3 Key-value interfaces
+\g__keyval_level_int=\count118
+\l_keys_choice_int=\count119
+L3 Module: l3fp 2015/08/25 v5890 L3 Floating points
+\c__fp_leading_shift_int=\count120
+\c__fp_middle_shift_int=\count121
+\c__fp_trailing_shift_int=\count122
+\c__fp_big_leading_shift_int=\count123
+\c__fp_big_middle_shift_int=\count124
+\c__fp_big_trailing_shift_int=\count125
+\c__fp_Bigg_leading_shift_int=\count126
+\c__fp_Bigg_middle_shift_int=\count127
+\c__fp_Bigg_trailing_shift_int=\count128
+L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
+\c_empty_box=\box38
+\l_tmpa_box=\box39
+\l_tmpb_box=\box40
+\g_tmpa_box=\box41
+\g_tmpb_box=\box42
+L3 Module: l3coffins 2015/08/06 v5789 L3 Coffin code layer
+\l__coffin_internal_box=\box43
+\l__coffin_internal_dim=\dimen170
+\l__coffin_offset_x_dim=\dimen171
+\l__coffin_offset_y_dim=\dimen172
+\l__coffin_x_dim=\dimen173
+\l__coffin_y_dim=\dimen174
+\l__coffin_x_prime_dim=\dimen175
+\l__coffin_y_prime_dim=\dimen176
+\c_empty_coffin=\box44
+\l__coffin_aligned_coffin=\box45
+\l__coffin_aligned_internal_coffin=\box46
+\l_tmpa_coffin=\box47
+\l_tmpb_coffin=\box48
+\l__coffin_display_coffin=\box49
+\l__coffin_display_coord_coffin=\box50
+\l__coffin_display_pole_coffin=\box51
+\l__coffin_display_offset_dim=\dimen177
+\l__coffin_display_x_dim=\dimen178
+\l__coffin_display_y_dim=\dimen179
+L3 Module: l3color 2014/08/23 v5354 L3 Experimental color support
+L3 Module: l3sys 2015/09/25 v6087 L3 Experimental system/runtime functions
+L3 Module: l3candidates 2016/01/14 v6376 L3 Experimental additions to l3kernel
+\l__box_top_dim=\dimen180
+\l__box_bottom_dim=\dimen181
+\l__box_left_dim=\dimen182
+\l__box_right_dim=\dimen183
+\l__box_top_new_dim=\dimen184
+\l__box_bottom_new_dim=\dimen185
+\l__box_left_new_dim=\dimen186
+\l__box_right_new_dim=\dimen187
+\l__box_internal_box=\box52
+\l__coffin_bounding_shift_dim=\dimen188
+\l__coffin_left_corner_dim=\dimen189
+\l__coffin_right_corner_dim=\dimen190
+\l__coffin_bottom_corner_dim=\dimen191
+\l__coffin_top_corner_dim=\dimen192
+\l__coffin_scaled_total_height_dim=\dimen193
+\l__coffin_scaled_width_dim=\dimen194
+L3 Module: l3luatex 2015/11/11 v6250 L3 Experimental LuaTeX-specific functions
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
+File: l3pdfmode.def 2015/11/11 v6250 L3 Experimental driver: PDF mode
+\l__driver_color_stack_int=\count129
+))
+Package: xparse 2016/01/19 v6377 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count130
+\l__xparse_m_args_int=\count131
+\l__xparse_mandatory_args_int=\count132
+\l__xparse_processor_int=\count133
+\l__xparse_v_nesting_int=\count134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count107
-\calc@Bcount=\count108
-\calc@Adimen=\dimen164
-\calc@Bdimen=\dimen165
-\calc@Askip=\skip41
-\calc@Bskip=\skip42
+\calc@Acount=\count135
+\calc@Bcount=\count136
+\calc@Adimen=\dimen195
+\calc@Bdimen=\dimen196
+\calc@Askip=\skip47
+\calc@Bskip=\skip48
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count109
-\calc@Cskip=\skip43
+\calc@Ccount=\count137
+\calc@Cskip=\skip49
 )
 (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count110
+\etb@tempcnta=\count138
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2013/07/12 v3.0.1a (rcs-revision 1.5)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2013/07/15 v3.0.1a (rcs-revision 1.9)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)
+\@envbody=\toks31
 )
 
 LaTeX Warning: You have requested package `',
@@ -453,2352 +591,100 @@ LaTeX Warning: You have requested package `',
 
 Package: forsyde-plot 2017/05/20 v0.2 Signal Plot Library
 (./tikzlibraryforsyde.shapes.code.tex
-\foo=\skip44
-\baz=\skip45
-\twd=\skip46
-\tht=\skip47
-\tdp=\skip48
-\pgfnodepartfabox=\box38
-\pgfnodepartfbbox=\box39
-\pgfnodepartfcbox=\box40
-\pgfnodepartfdbox=\box41
+\foo=\skip50
+\baz=\skip51
+\twd=\skip52
+\tht=\skip53
+\tdp=\skip54
+\pgfnodepartfabox=\box53
+\pgfnodepartfbbox=\box54
+\pgfnodepartfcbox=\box55
+\pgfnodepartfdbox=\box56
 ) (./tikzlibraryforsyde.utils.code.tex)
-./forsyde-plot.sty:21: Undefined control sequence.
-l.21 \NewDocumentCommand
-                        \inputSY{s O{} D<>{0,0} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:21: Undefined control sequence.
-l.21 \NewDocumentCommand\inputSY
-                                {s O{} D<>{0,0} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:21: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.21 \NewDocumentCommand\inputSY{s
-                                   O{} D<>{0,0} m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no s in font nullfont!
-Missing character: There is no O in font nullfont!
-Missing character: There is no D in font nullfont!
-Missing character: There is no < in font nullfont!
-Missing character: There is no > in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:22: Undefined control sequence.
-l.22   \node
-            [anchor=south east, xshift=-.5cm, #2] (insig) at (#3) {#4};%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no x in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no , in font nullfont!
-./forsyde-plot.sty:22: You can't use `macro parameter character #' in horizonta
-l mode.
-l.22   \node[anchor=south east, xshift=-.5cm, #
-                                               2] (insig) at (#3) {#4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 2 in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ( in font nullfont!
-./forsyde-plot.sty:22: You can't use `macro parameter character #' in horizonta
-l mode.
-l.22 ...outh east, xshift=-.5cm, #2] (insig) at (#
-                                                  3) {#4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 3 in font nullfont!
-Missing character: There is no ) in font nullfont!
-./forsyde-plot.sty:22: You can't use `macro parameter character #' in horizonta
-l mode.
-l.22 ...east, xshift=-.5cm, #2] (insig) at (#3) {#
-                                                  4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 4 in font nullfont!
-Missing character: There is no ; in font nullfont!
-./forsyde-plot.sty:23: Undefined control sequence.
-l.23   \IfBooleanTF
-                   #1{\path[s,-|-=.9,->] (insig.south west) edge (#3);}{}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:23: You can't use `macro parameter character #' in horizonta
-l mode.
-l.23   \IfBooleanTF#
-                    1{\path[s,-|-=.9,->] (insig.south west) edge (#3);}{}%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 1 in font nullfont!
-./forsyde-plot.sty:23: Undefined control sequence.
-l.23   \IfBooleanTF#1{\path
-                           [s,-|-=.9,->] (insig.south west) edge (#3);}{}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no | in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 9 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no > in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ( in font nullfont!
-./forsyde-plot.sty:23: You can't use `macro parameter character #' in horizonta
-l mode.
-l.23 ...th[s,-|-=.9,->] (insig.south west) edge (#
-                                                  3);}{}%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 3 in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 21--25
-[]
- []
-
-./forsyde-plot.sty:27: Undefined control sequence.
-l.27 \NewDocumentCommand
-                        \outputSY{s O{} D<>{0,0} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:27: Undefined control sequence.
-l.27 \NewDocumentCommand\outputSY
-                                 {s O{} D<>{0,0} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:27: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.27 \NewDocumentCommand\outputSY{s
-                                    O{} D<>{0,0} m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no s in font nullfont!
-Missing character: There is no O in font nullfont!
-Missing character: There is no D in font nullfont!
-Missing character: There is no < in font nullfont!
-Missing character: There is no > in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:28: Undefined control sequence.
-l.28   \node
-            [anchor=south west, xshift=.5cm, #2] (outsig) at (#3) {#4};%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no x in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no , in font nullfont!
-./forsyde-plot.sty:28: You can't use `macro parameter character #' in horizonta
-l mode.
-l.28   \node[anchor=south west, xshift=.5cm, #
-                                              2] (outsig) at (#3) {#4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 2 in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ( in font nullfont!
-./forsyde-plot.sty:28: You can't use `macro parameter character #' in horizonta
-l mode.
-l.28 ...outh west, xshift=.5cm, #2] (outsig) at (#
-                                                  3) {#4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 3 in font nullfont!
-Missing character: There is no ) in font nullfont!
-./forsyde-plot.sty:28: You can't use `macro parameter character #' in horizonta
-l mode.
-l.28 ...west, xshift=.5cm, #2] (outsig) at (#3) {#
-                                                  4};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 4 in font nullfont!
-Missing character: There is no ; in font nullfont!
-./forsyde-plot.sty:29: Undefined control sequence.
-l.29   \IfBooleanTF
-                   #1{\path[s,-|-=.9,<-] (outsig.south east) edge (#3);}{}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:29: You can't use `macro parameter character #' in horizonta
-l mode.
-l.29   \IfBooleanTF#
-                    1{\path[s,-|-=.9,<-] (outsig.south east) edge (#3);}{}%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 1 in font nullfont!
-./forsyde-plot.sty:29: Undefined control sequence.
-l.29   \IfBooleanTF#1{\path
-                           [s,-|-=.9,<-] (outsig.south east) edge (#3);}{}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no | in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 9 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no < in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ( in font nullfont!
-./forsyde-plot.sty:29: You can't use `macro parameter character #' in horizonta
-l mode.
-l.29 ...h[s,-|-=.9,<-] (outsig.south east) edge (#
-                                                  3);}{}%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 3 in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 27--31
-[]
- []
-
-\c@signum=\count111
-./forsyde-plot.sty:75: Undefined control sequence.
-l.75 \NewDocumentEnvironment
-                            {signalsDE}{O{} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:75: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.75 \NewDocumentEnvironment{s
-                              ignalsDE}{O{} m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no D in font nullfont!
-Missing character: There is no E in font nullfont!
-Missing character: There is no O in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:76: Illegal parameter number in definition of \pgfkeyscurren
-tkey.
-<to be read again> 
-                   1
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:76: Illegal parameter number in definition of \pgfkeyscurren
-tkeyRAW.
-<to be read again> 
-                   1
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:76: Illegal parameter number in definition of \pgfkeyscurren
-tkey.
-<to be read again> 
-                   1
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:76: Illegal parameter number in definition of \pgfkeys@temp.
-<to be read again> 
-                   1
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:76: Illegal parameter number in definition of \pgfkeyscurren
-tname.
-<to be read again> 
-                   1
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:76: Package pgfkeys Error: I do not know the key '/signal pl
-ot keys/##1' and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.76   \pgfkeys{/signal plot keys, default, #1}
-                                               %
-This error message was generated by an \errmessage
-command, so I can't give any explicit help.
-Pretend that you're Hercule Poirot: Examine all clues,
-and deduce the truth by order and method.
-
-./forsyde-plot.sty:78: Illegal parameter number in definition of \lastTag.
-<to be read again> 
-                   2
-l.78   \def\lastTag{#2
-                      }
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:83: Undefined control sequence.
-l.83   \node
-            [%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no x in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no y in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no ) in font nullfont!
-./forsyde-plot.sty:90: Extra }, or forgotten \endgroup.
-l.90   }
-        {%
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./forsyde-plot.sty:99: Missing } inserted.
-<inserted text> 
-                }
-l.99   \end{tikzpicture}
-                        %
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no ; in font nullfont!
-./forsyde-plot.sty:101: Undefined control sequence.
-l.101   \node
-             [ports e\thesignum w\thesignum, inner sep=0pt,
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 75--128
-[]
- []
-
-./forsyde-plot.sty:129: Undefined control sequence.
-l.129 \NewDocumentCommand
-                         {\signalDE}{>{ \SplitList {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:129: Undefined control sequence.
-l.129 \NewDocumentCommand{\signalDE
-                                   }{>{ \SplitList {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:129: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.129 \NewDocumentCommand{\signalDE}{>
-                                      { \SplitList {,} } m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no > in font nullfont!
-./forsyde-plot.sty:129: Undefined control sequence.
-l.129 \NewDocumentCommand{\signalDE}{>{ \SplitList
-                                                   {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no , in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:130: Undefined control sequence.
-<argument> -\thesignum * \deSep 
-                                
-l.130 ...thsetmacro{\deYPos}{-\thesignum * \deSep}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:130: Missing number, treated as zero.
-<to be read again> 
-                   p
-l.130 ...thsetmacro{\deYPos}{-\thesignum * \deSep}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-./forsyde-plot.sty:131: Undefined control sequence.
-l.131   \path
-              (0,\deYPos) node[left] {} node[time] (t_cur) {};
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no [ in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no [ in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:131: Missing $ inserted.
-<inserted text> 
-                $
-l.131 ... (0,\deYPos) node[left] {} node[time] (t_
-                                                  cur) {};
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 131.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 131.
-./forsyde-plot.sty:132: Undefined control sequence.
-l.132   \ProcessList
-                     { #1 } {\deDrawEvents}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:132: You can't use `macro parameter character #' in math mod
-e.
-l.132   \ProcessList { #
-                        1 } {\deDrawEvents}%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:132: Undefined control sequence.
-l.132   \ProcessList { #1 } {\deDrawEvents
-                                          }%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:133: Undefined control sequence.
-l.133   \deLastEvent
-                    {}{\lastTag}%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:133: Undefined control sequence.
-l.133   \deLastEvent{}{\lastTag
-                               }%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:134: Undefined control sequence.
-l.134   \firstitemtrue
-                      %
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:136: Extra }, or forgotten $.
-l.136 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./forsyde-plot.sty:137: Missing $ inserted.
-<inserted text> 
-                $
-l.137 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 129--137
-[]
- []
-
-
-Overfull \hbox (27.92102pt too wide) in paragraph at lines 129--137
-[]\OML/cmm/m/it/10 ur\OT1/cmr/m/n/10 )[]; 1[][][]$ 
- []
-
-./forsyde-plot.sty:141: Undefined control sequence.
-l.141 \NewDocumentCommand
-                         {\deDrawEvents}{ > {\SplitArgument{1}{:}} m }{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:141: Undefined control sequence.
-l.141 \NewDocumentCommand{\deDrawEvents
-                                       }{ > {\SplitArgument{1}{:}} m }{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:141: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.141 \NewDocumentCommand{\deDrawEvents}{ >
-                                            {\SplitArgument{1}{:}} m }{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no > in font nullfont!
-./forsyde-plot.sty:141: Undefined control sequence.
-l.141 ...Command{\deDrawEvents}{ > {\SplitArgument
-                                                  {1}{:}} m }{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no : in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:142: Undefined control sequence.
-l.142   \iffirstitem\firstitemfalse\deFirstEvent
-                                                 #1
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:142: You can't use `macro parameter character #' in horizont
-al mode.
-l.142   \iffirstitem\firstitemfalse\deFirstEvent #
-                                                  1
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no 1 in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 141--146
-[]
- []
-
-./forsyde-plot.sty:147: Undefined control sequence.
-l.147 \NewDocumentCommand
-                         {\deFirstEvent}{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:147: Undefined control sequence.
-l.147 \NewDocumentCommand{\deFirstEvent
-                                       }{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:147: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.147 \NewDocumentCommand{\deFirstEvent}{m
-                                           m} {%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no m in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:148: Illegal parameter number in definition of \dePrevValue.
-<to be read again> 
-                   1
-l.148   \def\dePrevValue{#1
-                           }%
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:150: Undefined control sequence.
-l.150 \NewDocumentCommand
-                         {\deEvent}{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:150: Undefined control sequence.
-l.150 \NewDocumentCommand{\deEvent
-                                  }{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no m in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:151: Undefined control sequence.
-l.151   \draw
-              (t_cur) %
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:151: Missing $ inserted.
-<inserted text> 
-                $
-l.151   \draw (t_
-                 cur) %
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-./forsyde-plot.sty:152: You can't use `macro parameter character #' in math mod
-e.
-l.152   -- ++( .05, .3) -- (#
-                             2-.05,.3+\deYPos) -- ++(.05,-.3) %
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:153: Missing $ inserted.
-<inserted text> 
-                $
-l.153   -- ++(-.05,-.3) -- ($(t_
-                                cur)+(.05,-.3)$) -- cycle; %
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-Missing character: There is no ) in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no - in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no y in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ; in font nullfont!
-./forsyde-plot.sty:154: Undefined control sequence.
-l.154   \path
-              (t_cur)
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:154: Missing $ inserted.
-<inserted text> 
-                $
-l.154   \path (t_
-                 cur)
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-./forsyde-plot.sty:155: Undefined control sequence.
-l.155   -- node[anchor=\dePos
-                             ] {\scriptsize\dePrevValue}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:155: Undefined control sequence.
-l.155   -- node[anchor=\dePos] {\scriptsize
-                                           \dePrevValue}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:155: Undefined control sequence.
-l.155 ...e[anchor=\dePos] {\scriptsize\dePrevValue
-                                                  }
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:156: You can't use `macro parameter character #' in math mod
-e.
-l.156   (#
-          2,\deYPos) node[time] (t_cur) {};
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:157: Illegal parameter number in definition of \dePrevValue.
-<to be read again> 
-                   1
-l.157   \def\dePrevValue{#1
-                           }
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:158: Extra }, or forgotten $.
-l.158 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./forsyde-plot.sty:159: Undefined control sequence.
-l.159 \NewDocumentCommand
-                         {\deLastEvent}{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:159: Undefined control sequence.
-l.159 \NewDocumentCommand{\deLastEvent
-                                      }{m m} {%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:160: Undefined control sequence.
-l.160   \draw
-              (t_cur) -- ++( .05, .3) -- (#2,.3+\deYPos);
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:160: You can't use `macro parameter character #' in math mod
-e.
-l.160   \draw (t_cur) -- ++( .05, .3) -- (#
-                                           2,.3+\deYPos);
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:161: Undefined control sequence.
-l.161   \draw
-              (t_cur) -- ++( .05, -.3) -- (#2,-.3+\deYPos);
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:161: You can't use `macro parameter character #' in math mod
-e.
-l.161   \draw (t_cur) -- ++( .05, -.3) -- (#
-                                            2,-.3+\deYPos);
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:162: Undefined control sequence.
-l.162   \path
-              (t_cur)
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:163: Undefined control sequence.
-l.163   -- node[anchor=\dePos
-                             ] {\scriptsize\dePrevValue}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:163: Undefined control sequence.
-l.163   -- node[anchor=\dePos] {\scriptsize
-                                           \dePrevValue}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:163: You can't use `macro parameter character #' in math mod
-e.
-\dePrevValue ->##
-                 1
-l.163 ...e[anchor=\dePos] {\scriptsize\dePrevValue
-                                                  }
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:164: You can't use `macro parameter character #' in math mod
-e.
-l.164   (#
-          2,\deYPos) node[time] (signal-\thesignum) {};
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:166: Missing $ inserted.
-<inserted text> 
-                $
-l.166 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 147--166
-[]
- []
-
-
-Overfull \hbox (26.2544pt too wide) in paragraph at lines 147--166
-[]\OML/cmm/m/it/10 ur\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (15.5556pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 +
- []
-
-
-Overfull \hbox (48.33344pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 +(\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05\OML/cmm/m/it/10 ; :\OT1/
-cmr/m/n/10 3) \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (24.44452pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 (2 \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (32.77783pt too wide) in paragraph at lines 147--166
-\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05\OML/cmm/m/it/10 ; :\OT1/cmr/m/n/10 3 +
- []
-
-
-Overfull \hbox (24.44452pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 0) \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (15.5556pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 +
- []
-
-
-Overfull \hbox (56.11124pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 +(\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05\OML/cmm/m/it/10 ; \OMS/c
-msy/m/n/10 ^^@\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 3) \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (15.5556pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 +
- []
-
-
-Overfull \hbox (63.88904pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 +(\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05\OML/
-cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 3) \OMS/cms
-y/m/n/10 ^^@
- []
-
-
-Overfull \hbox (37.9211pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 ($$[]\OML/cmm/m/it/10 ur\OT1/cmr/m/n/10 ) +
-
- []
-
-
-Overfull \hbox (40.55563pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05\OML/cmm/m/it/10 ; \OMS/cm
-sy/m/n/10 ^^@\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 3)$
- []
-
-
-Overfull \hbox (26.2544pt too wide) in paragraph at lines 147--166
-[]\OML/cmm/m/it/10 ur\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
- []
-
-
-Overfull \hbox (72.83578pt too wide) in paragraph at lines 147--166
-\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 node\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 anch
-or \OT1/cmr/m/n/10 =
- []
-
-
-Overfull \hbox (740.54991pt too wide) in paragraph at lines 147--166
-\OT1/cmr/m/n/10 ][](2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1
-/cmr/m/n/10 0)\OML/cmm/m/it/10 node\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 time\OT1/c
-mr/m/n/10 ](\OML/cmm/m/it/10 t[]ur\OT1/cmr/m/n/10 )[]; [][][]$ 
- []
-
-./forsyde-plot.sty:185: Undefined control sequence.
-l.185 \NewDocumentEnvironment
-                             {signalsCT}{O{} O{0} m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:185: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.185 \NewDocumentEnvironment{s
-                               ignalsCT}{O{} O{0} m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no C in font nullfont!
-Missing character: There is no T in font nullfont!
-Missing character: There is no O in font nullfont!
-Missing character: There is no O in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:186: Illegal parameter number in definition of \pgfkeyscurre
-ntkey.
-<to be read again> 
-                   1
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:186: Illegal parameter number in definition of \pgfkeyscurre
-ntkeyRAW.
-<to be read again> 
-                   1
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:186: Illegal parameter number in definition of \pgfkeyscurre
-ntkey.
-<to be read again> 
-                   1
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:186: Illegal parameter number in definition of \pgfkeys@temp
-.
-<to be read again> 
-                   1
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:186: Illegal parameter number in definition of \pgfkeyscurre
-ntname.
-<to be read again> 
-                   1
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:186: Package pgfkeys Error: I do not know the key '/signal p
-lot keys/##1' and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.186   \pgfkeys{/signal plot keys, default, #1}
-                                                %
-(That was another \errmessage.)
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   2
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   2
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   2
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:188: Illegal parameter number in definition of \pgfmath@toke
-n.
-<to be read again> 
-                   }
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:188: Package PGF Math Error: Unknown operator `##' or `##2' 
-(in '##2').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.188   \pgfmathsetmacro{\firstTag}{#2}
-                                       
-(That was another \errmessage.)
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   3
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   2
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   3
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   3
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   2
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   3
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   3
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   2
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:189: Illegal parameter number in definition of \pgfmath@toke
-n.
-<to be read again> 
-                   }
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:189: Package PGF Math Error: Unknown operator `##' or `##3' 
-(in '##3 - ##2').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.189   \pgfmathsetmacro{\lastTag}{#3 - #2}
-                                           
-(That was another \errmessage.)
-
-./forsyde-plot.sty:194: Undefined control sequence.
-l.194   \node
-             [%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no x in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no y in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no ) in font nullfont!
-./forsyde-plot.sty:201: Extra }, or forgotten \endgroup.
-l.201   }
-         {%
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./forsyde-plot.sty:211: Missing } inserted.
-<inserted text> 
-                }
-l.211   \end{tikzpicture}
-                         %
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no ; in font nullfont!
-./forsyde-plot.sty:213: Undefined control sequence.
-l.213   \node
-             [ports e\thesignum w\thesignum,inner sep=0pt,
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no w in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 185--241
-[]
- []
-
-./forsyde-plot.sty:257: Undefined control sequence.
-l.257 \NewDocumentCommand
-                         {\signalCT}{O{} m m >{ \SplitList {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:257: Undefined control sequence.
-l.257 \NewDocumentCommand{\signalCT
-                                   }{O{} m m >{ \SplitList {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:257: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.257 \NewDocumentCommand{\signalCT}{O
-                                      {} m m >{ \SplitList {,} } m}{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no O in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no > in font nullfont!
-./forsyde-plot.sty:257: Undefined control sequence.
-l.257 ...tCommand{\signalCT}{O{} m m >{ \SplitList
-                                                   {,} } m}{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no , in font nullfont!
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:258: Illegal parameter number in definition of \pgfkeyscurre
-ntkey.
-<to be read again> 
-                   1
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:258: Illegal parameter number in definition of \pgfkeyscurre
-ntkeyRAW.
-<to be read again> 
-                   1
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:258: Illegal parameter number in definition of \pgfkeyscurre
-ntkey.
-<to be read again> 
-                   1
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:258: Illegal parameter number in definition of \pgfkeys@temp
-.
-<to be read again> 
-                   1
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:258: Illegal parameter number in definition of \pgfkeyscurre
-ntname.
-<to be read again> 
-                   1
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:258: Package pgfkeys Error: I do not know the key '/ct signa
-l keys/##1' and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.258   \pgfkeys{/ct signal keys, default, #1}
-                                              %
-(That was another \errmessage.)
-
-./forsyde-plot.sty:261: Undefined control sequence.
-<argument> -\thesignum * \deSep 
-                                * 1.5
-l.261 ...acro{\deYPos}{-\thesignum * \deSep * 1.5}
-                                                  \fi
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:261: Missing number, treated as zero.
-<to be read again> 
-                   p
-l.261 ...acro{\deYPos}{-\thesignum * \deSep * 1.5}
-                                                  \fi
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   2
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   2
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   2
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   2
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@toke
-n.
-<to be read again> 
-                   }
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:263: Package PGF Math Error: Unknown operator `##' or `##2' 
-(in '##2').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.263   \pgfmathsetmacro{\plotYMin}{#2}
-                                       \pgfmathsetmacro{\plotYMax}{#3}
-(That was another \errmessage.)
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   3
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   3
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   3
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   3
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   3
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:263: Illegal parameter number in definition of \pgfmath@toke
-n.
-<to be read again> 
-                   }
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:263: Package PGF Math Error: Unknown operator `##' or `##3' 
-(in '##3').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.263 ...tYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-                                                  
-(That was another \errmessage.)
-
-
-./forsyde-plot.sty:264: Package PGF Math Error: You've asked me to divide `1' b
-y `0.0', but I cannot divide any number by `0.0' (in '1/(0- 0)').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.264 ...ro{\plotScale}{1/(\plotYMax - \plotYMin)}
-                                                  
-(That was another \errmessage.)
-
-./forsyde-plot.sty:264: Arithmetic overflow.
-\pgfmathdivide@ ...\pgfmath@x by\c@pgfmath@counta 
-                                                  \else \ifdim 0pt>\pgfmath@...
-l.264 ...ro{\plotScale}{1/(\plotYMax - \plotYMin)}
-                                                  
-I can't carry out that multiplication or division,
-since the result is out of range.
-
-./forsyde-plot.sty:266: Undefined control sequence.
-<argument> \ctPlotWidth / \lastTag 
-                                   * \plotSamp 
-l.266 ...tep}{\ctPlotWidth / \lastTag * \plotSamp}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:266: Missing number, treated as zero.
-<to be read again> 
-                   p
-l.266 ...tep}{\ctPlotWidth / \lastTag * \plotSamp}
-                                                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-
-./forsyde-plot.sty:266: Package PGF Math Error: You've asked me to divide `4' b
-y `', but I cannot divide any number by `' (in '4/ * .1').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.266 ...tep}{\ctPlotWidth / \lastTag * \plotSamp}
-                                                  
-(That was another \errmessage.)
-
-./forsyde-plot.sty:266: Arithmetic overflow.
-\pgfmathdivide@ ...\pgfmath@x by\c@pgfmath@counta 
-                                                  \else \ifdim 0pt>\pgfmath@...
-l.266 ...tep}{\ctPlotWidth / \lastTag * \plotSamp}
-                                                  
-I can't carry out that multiplication or division,
-since the result is out of range.
-
-./forsyde-plot.sty:272: Undefined control sequence.
-l.272   \path
-              (0,\deYPos) node[left] {} node[time] (t_start) {};
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no , in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no . in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no [ in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no [ in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:272: Missing $ inserted.
-<inserted text> 
-                $
-l.272 ... (0,\deYPos) node[left] {} node[time] (t_
-                                                  start) {};
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-./forsyde-plot.sty:273: Undefined control sequence.
-l.273   \ProcessList
-                     { #4 } {\ctDrawEvents};%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:273: You can't use `macro parameter character #' in math mod
-e.
-l.273   \ProcessList { #
-                        4 } {\ctDrawEvents};%
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-./forsyde-plot.sty:273: Undefined control sequence.
-l.273   \ProcessList { #4 } {\ctDrawEvents
-                                          };%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:290: Extra }, or forgotten $.
-l.290 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./forsyde-plot.sty:291: Missing $ inserted.
-<inserted text> 
-                $
-l.291 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 257--291
-[]
- []
-
-
-Overfull \hbox (37.68292pt too wide) in paragraph at lines 257--291
-[]\OML/cmm/m/it/10 tart\OT1/cmr/m/n/10 )[]; 4[];$ 
- []
-
-./forsyde-plot.sty:292: Undefined control sequence.
-l.292 \NewDocumentCommand
-                         {\ctDrawEvents}{ m }{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./forsyde-plot.sty:292: Undefined control sequence.
-l.292 \NewDocumentCommand{\ctDrawEvents
-                                       }{ m }{%
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-./forsyde-plot.sty:292: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.292 \NewDocumentCommand{\ctDrawEvents}{ m
-                                            }{%
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no m in font nullfont!
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@expr
-ession.
-<to be read again> 
-                   1
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   1
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@next
-.
-<to be read again> 
-                   1
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@bgro
-up@strip@last.
-<to be read again> 
-                   1
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@bgro
-up@stripped.
-<to be read again> 
-                   1
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-./forsyde-plot.sty:293: Illegal parameter number in definition of \pgfmath@toke
-n.
-<to be read again> 
-                   }
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-You meant to type ## instead of #, right?
-Or maybe a } was forgotten somewhere earlier, and things
-are all screwed up? I'm going to assume that you meant ##.
-
-
-./forsyde-plot.sty:293: Package PGF Math Error: Unknown operator `##' or `##1' 
-(in '##1 * 1.0+ 0.0- 0.0').
-
-See the PGF Math package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.293 ...}{#1 * \plotScale + \deYPos - \plotShift}
-                                                  
-(That was another \errmessage.)
-
-./forsyde-plot.sty:295: Undefined control sequence.
-l.295     \node
-               [time] (t_cur) at (\deXPos,\plotYPos){};
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no ( in font nullfont!
-Missing character: There is no t in font nullfont!
-./forsyde-plot.sty:295: Missing $ inserted.
-<inserted text> 
-                $
-l.295     \node[time] (t_
-                         cur) at (\deXPos,\plotYPos){};
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-./forsyde-plot.sty:303: Extra }, or forgotten $.
-l.303 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
+\c@signum=\count139
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \signalSY with sig. 'O{} >{ \SplitList {,} } m' on line 86.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \syDrawEvents with sig. ' > {\SplitArgument {1}{:}} m ' on
+. line 96.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \syFirstEvent with sig. 'm m' on line 98.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \syEvent with sig. 'm m' on line 99.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \syLastEvent with sig. 'm m' on line 100.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \inputSY with sig. 's O{} D<>{0,0} m' on line 107.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \outputSY with sig. 's O{} D<>{0,0} m' on line 113.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-environment"
+. 
+. Defining environment 'signalsDE' with sig. 'O{} m' on line 171.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \signalDE with sig. '>{ \SplitList {,} } m' on line 180.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \deDrawEvents with sig. ' > {\SplitArgument {1}{:}} m ' on
+. line 189.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \deFirstEvent with sig. 'm m' on line 193.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \deEvent with sig. 'm m' on line 202.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \deLastEvent with sig. 'm m' on line 209.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-environment"
+. 
+. Defining environment 'signalsCT' with sig. 'O{} O{0} m' on line 284.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \signalCT with sig. 'O{} m m >{ \SplitList {,} } m' on line
+. 336.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining command \ctDrawEvents with sig. ' m ' on line 349.
+.................................................
 )
 ! Emergency stop.
 <*> \input forsyde-plot.sty
@@ -2807,11 +693,11 @@ deleted material, e.g., by typing `I$}'.
 
  
 Here is how much of TeX's memory you used:
- 26099 strings out of 493029
- 701479 string characters out of 6136235
- 750779 words of memory out of 5000000
- 29350 multiletter control sequences out of 15000+600000
+ 33083 strings out of 493029
+ 844011 string characters out of 6136234
+ 858133 words of memory out of 5000000
+ 36302 multiletter control sequences out of 15000+600000
  3640 words of font info for 14 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,3n,77p,784b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,0n,77p,10391b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!
