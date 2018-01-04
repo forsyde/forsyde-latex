@@ -160,7 +160,9 @@
 \newif\iftruncatevalue
 \pgfkeys{/designalkeys/.is family, /designalkeys,
   trunc/.is if=truncatevalue,
+  name/.estore in = \deName,
   default/.style = {
+    name=,
   }
 }
 
@@ -169,7 +171,7 @@
   \pgfkeys{/designalkeys, default, #2}%
   %%% prepare drawing of signal %%%
   \pgfmathsetmacro{\deYPos}{-\thesignum * \plotSep}
-  \path (0,\deYPos) node[left] {} node[time] (t_cur) {};
+  \path (0,\deYPos) node[left] {\scriptsize\deName} node[time] (t_cur) {};
   %%% test if reading from file or string %%%
   \IfBooleanTF{#1}
   { \IfFileExists{#3}
@@ -329,7 +331,7 @@
   % step/.estore in         = \plotSamp,
   ymax/.estore in         = \plotYMax,
   ymin/.estore in         = \plotYMin,
-  name/.estore in         = \plotName,
+  name/.estore in         = \ctName,
   ordinate pos/.estore in = \plotOrdPos,
   ordinate/.style  ={draw ordinate, ordinate pos={#1}},
   line style/.estore in   = \lineStyle,
@@ -343,42 +345,6 @@
     line style=
   }
 }
-
-% \ExplSyntaxOn
-% \NewDocumentCommand{\signalDE}{s O{} m }{%
-%   \pgfkeys{/designalkeys, default, #2}%
-%   %%% prepare drawing of signal %%%
-%   \pgfmathsetmacro{\deYPos}{-\thesignum * \plotSep}
-%   \path (0,\deYPos) node[left] {} node[time] (t_cur) {};
-%   %%% test if reading from file or string %%%
-%   \IfBooleanTF{#1}
-%   { \IfFileExists{#3}
-%     {\CatchFileDef{\deTokensString}{#3}{\endlinechar=-1 }}
-%     {\PackageError{forsyde-plot}
-%       {File '#3' does not exist!}
-%       {Please provide a valid file path to the 'signalDE' command}}
-%     %%% start drawing. expand the argument (once) %%%
-%     \desig_toklist:o { \deTokensString }
-%   }
-%   { %%% start drawing %%%
-%     \desig_toklist:n { #3 }
-%   }
-%   \firstitemtrue%
-%   \stepcounter{signum}
-% }
-
-% \seq_new:N \l_desig_toklist_input_seq
-
-% \cs_new_protected:Npn \desig_toklist:n #1
-% {
-%   \seq_set_split:Nnn \l_desig_toklist_input_seq {,} { #1 }
-%   \seq_map_inline:Nn \l_desig_toklist_input_seq
-%   {
-%     \deDrawEventsList{##1}
-%   }
-% }
-% \cs_generate_variant:Nn \desig_toklist:n { o }
-% \ExplSyntaxOff
 
 % \NewDocumentCommand{\signalCT}{s O{} >{ \SplitList {,} } m}{%
 %   \pgfkeys{/ctsignalkeys, default, #1}%
