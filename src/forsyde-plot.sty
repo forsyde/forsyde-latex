@@ -293,11 +293,11 @@
   \end{tikzpicture}%
   \egroup;
   \node[ports e\thesignum w\thesignum,inner sep=0pt,
-    fit=(sigdrawing)] (sigplot) {};
+    fit=(sigdrawing)] (\plotName) {};
   \iftimestamp
   \pgfmathsetmacro{\rescaleX}{\ctPlotWidth /(\lastTag -\firstTag)}
   \pgfmathsetmacro{\gridstep}{\rescaleX * \plotGridSize}
-  \node[anchor=south east, inner sep=0] at (sigplot.north east) {%
+  \node[anchor=south east, inner sep=0] at (\plotName .north east) {%
     \begin{tikzpicture}[draw=black,%
       xscale=\plotXScale, yscale=\plotYScale] 
       \foreach \x [count=\i] in {0,\gridstep,...,\ctPlotWidth} {
@@ -312,12 +312,12 @@
   \else\fi
   % \ifdrawinputs
   % \foreach \i in {1,...,\thesignum} {
-  %   \path (sigplot.e\i) edge[s,-|-,->] (\plotAt.w\i);
+  %   \path (\plotName.e\i) edge[s,-|-,->] (\plotAt.w\i);
   % }
   % \else\fi
   % \ifdrawoutputs
   % \foreach \i in {1,...,\thesignum} {
-  %   \path (sigplot.w\i) edge[s,-|-,<-] (\plotAt.e\i);
+  %   \path (\plotName.w\i) edge[s,-|-,<-] (\plotAt.e\i);
   % }
   % \else\fi
 }

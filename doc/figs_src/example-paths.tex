@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage{forsyde-tikz}
+\begin{document}
+\begin{tikzpicture}[]
+  \node[] at (7.5,2.3) {};
+  \node[draw] (a) at (6, -1) {};
+  \cluster[embed] (cl) <(a)> {};
+  \path (0,2)   edge[s, srcport,->,dstport]  (1.5,2)
+        (2,2)   edge[s=ct,-> , token=vector-scalar]  (3.5,2)
+        (4,2)   edge[s=sy, -|-|-=0.2:0.6, deviate=-10pt] (5.5,2)
+        (6,1.7) edge[s, <-<, token=scalar, token pos=0.2, -|-] (7.5,2.3)
+        (0,1)   edge[v,token=scalar-vector-function,srcport,->,dstport] (2,1)
+        (3,1)   edge[v=sdf] (5,1)
+        (6,1)   edge[v, <-, token=vector,token pos=0.35] (8,1)
+        (1,0)   edge[f, ->, |-|=0.6] (2,-2)
+        (4,-1)  edge[trans={v,dstport}{cl-west}{s,->}] (a);
+\end{tikzpicture}
+\end{document}

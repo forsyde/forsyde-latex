@@ -3,7 +3,9 @@
 figs/*
 !inputs
 !inputs/*
-!figs/*.tex
+!figs_src
+figs_src/*
+!figs_src/*.tex
 !Makefile
 !.gitignore
 !*.tex
