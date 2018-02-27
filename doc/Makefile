@@ -55,6 +55,7 @@ clean:
 
 # Rules for Tikz and LaTeX figures
 $(TIKZ_FIGS): figs/%.pdf: figs_src/%.tex
+	@mkdir -p figs
 	@echo $(@F)
 	TEXINPUTS=:$(FIGS_SRC)/:$(STYDIR)/ pdflatex $(*F)
 	mv $(@F) $@ 

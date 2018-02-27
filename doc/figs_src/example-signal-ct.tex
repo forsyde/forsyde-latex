@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage[plot,tikz]{forsyde}
+\graphicspath{figs_src}
+\begin{document}
+\begin{tikzpicture}[]
+  \begin{signalsCT}[name=n, grid and time=1, xscale=.7, yscale=.7]{3.3}
+    \signalCT [name=sig-ct1, outline, ymin=-1.1, ymax=2.1,draw ordinate, line style={ultra thick}]{
+      -1.0:0, -1.0:0.9999999776, 0.0:1.009999977376, 0.0:1.9999999552, 1.0:2.009999954976,
+      1.0:2.9999999328, 2.0:3.009999932576, 2.0:3.29999992608
+    }
+    \signalCT*[name=sig-ct2, outline, ymin=-1.1, ymax=2.1,draw ordinate]{ct-input1.flx}
+    \signalCT [name=sig-ct3, outline, ymin=-1.1, ymax=2.1,draw ordinate, line style={ultra thick}]{
+      -1.0:0,-1.0:2.39999994624,0.0:2.409999946016,0.0:3.29999992608
+    }
+    \signalCT[name= sig-ct4, outline, ymin=-1.1, ymax=2.1,draw ordinate]{
+      1.0:0,1.0:0.009999999776, 1.0:1.39999996864, 0.0:1.409999968416, 0.0:2.79999993728,
+      -1.0:2.809999937056, -1.0:3.29999992608
+    }
+  \end{signalsCT}
+  \foreach \i in {1,...,4} {
+    \node[anch] (a) at (n.e\i) {}; \node[label, anchor=west] (l) at (a.east) {\texttt{n.e\i}};
+    \node[anch] (a) at (n.w\i) {}; \node[label, anchor=east] (l) at (a.west) {\texttt{n.w\i}};
+  }
+\end{tikzpicture}
+\end{document}

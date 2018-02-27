@@ -74,9 +74,9 @@
     matrix of nodes, row sep=3pt, column sep=3pt,
     ampersand replacement=\&, nodes={align=right},
     xshift=\plotXShift, yshift=\plotYShift, anchor=\plotAnchor,
-  ] {
-    \BODY
-  };
+    ] {
+      \BODY
+    };
 }
 
 \NewDocumentCommand{\signalSY}{O{} >{ \SplitList {,} } m}{%
@@ -158,10 +158,14 @@
 \usepackage{catchfile}
 
 \newif\iftruncatevalue
+\newif\iflastlabel
 \pgfkeys{/designalkeys/.is family, /designalkeys,
   trunc/.is if=truncatevalue,
+  last label/.is if=lastlabel,
   name/.estore in = \deName,
   default/.style = {
+    trunc=false,
+    last label=true,
     name=,
   }
 }
@@ -202,17 +206,6 @@
 \cs_generate_variant:Nn \desig_toklist:n { o }
 \ExplSyntaxOff
 
-
-% \NewDocumentCommand{\signalDE}{O{} >{ \SplitList {,} } m}{%
-%   \pgfmathsetmacro{\deYPos}{-\thesignum * \plotSep}
-%   \path (0,\deYPos) node[left] {} node[time] (t_cur) {};
-%   % \node[anchor=east, draw] (0,\deYPos) {};
-%   \ProcessList { #2 } {\deDrawEventsList}%
-%   % \deLastEvent{}{\lastTag}%
-%   \firstitemtrue%
-%   \stepcounter{signum}
-% }
-
 \newif\iffirstitem
 \firstitemtrue   
 
@@ -226,14 +219,6 @@
   \def\dePrevValue{#1}%
 }
 
-  % \ifdim#2 pt>\lastTag pt\else% 
-  % % \ifnum0#2>\lastTag\else
-  % \pgfmathsetmacro{\plotYPos}{(#1 -\plotShift)*\rescaleY +\deYPos}
-  % \pgfmathsetmacro{\plotXPos}{(#2 -\firstTag) *\rescaleX}
-  % \draw[color=currentcolor, thin, \lineStyle]
-  %   (t_cur) -- (\plotXPos,\plotYPos) node[time] (t_cur) {};
-  % \fi
-
 \NewDocumentCommand{\deEvent}{m m} {%
   \iftruncatevalue\pgfmathtruncatemacro\valLabel{\dePrevValue}
   \else\def\valLabel{\dePrevValue}\fi
@@ -244,6 +229,7 @@
       (#2,\deYPos) node[time] (t_cur) {};
     \def\dePrevValue{#1}
   \else%
+    \iflastlabel\else\def\valLabel{}\fi
     \draw (t_cur) -- ++(.05, .3) -- (\lastTag,.3+\deYPos);
     \draw (t_cur) -- ++(.05, -.3) -- (\lastTag,-.3+\deYPos);
     \path (t_cur) -- node[anchor=\labelPos] {\scriptsize\valLabel}
@@ -346,43 +332,6 @@
   }
 }
 
-% \NewDocumentCommand{\signalCT}{s O{} >{ \SplitList {,} } m}{%
-%   \pgfkeys{/ctsignalkeys, default, #1}%
-%   % determine the Y position
-%   \ifoverlap\pgfmathsetmacro{\deYPos}{0}
-%   \else\pgfmathsetmacro{\deYPos}{-\thesignum * \plotSep * 1.5}\fi
-%   % determine the scale
-%   % \pgfmathsetmacro{\plotYMin}{#2}\pgfmathsetmacro{\plotYMax}{#3}
-%   \pgfmathsetmacro{\rescaleY}{1/(\plotYMax - \plotYMin)}
-%   \pgfmathsetmacro{\rescaleX}{\ctPlotWidth /(\lastTag -\firstTag)}
-%   \pgfmathsetmacro{\plotShift}{(\plotYMax + \plotYMin)/2}
-%   % \pgfmathsetmacro{\plotStep}{\ctPlotWidth / \lastTag * \plotSamp}
-%   % determine the color
-%   \pgfmathsetmacro{\thecurrentcolor}{\Colors[\value{signum}]}
-%   \definecolor{currentcolor}{HTML}{\thecurrentcolor}
-%   % start plotting
-%   \path (0,\deYPos) node[left] {} node[time] (t_start) {};
-%   \ProcessList { #2 } {\ctDrawEvents};%
-%   \ifdrawordinate
-%     \pgfmathsetmacro{\ordYPos}{(\plotOrdPos - \plotShift) *\rescaleY +\deYPos}
-%     \draw[->,line width=.1pt]%
-%     (0,\ordYPos) node[left] (t_start) {\tiny\pgfmathprintnumber{\plotOrdPos}}
-%     -- (\ctPlotWidth,\ordYPos);
-%   \else\fi
-%   \ifdrawoutline
-%     \draw[ultra thin, gray] (0,\deYPos)
-%     --++(0,.5) node[left] {\tiny\pgfmathprintnumber{\plotYMax}}
-%     --++(\ctPlotWidth,0) ++(0,-1)
-%     --++(-\ctPlotWidth,0) node[left] {\tiny\pgfmathprintnumber{\plotYMin}}
-%     --++(0,.5);
-%   \else\fi
-%   \node[anchor=east] at (t_start.west) {\tiny\it\plotName};  
-%   % update state
-%   \firstitemtrue%
-%   \stepcounter{signum}
-% }
-
-
 \ExplSyntaxOn
 \NewDocumentCommand{\signalCT}{s O{} m}{%
   \pgfkeys{/ctsignalkeys, default, #2}%
@@ -471,16 +420,3 @@
     (t_cur) -- (\plotXPos,\plotYPos) node[time] (t_cur) {};
   \fi
 }
-
-
-% \NewDocumentCommand{\ctDrawEvents}{ m }{%
-%   \iffirstitem\firstitemfalse%
-%     \node[time] (t_cur) at (\deXPos,\plotYPos){};
-%   \else%
-%     \ifdim\deXPos pt<\ctPlotWidth pt% 
-%     \draw[color=currentcolor, thin, \lineStyle]
-%     (t_cur) -- (\deXPos,\plotYPos) node[time] (t_cur) {};
-%     \else\fi
-%   \fi
-%   \pgfmathsetmacro{\deXPos}{\deXPos + \plotStep}
-% } 

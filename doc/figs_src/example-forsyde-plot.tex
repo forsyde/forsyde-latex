@@ -31,14 +31,14 @@
 
 \begin{document}
 \begin{tikzpicture}[]
-  \standard[process, ni=2, no=1, moc=ct, type=toDE](p1){};
+  \standard[process, ni=2, no=1, moc=ct, type=sampDE](p1){};
   \begin{signalsCT}[name=ct-in, timestamps=1.57, grid=1.57, at={p1.west}, anchor=north east, xshift=-.5cm, yshift=-.2cm, xscale=1]{7.86}
     \signalCT*[outline,ordinate=0,ymin=-1,ymax=1]{ct-sampde-i1.flx}
   \end{signalsCT}
   \begin{signalsDE}[name=de-in, timestamps=3.14, grid=3.14, at={p1.west}, anchor=south east, xshift=-.4cm, yshift=.2cm]{8}
-    \signalDE[trunc]{ 1.0 : 0, 1.0 : 1.570, 1.0 : 3.141, 1.0 : 4.712, 1.0 : 6.283, 1.0 : 7.853, 1.0 : 8 }
+    \signalDE[trunc,last label=false]{ 1.0 : 0, 1.0 : 1.570, 1.0 : 3.141, 1.0 : 4.712, 1.0 : 6.283, 1.0 : 7.853, 1.0 : 8 }
   \end{signalsDE}
-  \begin{signalsDE}[name=de-out, timestamps=3.14, grid=3.14, outputs={p1.east}]{9}
+  \begin{signalsDE}[name=de-out, timestamps=3.14, grid=3.14, outputs={p1.east}]{7.8}
     \signalDE*[trunc]{ct-sampde-o1.flx}
   \end{signalsDE}
   \path[s,-|-,->] (de-in.e1) edge (p1.w1) (ct-in.e1) edge (p1.w2) (p1.e1) edge (de-out.w1);

@@ -69,10 +69,18 @@ The library contains the following main packages:
 
 \section{Installation \& usage}
 
-There are three main alternatives to install the libraries:
+The most straightforward way to install \ForSyDeLaTeX\ is to use the provided  \href{https://www.gnu.org/software/make/}{GNU Make} script command:
+%
+\begin{verbatim}
+    make install
+\end{verbatim}
+%
+\noindent which installs the packages in \texttt{TEXMFLOCAL} if you have write access or \texttt{TEXMFHOME} otherwise. Refer to \url{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages} for more information about the two enviroment variables.
+
+Alternatively, there are three main alternatives to manually install the libraries:
 
 \begin{enumerate}
-\item copy the contents of \texttt{forsyde-latex/src} and \texttt{forsyde-latex/fonts} in their appropriate path under \texttt{TEXMFHOME} or any standard loading path, as specified by your \LaTeX\ compiler. Refer to \url{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages} for more information.
+\item copy the contents of \texttt{forsyde-latex/src} and \texttt{forsyde-latex/fonts} in their appropriate path under \texttt{TEXMFHOME} or any standard loading path, as specified by your \LaTeX\ compiler.
 \item compile your document with the variable \texttt{TEXINPUTS} set to \texttt{/path/to/forsyde-latex/src/}. If you intend to use \texttt{forsyde-math} characters, you need to generate the fonts under \texttt{forsyde-latex/fonts} using a \texttt{METAFONT} tool suite, and afterwards compile your document with the variable \texttt{TEXFONTS} set to \texttt{/path/to/forsyde-latex/fonts/};
 \item copy the contents of \texttt{forsyde-latex/src} and \texttt{forsyde-latex/fonts} in the same folder as your document and compile normally.
 \end{enumerate}

@@ -37,18 +37,22 @@ uninstall :
 
 define install-template
   $(METAFONTS) : $(1)/fonts/source/public/typeface/%.mf : fonts/%.mf
+	@echo "* installing $$(@F)"
 	@cp $$< $$@
 
   $(FOUNDRIES) : $(1)/fonts/tfm/foundry/typeface/%.tfm : fonts/%.mf
+	@echo "* generating fontmap for $$(@F)"
 	@if mf '\mode:=ljfour; nonstopmode; input '"$$<"'' ; then \
 		mv $$(@F) $$@; \
 	fi
 	@rm *log *gf
 
   $(SOURCES) : $(1)/tex/latex/forsyde/%.tex : src/%.tex
+	@echo "* installing $$(@F)"
 	@cp $$< $$@
 
   $(PACKAGES) : $(1)/tex/latex/forsyde/%.sty : src/%.sty
+	@echo "* installing $$(@F)"
 	@cp $$< $$@
 endef
 
