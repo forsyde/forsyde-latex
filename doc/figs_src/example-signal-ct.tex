@@ -4,12 +4,12 @@
 \begin{document}
 \begin{tikzpicture}[]
   \begin{signalsCT}[name=n, grid and time=1, xscale=.7, yscale=.7]{3.3}
-    \signalCT [name=sig-ct1, outline, ymin=-1.1, ymax=2.1,draw ordinate, line style={ultra thick}]{
+    \signalCT [name=sig-ct1, outline, ymin=-1.1, ymax=2.1, line style={ultra thick}]{
       -1.0:0, -1.0:0.9999999776, 0.0:1.009999977376, 0.0:1.9999999552, 1.0:2.009999954976,
       1.0:2.9999999328, 2.0:3.009999932576, 2.0:3.29999992608
     }
     \signalCT*[name=sig-ct2, outline, ymin=-1.1, ymax=2.1,draw ordinate]{ct-input1.flx}
-    \signalCT [name=sig-ct3, outline, ymin=-1.1, ymax=2.1,draw ordinate, line style={ultra thick}]{
+    \signalCT [name=sig-ct3, ymin=-1.1, ymax=2.1,draw ordinate, line style={ultra thick}]{
       -1.0:0,-1.0:2.39999994624,0.0:2.409999946016,0.0:3.29999992608
     }
     \signalCT[name= sig-ct4, outline, ymin=-1.1, ymax=2.1,draw ordinate]{

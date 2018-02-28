@@ -46,10 +46,12 @@ $(MAIN).pdf : $(STYFILES) $(INPFILES) $(TEXFILES) $(TIKZ_FIGS) $(FONT_MAP) Makef
 	done
 
 clean:
-	@rm -f *.aux *~*.log *.ps *.gz *.dvi
+	@rm -f *.aux *~*.log *.ps *.gz *.dvi, *.flx
 	@rm -f *.bbl *.tmp *.thm *.out *.blg
 	@rm -f *.toc *.lo* comment.cut
 	@rm -rf auto
+
+superclean: clean
 	@rm -f figs/*.pdf
 	@rm refman.pdf
 

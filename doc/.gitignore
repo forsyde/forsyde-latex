@@ -6,6 +6,7 @@ figs/*
 !figs_src
 figs_src/*
 !figs_src/*.tex
+!figs_src/*.flx
 !Makefile
 !.gitignore
 !*.tex

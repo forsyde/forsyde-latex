@@ -23,6 +23,9 @@ docs :
 clean :
 	$(MAKE) clean -C doc
 
+superclean :
+	$(MAKE) superclean -C doc
+
 view :
 	$(MAKE) view -C doc
 
@@ -58,4 +61,4 @@ endef
 
 $(eval $(call install-template, $(TEXMF_PATH)))
 
-.PHONY: uninstall
+.PHONY: uninstall clean superclean

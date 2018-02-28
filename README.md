@@ -11,8 +11,13 @@ This project comes with an instalation script which copies the library files and
 The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (usually `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`).
 
 ```
-./install.sh          # installs packages and fonts under TEXMFHOME
-sudo ./install.sh     # installs packages and fonts under TEXMFLOCAL
+make install          # installs packages and fonts under TEXMFHOME
+sudo make install     # installs packages and fonts under TEXMFLOCAL
+make uninstall        # uninstalls the packages and fonts from TEXMFHOME
+sudo make uninstall   # uninstalls the packages and fonts from TEXMFLOCAL
+make doc              # (default), compiles the reference manual
+make clean            # cleans the intermediate files generated for the reference manual
+make superclean       # removes manual and generated files
 ```
 
 To import the libraries you need to write in the preamble of your document:
@@ -26,7 +31,8 @@ where `options` is a list of packages to load:
 
  * `tikz` : loads a collection of PGF and TikZ styles, graphical primitives and draw commands
  * `math` : loads a collection of math symbols and math environment commands
- * `plot` : (under construction)
+ * `plot` : loads a collection of alternative TikZ plotting commands, to be used with the dumped signal data.
+ * `pictures` : loads the dependencies for drawing utility pictures used in ForSyDe publications and documentations. 
  * `legacy` : API for previous versions of this project
 
 Manual

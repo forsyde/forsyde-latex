@@ -1,0 +1,103 @@
+\section{Libraries of additional pictures}
+\label{sec:forsyde-pictures}
+
+The \ForSyDeLaTeX\ package contains a set of additional libraries containing usual parameterized pictures used in related publications or documentation. Their sources are public and can be imported as regular \textsc{TikZ} libraries. To use them one has to pre-load some general package dependencies, which are taken care of by passing the \texttt{pictures} option when loading the \texttt{forsyde} package.
+%
+\begin{verbatim}
+\usepackage[pictures]{forsyde}
+...
+\usetikzlibrary{library}
+\end{verbatim}
+%
+\noindent where \texttt{library} is named along the lines of \texttt{forsyde.pictures.(name)}.
+
+The following libraries are not extensively documented but rather listed along with the main commands and an example of usage. For more information check their source code.
+
+\subsection{The \texttt{forsyde.pictures.layered} library}
+\label{sec:forsyde-pictures-layered}
+
+This library provides commands for depicting the layered structure of constructors, as introduced in the \ForSyDeAtom\ project.
+
+\vspace{1ex}
+\hspace{1pt}\bookmark{\char`\\forsydeAtomMakeLayers\opt{[options]}\man{\{list\_of\_layers\}}}
+
+\noindent Creates a a picture of incremental layers wrapping each other, based on the list of labels, formatted in the following way:
+%
+\begin{verbatim}
+  inner label 0: outer label 0, inner label 1: outer label 1, ...
+\end{verbatim}
+%
+Each layer \texttt{N}, where $\mathtt{N} \in [0..n]$ has:
+
+\begin{itemize}
+\item a named referred to by other commands: \texttt{layerN};
+\item defined coordinates/anchors: \texttt{layerN-center}, \texttt{layerN-left}, and \texttt{layerN-right};
+\item defined paths: \texttt{layerN-leftpath} and \texttt{layerN-rightpath}.
+\end{itemize}
+
+\noindent The \texttt{options} are:
+
+\begin{optionslist}
+\item \texttt{width=} default is \texttt{3.8cm};
+\item \texttt{height=} default is \texttt{1.8cm};
+\item \texttt{length=} default is \texttt{1cm};
+\end{optionslist}
+
+
+\hspace{1pt}\bookmark{\char`\\forsydeAtomSignalArrow\opt{[options]}\man{\{position\}}}
+
+\noindent Creates a a picture of wide arrow representing signal of events. The \texttt{position} is where the arrow tip should point to. It has defined the following coordinates/anchors: \texttt{arrow-south}, \texttt{arrow-north}, \texttt{arrow-east}, \texttt{arrow-west}, \texttt{arrow-center}. The \texttt{options} are:
+
+\begin{optionslist}
+\item \texttt{left indent=} default is \texttt{3pt};
+\item \texttt{right indent=} default is \texttt{0pt};
+\item \texttt{label shift=} default is \texttt{-4ex};
+\item \texttt{layer radius=} default is \texttt{2cm};
+\end{optionslist}
+
+\hspace{1pt}\bookmark{\char`\\forsydeAtomSignalVector\man{\{interesction\_path\}}}
+
+\noindent Is used after a \texttt{\char`\\forsydeAtomSignalArrow} command to draw at which layer \texttt{interesction\_path} does a signal is transformed into a structure/vector of signals.
+
+\vspace{1ex}
+\hspace{1pt}\bookmark{\char`\\forsydeAtomHighlightLayer\opt{[color]}\man{\{layer\_number\}}}
+
+\noindent Highlights a layer by filling it with a background color. Default \texttt{color} is \texttt{red}.
+
+\begin{lstlisting}[caption={Example usage of} \texttt{forsyde.pictures.layered}]
+  \forsydeAtomMakeLayers[]{%
+    Function Layer:Function,%
+    Behavior Layer:Behavior,%
+    MoC Layer:Process,%
+    Skeleton Layer:Process Network}
+  \node[] (value) at (layer0-center){%
+    \usebox{\forsydeAtomValue}};
+  \node[] (ext-value) at ($(layer1-center)!.5!(layer2-center)$) {%
+    \usebox{\forsydeAtomExtValue}};
+  \node[] (event) at ($(layer2-center)!.5!(layer3-center)$) {%
+    \usebox{\forsydeAtomTagExtValue}};
+  \forsydeAtomSignalArrow[width=4.2cm]{layer3-center}
+  \node[inner sep=0] (token) at (arrow-center) {%
+    \usebox{\forsydeAtomTagExtValue}};
+  \node[] at ($(token.east)!.5!(arrow-west)$) {%
+    \usebox{\forsydeAtomTagExtValue}};
+  \node[] at ($(token.west)!.5!(arrow-east)$) {%
+    \usebox{\forsydeAtomTagExtValue}};
+  \forsydeAtomSignalVector{layer4-rightpath}
+\end{lstlisting}
+
+
+The  \texttt{forsyde.pictures.layered} library also holds a number of shapes defined as \texttt{box}es. These boxes are:
+
+\begin{itemize}
+\item \texttt{\char`\\forsydeAtomValue}
+\item \texttt{\char`\\forsydeAtomExtValue}
+\item \texttt{\char`\\forsydeAtomTagValue}
+\item \texttt{\char`\\forsydeAtomTagExtValue}
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../refman"
+%%% End:

@@ -12,11 +12,13 @@
 \newboolean{load-math}
 \newboolean{load-plot}
 \newboolean{load-legacy}
+\newboolean{load-pictures}
 
 \DeclareOption{tikz}{\setboolean{load-tikz}{true}}
 \DeclareOption{math}{\setboolean{load-math}{true}}
 \DeclareOption{plot}{\setboolean{load-plot}{true}}
 \DeclareOption{legacy}{\setboolean{load-legacy}{true}}
+\DeclareOption{pictures}{\setboolean{load-pictures}{true}}
 
 \ExecuteOptions{}
 \ProcessOptions\relax
@@ -30,8 +32,11 @@
 \ifthenelse{\boolean{load-math}}{\RequirePackage{forsyde-math}}{}
 \ifthenelse{\boolean{load-plot}}{\RequirePackage{forsyde-plot}}{}
 \ifthenelse{\boolean{load-legacy}}{\RequirePackage{forsyde-legacy}}{}
+\ifthenelse{\boolean{load-pictures}}{\RequirePackage{forsyde-pictures}}{}
 
 % General typeset commands and logo
 \def\ForSyDe{\textsc{ForSyDe}\ }
 \def\ForSyDeLaTeX{\mbox{\textsc{ForSyDe}--\LaTeX}}
 \def\ForSyDeAtom{\mbox{\textsc{ForSyDe--Atom}}}
+
+
