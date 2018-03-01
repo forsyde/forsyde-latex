@@ -2,7 +2,7 @@
 !figs
 figs/*
 !inputs
-!inputs/*
+!inputs/*.tex
 !figs_src
 figs_src/*
 !figs_src/*.tex

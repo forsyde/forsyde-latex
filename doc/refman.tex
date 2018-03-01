@@ -47,10 +47,15 @@
 \def\opt#1{\color{gray}{#1}}
 \def\man#1{\color{black}{#1}}
 
+\makeatletter
+\def\blfootnote{\gdef\@thefnmark{}\@footnotetext}
+\makeatother
+
 \begin{document}
 \maketitle
 \reversemarginpar
 
+\blfootnote{This work is licensed under a \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons Attribution-ShareAlike 4.0 International License}.}
 \begin{abstract}
 \noindent This is the reference manual for the \LaTeX\ utilities used in \ForSyDe\ documentations. This manual presents the featured packages, their API, as well as some examples of usage.
 \end{abstract}
