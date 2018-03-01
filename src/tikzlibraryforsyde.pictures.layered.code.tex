@@ -115,13 +115,13 @@
       (135:180:\currentradius) coordinate  (layer\currentLayer -left);
 }
 
-\newcommand\forsydeAtomHighlightLayer[1]{
-  \pgfmathtruncatemacro{\nextLayer}{#1 + 1}
-  \gettikzy{(layer#1-right)}{\firstlayerrad}
+\newcommand\forsydeAtomHighlightLayer[2][red]{
+  \pgfmathtruncatemacro{\nextLayer}{#2 + 1}
+  \gettikzy{(layer#2-right)}{\firstlayerrad}
   \gettikzy{(layer\nextLayer -right)}{\nextlayerrad}
-  \coordinate (layer1r) at (layer#1-right);
+  \coordinate (layer1r) at (layer#2-right);
   \begin{pgfonlayer}{background}
-    \fill[red]
+    \fill[#1]
     ([shift=(90:\firstlayerrad)]0,0) arc (85:180:\firstlayerrad)
     -- (layer\nextLayer -left) --  (layer\nextLayer -right) --
     (layer\nextLayer -left) arc (180:85:\nextlayerrad)

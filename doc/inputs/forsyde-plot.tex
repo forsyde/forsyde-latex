@@ -8,13 +8,15 @@
 \label{sec:forsyde-plot-package}
 
 
-This package provides environments and plot commands for visualizing the contents of \ForSyDe\ signals. It is meant to be an alternative to GNUplot or other plotting tools, but not necessarily a replacement for these.
+This package provides environments and plot commands for visualizing the contents of \ForSyDe\ signals. It is meant to be an alternative to GNUplot or other plotting tools, but not necessarily a replacement for these. The package is imported using the command \texttt{\char`\\usepackage[plot]\{forsyde\}} in the document preamble.
 
 \subsection{The \texttt{signalsSY} environment}
 \label{sec:plot-signalsSY}
 
+
 This environment creates a \textsc{TikZ} matrix of events, where each row is the content of a signal, and ``synchronous'' events are aligned on columns. This environment is suitable for depicting signals where the time/causality between events is implicit from their position in the signal. This includes synchronous signals, but also any dataflow signals.
 
+\bookmark{environment}
 \begin{verbatim}
 \begin{signalsSY}[options]
 
@@ -22,8 +24,9 @@ This environment creates a \textsc{TikZ} matrix of events, where each row is the
 \end{signalsSY}
 \end{verbatim}
 
-The \texttt{body} of the environment usually consists in a series of \texttt{\char`\\signalSY} commands, but it may also contain any command acceptable within a \textsc{TikZ} \texttt{matrix} environment. Notice that it needs an initial line break. The \texttt{options} are:
+The \texttt{body} of the environment usually consists of a series of \texttt{\char`\\signalSY} commands, but it may also contain any command acceptable within a \textsc{TikZ} \texttt{matrix} environment. Notice that it needs an initial line break. The \texttt{options} are:
 
+\bookmark{options}
 \begin{optionslist}
 \item \texttt{name=} the name of the \textsc{TikZ} element. Default is \texttt{sigplot}.
 \item \texttt{at=} the position of the plot within the \texttt{tikzpicture}. Default is \texttt{(0,0)}.
@@ -47,15 +50,16 @@ The \texttt{body} of the environment usually consists in a series of \texttt{\ch
 
 This environment creates a (simple) plot of DE signals similar to Modelsim or GTKwave, within a \texttt{tikzpicture}.
 
-
+\bookmark{environment}
 \begin{verbatim}
 \begin{signalsDE}[options]{xmax}
   body...
 \end{signalsDE}
 \end{verbatim}
 
-The body within the environment consists in a series of \texttt{\char`\\signalDE} commands. It \emph{requires} an \texttt{xmax} number which stands for the last timestamp plotted. The \texttt{options} are:
+The body within the environment consists of a series of \texttt{\char`\\signalDE} commands. It \emph{requires} an \texttt{xmax} number which stands for the last timestamp plotted. The \texttt{options} are:
 
+\bookmark{options}
 \begin{optionslist}
 \item \texttt{name=} the name of the \textsc{TikZ} element. Default is \texttt{sigplot}.
 \item \texttt{grid=\it step} draws a dashed line every \texttt{step} time(stamps).
@@ -98,14 +102,16 @@ value1 : timestamp1, value2 : timestamp2, ... , valueN : timestampN
 
 This environment creates a (simple) stacked plot of CT signals within a \texttt{tikzpicture}.
 
+\bookmark{environment}
 \begin{verbatim}
 \begin{signalsCT}[options]{xmax}
   body...
 \end{signalsCT}
 \end{verbatim}
 
-The body within the environment consists in a series of \texttt{\char`\\signalDE} commands. It \emph{requires} an \texttt{xmax} number which stands for the last timestamp plotted. The \texttt{options} are:
+The body within the environment consists of a series of \texttt{\char`\\signalCT } commands. It \emph{requires} an \texttt{xmax} number which stands for the last timestamp plotted. The \texttt{options} are:
 
+\bookmark{options}
 \begin{optionslist}
 \item \texttt{name=} the name of the \textsc{TikZ} element. Default is \texttt{sigplot}.
 \item \texttt{grid=\it step} draws a dashed line every \texttt{step} time(stamps).

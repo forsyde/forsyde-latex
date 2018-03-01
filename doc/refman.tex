@@ -12,9 +12,9 @@
 \title{The \ForSyDeLaTeX\ utilities}
 \author{
   George Ungureanu \\
-  Department of Electronic Systems\\
-  KTH Royal Institute of Technology\\
-  Stockholm, SWEDEN
+  \small Department of Electronics, School of EECS,\\
+  \small KTH Royal Institute of Technology\\
+  \small Stockholm, SWEDEN
 }
 \date{\today}
 
@@ -52,19 +52,20 @@
 \reversemarginpar
 
 \begin{abstract}
-This is the reference manual for the \LaTeX\ utilities used in the context of \ForSyDe. All packages and their API features are documented here.
+\noindent This is the reference manual for the \LaTeX\ utilities used in \ForSyDe\ documentations. This manual presents the featured packages, their API, as well as some examples of usage.
 \end{abstract}
 
 \section{Introduction}
 
-This library was developed as an effort to standardize symbols and graphical primitives in documents related to \ForSyDe, but also to provide tools and utilities for user convenience. \ForSyDe is a high-level design methodology aiming at synthesizing correct-by-construction systems through formal means. For more information check \url{https://forsyde.ict.kth.se}.
+This library was developed as an effort to standardize symbols and graphical primitives in documents related to \ForSyDe, but also to provide tools and utilities for user convenience. \ForSyDe\ is a high-level design methodology aiming at correct-by-construction system design flows through formal means. For more information check \url{https://forsyde.github.io}.
 
 The library contains the following main packages:
 \begin{itemize}
-\item \texttt{forsyde-tikz} : is a collection of \textsc{PGF} and \textsc{TikZ} styles, graphical primitives and commands for drawing \ForSyDe process networks;
-\item \texttt{forsyde-math} : is a collection of math symbols used in the \ForSyDe formal notation. It is mainly focused on the ongoing \ForSyDeAtom methodology;
-\item \texttt{forsyde-plot} : provides utilities for plotting \ForSyDe signals;
-\item \texttt{forsyde-legacy} : API for the previous versions of this library.
+\item \texttt{forsyde-tikz} : is a collection of \textsc{PGF} and \textsc{TikZ} styles, graphical primitives and commands for drawing \ForSyDe\ process networks;
+\item \texttt{forsyde-math} : is a collection of math symbols used in the \ForSyDe\ formal notation. It is mainly focused on the ongoing \ForSyDeAtom\ project;
+\item \texttt{forsyde-plot} : provides utilities for plotting \ForSyDe\ signals;
+% \item \texttt{forsyde-legacy} : API for the previous versions of this library.
+\item a set of additional \textsc{TikZ} picture libraries commonly used in \ForSyDe\ documentation.
 \end{itemize}
 
 \section{Installation \& usage}
@@ -92,10 +93,10 @@ To include any of the packages enumerated in the introduction, you cal load the 
 \end{verbatim}
 where \texttt{option} is
 \begin{itemize}
-\item \texttt{tikz} for loading the \texttt{forsyde-tikz} library
-\item \texttt{math} for loading the \texttt{forsyde-math} library
-\item \texttt{plot} for loading the \texttt{forsyde-plot} library
-\item \texttt{legacy} for loading the \texttt{forsyde-legacy} library
+\item \texttt{tikz} for loading the \texttt{forsyde-tikz} package.
+\item \texttt{math} for loading the \texttt{forsyde-math} package.
+\item \texttt{plot} for loading the \texttt{forsyde-plot} package.
+\item \texttt{legacy} for using commands defined in previous versions of the library (\texttt{v0.3} or earlier).
 \end{itemize}
 
 When loaded without an option, this package only provides some general commands for typesetting and logos:
@@ -107,6 +108,7 @@ When loaded without an option, this package only provides some general commands 
   \texttt{\string\ForSyDe}      & \ForSyDe \\
   \texttt{\string\ForSyDeLaTeX} & \ForSyDeLaTeX \\
   \texttt{\string\ForSyDeAtom} & \ForSyDeAtom \\
+  \texttt{\string\ForSyDeShallow} & \ForSyDeShallow \\
   \bottomrule
 \end{longtable}
 

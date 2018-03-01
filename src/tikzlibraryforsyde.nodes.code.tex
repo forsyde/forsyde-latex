@@ -19,6 +19,8 @@
   /tikz/label style = \textbf,
   /tikz/function style/.store in = \funcStyle,
   /tikz/function style = \scriptsize,
+  /tikz/constructors/.store in = \constructorConvention,
+  /tikz/constructors =atom,
 }
 
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
@@ -89,13 +91,18 @@
 \addcase\getmoclabel{de}{DE}
 \addcase\getmoclabel{ct}{CT}
 \addcase\getmoclabel{sdf}{SDF}
+\addcase\getmoclabel{csdf}{CSDF}
+\addcase\getmoclabel{sadf}{SADF}
 
 \makeswitch[\defaultfillcolor]\getfieldcolor
 \addcase\getfieldcolor{sy}{sycolor}
 \addcase\getfieldcolor{de}{decolor}
 \addcase\getfieldcolor{ct}{ctcolor}
 \addcase\getfieldcolor{sdf}{sdfcolor}
+\addcase\getfieldcolor{csdf}{sdfcolor}
+\addcase\getfieldcolor{sadf}{sdfcolor}
 \addcase\getfieldcolor{blackbox}{blackboxcolor}
+
 
 \newcommand\getcolor[3]{%
   \iftoggle{#1}%
@@ -109,6 +116,14 @@
   \ifnum #1>1 \nodepart{fb} #3\else\fi%
   \ifnum #1>2 \nodepart{fc} #4\else\fi%
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
+}
+
+\newcommand{\makeconstructorlabel}[2]{%
+  \IfStrEq{\constructorConvention}{atom}{%
+    \typeStyle{\ifnolabel\else\getmoclabel{#1}.\fi#2}%
+  }{%
+    \typeStyle{#2\ifnolabel\else\getmoclabel{#1}\fi}%
+  }
 }
 
 
@@ -166,7 +181,7 @@
       % the type (constructor) is positioned below the label
       \node[yshift=-\fsdInnerYSep,inner sep=2pt, anchor=north]
       (#2-t) at (#2-l.south){%
-        \typeStyle{\ifnolabel\else\getmoclabel{\fsdClass}.\fi\fsdType}
+        \makeconstructorlabel{\fsdClass}{\fsdType}
       };
       % The main shape is behind any other graphical element.
       \begin{pgfonlayer}{background}

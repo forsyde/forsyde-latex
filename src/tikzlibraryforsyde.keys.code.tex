@@ -5,6 +5,7 @@
 \newif\ifnolabel
 \newif\ifnocolor
 \pgfkeys{
+  % meant to be used globally
   /tikz/no moc color/.is if=nocolor,
   /tikz/no moc label/.is if=nolabel,
   /tikz/type style/.store in = \typeStyle,
@@ -13,6 +14,9 @@
   /tikz/label style = \textbf,
   /tikz/function style/.store in = \funcStyle,
   /tikz/function style = \scriptsize,
+  /tikz/constructors/.store in = \constructorConvention,
+  /tikz/constructors = atom,
+  % meant to be used locally
   /tikz/token pos/.store in = \tokPos,
   /tikz/token pos = 0.5,
   /tikz/deviate/.store in = \pDeviate,

@@ -1,5 +1,5 @@
 \documentclass{standalone}
-\usepackage[pictures]{forsyde}
+\usepackage[tikz]{forsyde}
 \usetikzlibrary{forsyde.pictures.layered}
 
 \begin{document}
@@ -23,5 +23,6 @@
   \node[] at ($(token.west)!.5!(arrow-east)$) {%
     \usebox{\forsydeAtomTagExtValue}};
   \forsydeAtomSignalVector{layer4-rightpath}
+  \forsydeAtomHighlightLayer[green!30]{2}
 \end{tikzpicture}
 \end{document}

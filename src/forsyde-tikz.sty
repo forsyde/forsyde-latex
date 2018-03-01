@@ -7,12 +7,13 @@
 \RequirePackage{pgfplots}
 \RequirePackage{pgfkeys}
 \RequirePackage{xparse,l3regex}
+\RequirePackage{calc}
 \RequirePackage{ezkeys}
 \RequirePackage{xstring}
-\usetikzlibrary{decorations.markings, shapes, positioning, calc, fit, backgrounds, intersections, arrows}
+\usetikzlibrary{decorations.markings, decorations.text, shapes, positioning, calc, fit, backgrounds, intersections, arrows, through}
 
 \ProvidesPackage{forsyde-tikz}
-              [2017/02/25 v0.4.0 ForSyDe TikZ Library]
+              [2018/03/01 v0.4.1 ForSyDe TikZ Library]
 
 \usetikzlibrary{forsyde.shapes,forsyde.paths,forsyde.nodes}
 \pgfplotsset{compat=1.13}
