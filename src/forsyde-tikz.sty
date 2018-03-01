@@ -7,12 +7,13 @@
 \RequirePackage{pgfplots}
 \RequirePackage{pgfkeys}
 \RequirePackage{xparse,l3regex}
+\RequirePackage{calc}
 \RequirePackage{ezkeys}
 \RequirePackage{xstring}
-\usetikzlibrary{decorations.markings, shapes, positioning, calc, fit, backgrounds, intersections, arrows}
+\usetikzlibrary{decorations.markings, decorations.text, shapes, positioning, calc, fit, backgrounds, intersections, arrows, through}
 
 \ProvidesPackage{forsyde-tikz}
-              [2017/02/25 v0.4.0 ForSyDe TikZ Library]
+              [2018/03/01 v0.4.1 ForSyDe TikZ Library]
 
 \usetikzlibrary{forsyde.shapes,forsyde.paths,forsyde.nodes}
 \pgfplotsset{compat=1.13}
@@ -33,7 +34,7 @@
 \newcommand{\compositelinewidth}{.4pt}       % composite process line width
 \newcommand{\skeletonlinewidth}{1pt}         % parallel processes line width
 \newcommand{\signalpathlinewidth}{1pt}       % signal paths
-\newcommand{\functionpathlinewidth}{.8pt}    % function paths
+\newcommand{\functionpathlinewidth}{.5pt}    % function paths
 \newcommand{\vectorpathlinewidth}{3pt}       % vector paths
 % sizes, etc.
 \newcommand{\tokensize}{2pt}
@@ -112,7 +113,7 @@
   processn/.style   = {hasmoc, shape=leafn shape},
   composite/.style  = {shape=comp shape},
   compositen/.style = {shape=nary comp shape},
-  black box/.style  = {shape=leaf shape, moc=blackbox},
+  black box/.style  = {shape=leaf shape, moc=blackbox, inner xsep = 5pt,inner ysep = 5pt,},
   embed/.style      = {hasmoc, shape=leaf shape, inner sep=15pt},
   farmstyle/.style  = {shape = dp shape,inner xsep = 15pt,inner ysep = 20pt,},
   pipestyle/.style  = {shape = pipe shape,inner xsep = 15pt,inner ysep = 20pt,},

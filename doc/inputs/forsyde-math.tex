@@ -6,14 +6,14 @@
     \fbox{\includegraphics[width=.9\textwidth]{figs/example-forsyde-math}}
   }
 \end{figure}
-\lstinputlisting{figs/example-forsyde-math.tex}
+\lstinputlisting{figs_src/example-forsyde-math.tex}
 \vfill
 \newpage
 
 \section{The \texttt{forsyde-math} package}
 \label{sec:forsyde-math-package}
 
-This package provides a set of symbols and commands for writing equations mainly for the \ForSyDeAtom\ theoretical framework.
+This package provides a set of symbols and commands for writing equations. At the moment it covers only the formal notation associated with the \ForSyDeAtom\ framework. The package is imported using the command \texttt{\char`\\usepackage[math]\{forsyde\}} in the document preamble.
 
 \subsection{Operator symbols}
 \label{sec:fonts}
@@ -36,6 +36,7 @@ The \texttt{forsyde-math} package exports a set of symbols written in the \texts
   \texttt{BhApp} & \makesymbolrow{\textBhApp} \\
   \texttt{BhDef} & \makesymbolrow{\textBhDef} \\
   \texttt{BhPhi} & \makesymbolrow{\textBhPhi} \\
+  \texttt{BhDeg} & \makesymbolrow{\textBhDeg} \\
   \midrule
   \texttt{MocFun} & \makesymbolrow{\textMocFun} \\
   \texttt{MocApp} & \makesymbolrow{\textMocApp} \\

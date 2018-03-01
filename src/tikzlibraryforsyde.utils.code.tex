@@ -1,0 +1,9 @@
+
+\newcommand\addcase[3]{%
+  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
+}
+\newcommand\makeswitch[2][]{%
+  \newcommand#2[1]{%
+    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
+  }%
+}

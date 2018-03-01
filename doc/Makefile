@@ -23,10 +23,11 @@
 MAIN        = refman
 STYDIR      = ../src
 FIGS_DIR    = figs
+FIGS_SRC    = figs_src
 INPS_DIR    = inputs
 FONT_MAP    = $(FIGS_DIR)/testfont.pdf
 
-TIKZ_FIGS   = $(patsubst $(FIGS_DIR)%.tex,$(FIGS_DIR)%.pdf,$(wildcard $(FIGS_DIR)/*.tex))
+TIKZ_FIGS   = $(patsubst $(FIGS_SRC)%.tex,$(FIGS_DIR)%.pdf,$(wildcard $(FIGS_SRC)/*.tex))
 TEXFILES    = $(wildcard ./*.tex)
 INPFILES    = $(wildcard $(INPS_DIR)/*.tex)
 STYFILES    = $(wildcard $(STYDIR)/*.tex) $(wildcard $(STYDIR)/*.sty)
@@ -45,30 +46,20 @@ $(MAIN).pdf : $(STYFILES) $(INPFILES) $(TEXFILES) $(TIKZ_FIGS) $(FONT_MAP) Makef
 	done
 
 clean:
-	find . -name "*.aux" -type f -delete
-	find . -name "*~" -type f -delete
-	find . -name "*.log" -type f -delete
-	find . -name "*.ps" -type f -delete
-	find . -name "*.gz" -type f -delete
-	find . -name "*.dvi" -type f -delete
-	find . -name "*.bbl" -type f -delete
-	find . -name "*.tmp" -type f -delete
-	find . -name "*.thm" -type f -delete
-	find . -name "*.out" -type f -delete
-	find . -name "*.blg" -type f -delete
-	find . -name "*.toc" -type f -delete
-	find . -name "*.lo*" -type f -delete
-	find . -name "comment.cut" -type f -delete
-	find . -name "auto" -type d -exec rm -rf "{}" \;
+	@rm -f *.aux *~*.log *.ps *.gz *.dvi, *.flx
+	@rm -f *.bbl *.tmp *.thm *.out *.blg
+	@rm -f *.toc *.lo* comment.cut
+	@rm -rf auto
 
 superclean: clean
-	find . -name "*.pdf" -type f -delete
-
+	@rm -f figs/*.pdf
+	@rm refman.pdf
 
 # Rules for Tikz and LaTeX figures
-$(TIKZ_FIGS): figs/%.pdf: figs/%.tex
+$(TIKZ_FIGS): figs/%.pdf: figs_src/%.tex
+	@mkdir -p figs
 	@echo $(@F)
-	TEXINPUTS=:$(FIGS_DIR)/:$(STYDIR)/ pdflatex $(*F)
+	TEXINPUTS=:$(FIGS_SRC)/:$(STYDIR)/ pdflatex $(*F)
 	mv $(@F) $@ 
 	rm *.log
 	rm *.aux

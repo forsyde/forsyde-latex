@@ -1,31 +1,34 @@
 \begin{figure}[htb]\centering
 \includegraphics[width=\textwidth]{figs/example-forsyde-tikz}
 \end{figure}
-\lstinputlisting{figs/example-forsyde-tikz.tex}
+\lstinputlisting{figs_src/example-forsyde-tikz.tex}
 
 \section{The \texttt{forsyde-tikz} package}
 
 
-This library is used to draw systems modeled as process networks with \ForSyDe, similar to the one on the previous page. A \ForSyDe process network is drawn like any other \textsc{TikZ} figure, inside a \texttt{tikzpicture} environment. The \texttt{options} provided are key variables defined by the \texttt{tikz} package. \bookmark{environment}
+This library is used to draw \ForSyDe\ systems modeled as process networks. The package is imported using the command \texttt{\char`\\usepackage[tikz]\{forsyde\}} in the document preamble.
+
+A \ForSyDe\ process network is drawn inside a \texttt{tikzpicture} environment, like any other \textsc{TikZ} figure. The \texttt{options} provided are key variables defined by the \texttt{tikz} package. \bookmark{environment}
 
 \begin{verbatim}
-	\begin{tikzpicture}[options]
-          content...
-	\end{tikzpicture}
+  \begin{tikzpicture}[options]
+    content...
+  \end{tikzpicture}
 \end{verbatim}
 
-Apart from the standard keys, \texttt{forsyde-tikz} provides the following variables:\bookmark{environment variables}
+Apart from the standard keys, \texttt{forsyde-tikz} provides the following \texttt{options} variables:\bookmark{environment variables}
 \begin{optionslist}
 \item \texttt{no moc color} : disables process coloring according to their MoC.
 \item \texttt{no moc label} : disables process labeling according to their MoC.
 \item \texttt{label style=} : font style for the process type labels. Default is \texttt{\char`\\ textbf}.
 \item \texttt{type style=} : font style for the process name labels. Default is \texttt{\char`\\ scriptsize\char`\\textit}.
 \item \texttt{function style=} : font style for the functions. Default is \texttt{\char`\\ scriptsize}.
+\item \texttt{constructors=[shallow|atom]} : switches between the process constructor naming convention of either \ForSyDeShallow\ or \ForSyDeAtom. Default is \texttt{atom}.
 \end{optionslist}
 
 \subsection{Main nodes}
 
-Using \texttt{forsyde-tikz}, process networks are drawn using a combination of commands and style options for customizing shapes. 
+Process networks are drawn using a combination of commands and style options for customizing shapes. 
 
 \subsubsection{Draw commands}
 \label{sec:draw-commands}
@@ -36,7 +39,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-basic}
-\lstinputlisting[linerange={5-5}]{figs/example-node-basic.tex}
+\lstinputlisting[linerange={5-5}]{figs_src/example-node-basic.tex}
 \caption{The \texttt{\char`\\basic} draw command. The red dots are custom anchors, accessed with \texttt{[name]-f.[anchor]}.}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\basic\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
@@ -55,7 +58,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-standard}
-\lstinputlisting[linerange={5-5}]{figs/example-node-standard.tex}
+\lstinputlisting[linerange={5-5}]{figs_src/example-node-standard.tex}
 \caption{The \texttt{\char`\\standard} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\standard\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
@@ -63,10 +66,10 @@ The library also provide as set of helper styles for setting several options at 
 \noindent The standard node is a more complex depiction of a ForSyDe block. It contains anchors for each port, shows a label and the constructor name, and its field is colored according to a MoC (if this is the case). It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
 \begin{optionslist}
-\item \texttt{class=[sy|de|ct|sdf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
+\item \texttt{class=[sy|de|ct|sdf|csdf|sadf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
 \item \texttt{hasmoc} flag for saying that this node is a process, therefore it is associated with a MoC. It need to be provided otherwise the global flags will ignore MoC-related options (e.g. \texttt{nomoccolor}).
 \item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
-\item \texttt{type=} the type / constructor of that particular ForSyDe block. It shows below the main label and it is affected by the \texttt{class} argument.
+\item \texttt{type=} the type / constructor of that particular ForSyDe block. It shows below the main label and it might be affected by the \texttt{moc} argument.
 \item \texttt{npw=[0..10]} number of ports on the left side of the node, i.e. the number of left port anchors.
 \item \texttt{ni=[0..10]} alias for \texttt{npw}, stands for ``number of inputs''.
 \item \texttt{npe=[0..10]} number of ports on the right side of the node, i.e. the number of right port anchors.
@@ -76,17 +79,17 @@ The library also provide as set of helper styles for setting several options at 
 \item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
 \item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
 \item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
-\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
-\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
-\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
-\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
-\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
-\item \texttt{inner ysep=[distance]} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
+\item \texttt{anchor=\it anchor} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=\it dist} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=\it dist} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=\it num} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=\it num} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner ysep=\it dist} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
 \end{optionslist}
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-interface}
-\lstinputlisting[linerange={5-5}]{figs/example-node-interface.tex}
+\lstinputlisting[linerange={5-5}]{figs_src/example-node-interface.tex}
 \caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\interface\opt{[options]}\opt{(name)}\opt{<position>}\man{\{domain~left\}}\man{\{domain~right\}};}
@@ -94,16 +97,16 @@ The library also provide as set of helper styles for setting several options at 
 \noindent This command draws an interface from one domain to another (e.g. a MoC interface). It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
 \begin{optionslist}
-\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
-\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
-\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
-\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{anchor=\it anchor} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=\it dist} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=\it dist} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=\it num} the rotation angle (in degrees) of the node. Default is \texttt{0}.
 \end{optionslist}
 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-trans}
-\lstinputlisting[linerange={5-5}]{figs/example-node-trans.tex}
+\lstinputlisting[linerange={5-5}]{figs_src/example-node-trans.tex}
 \caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\trans\opt{[options]}\opt{(name)}\opt{<position>}\man{\{\}};}
@@ -122,17 +125,17 @@ The library also provide as set of helper styles for setting several options at 
 \item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
 \item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
 \item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
-\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
-\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
-\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
-\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
-\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
-\item \texttt{inner ysep=[distance]} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
+\item \texttt{anchor=\it anchor} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=\it dist} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=\it dist} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=\it num} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=\it num} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner ysep=\it dist} the distance between the function node, the label node and the type node. Default is \texttt{3pt}.
 \end{optionslist}
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-cluster}
-\lstinputlisting[linerange={5-7}]{figs/example-node-cluster.tex}
+\lstinputlisting[linerange={5-7}]{figs_src/example-node-cluster.tex}
 \caption{The \texttt{\char`\\cluster} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]}, the port anchors are accessed with \texttt{[name].[anchor]} and the cluster outer shape edges are named \texttt{[name]-[position]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\cluster\opt{[options]}\opt{(name)}\man{<list~of~clustered~nodes>}\man{\{label\}};}
@@ -140,7 +143,7 @@ The library also provide as set of helper styles for setting several options at 
 \noindent This command draws a cluster around other nodes. Instead of a position, it requires a list of nodes to fit. Apart from the functions and port anchors as seen in the previous commands, this command provides the edges of the outer shape cluster as names. These names can be used further in computing intersection points. It can be customized with the following keys (check \ref{sec:helper-options} for composite options):
 
 \begin{optionslist}
-\item \texttt{class=[sy|de|ct|sdf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
+\item \texttt{class=[sy|de|ct|sdf|csdf|sadf|blackbox|none]} The class of the node. This option affects the field color and the constructor label. Default is \texttt{none}.
 \item \texttt{hasmoc} flag for saying that this node is a process, therefore it is associated with a MoC. It need to be provided otherwise the global flags will ignore MoC-related options (e.g. \texttt{nomoccolor}).
 \item \texttt{shape=} any \texttt{TikZ} style option for the node shape. Check section \ref{sec:provided-shapes} for a list of library-provided shapes. Default is \texttt{rectangle}.
 \item \texttt{type=} the type / constructor of that particular ForSyDe block. It shows below the main label and it is affected by the \texttt{class} argument.
@@ -153,19 +156,20 @@ The library also provide as set of helper styles for setting several options at 
 \item \texttt{f2=} second function label. Appears as a box in the upper part in case \texttt{nf > 1}. Default is $f_2$.
 \item \texttt{f3=} third function label. Appears as a box in the upper part in case \texttt{nf > 2}. Default is $f_3$.
 \item \texttt{f4=} fourth function label. Appears as a box in the upper part in case \texttt{nf > 3}. Default is $f_4$.
-\item \texttt{anchor=[anchor]} center point for shape. Default is \texttt{center}.
-\item \texttt{xshift=[distance]} shift position in X direction. Default is \texttt{0pt}.
-\item \texttt{yshift=[distance]} shift position in Y direction. Default is \texttt{0pt}.
-\item \texttt{rotate=[number]} the rotation angle (in degrees) of the node. Default is \texttt{0}.
-\item \texttt{rotate shape=[number]} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
-\item \texttt{inner xsep=[distance]} the inner separation in X direction. Default is \texttt{3pt}.
-\item \texttt{inner ysep=[distance]} the inner separation in Y direction. Default is \texttt{3pt}.
+\item \texttt{anchor=\it anchor} center point for shape. Default is \texttt{center}.
+\item \texttt{xshift=\it dist} shift position in X direction. Default is \texttt{0pt}.
+\item \texttt{yshift=\it dist} shift position in Y direction. Default is \texttt{0pt}.
+\item \texttt{rotate=\it num} the rotation angle (in degrees) of the node. Default is \texttt{0}.
+\item \texttt{rotate shape=\it num} the rotation angle (in degrees) of the \texttt{shape}. Defailt is \texttt{0}.
+\item \texttt{inner xsep=\it dist} the inner separation in X direction. Default is \texttt{3pt}.
+\item \texttt{inner ysep=\it dist} the inner separation in Y direction. Default is \texttt{3pt}.
+
 \end{optionslist}
 
 
 % \begin{figure}[htb]\centering
 % \includegraphics{figs/example-node-embed}
-% \lstinputlisting[linerange={5-7}]{figs/example-node-embed.tex}
+% \lstinputlisting[linerange={5-7}]{figs_src/example-node-embed.tex}
 % \caption{The \texttt{\char`\\embed} draw command. It is basically \texttt{\char`\\cluster} but where the clustered nodes are passed as a parameter}
 % \end{figure}
 % \hspace{1pt}\bookmark{\char`\\embed\opt{[cluster~options]}\opt{(name)}\man{\{code~for~clustered~nodes\}};}
@@ -175,7 +179,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-drawconduit}
-\lstinputlisting[linerange={5-8}]{figs/example-node-drawconduit.tex}
+\lstinputlisting[linerange={5-8}]{figs_src/example-node-drawconduit.tex}
 \caption{The \texttt{\char`\\drawconduit} draw command.}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\drawconduit\opt[length]\man\{node~with~ports\}\{num.~ports~west\}\{num.~ports~east\};}
@@ -202,7 +206,7 @@ The library also provide as set of helper styles for setting several options at 
   \\
   \texttt{leaf shape}
   & \vspace{0pt} \begin{tikzpicture}[baseline] \node[leaf shape, inner sep=7pt] {}; \end{tikzpicture}
-  &  meant to be used with the \texttt{\char`\\standard} command, it is a good candidate for depicting abstractions of complex semantics (e.g. black boxes).
+  &  meant to be used with the \texttt{\char`\\standard} command, it is a good candidate for depicting abstractions of more complex semantics (e.g. black boxes).
   \\
   \texttt{nary leaf shape}
   & \vspace{0pt} \begin{tikzpicture}[baseline] \node[nary leaf shape, inner sep=7pt] {}; \end{tikzpicture}
@@ -214,7 +218,7 @@ The library also provide as set of helper styles for setting several options at 
   \\
   \texttt{nary comp shape}
   & \vspace{0pt} \begin{tikzpicture}[baseline] \node[nary comp shape, inner sep=7pt] {}; \end{tikzpicture}
-  & similar to \texttt{leaf shape}, but suggests an n-tuple of blocks.
+  & similar to \texttt{comp shape}, but suggests an n-tuple of blocks.
   \\
   \texttt{\texttt{ports e[0..10]w[0..10]}}
   & \vspace{0pt} \begin{tikzpicture}[baseline] \node[ports e1w1] {}; \end{tikzpicture}
@@ -296,7 +300,7 @@ Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between co
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-paths}
-\lstinputlisting[linerange={6-16}]{figs/example-paths.tex}
+\lstinputlisting[linerange={6-16}]{figs_src/example-paths.tex}
 \caption{Different paths created with the library provided styles}
 \end{figure}
 
@@ -307,21 +311,21 @@ The library provides the following custom keys:\bookmark{path keys}
 \item \texttt{sn=[MoC]} draws an n-tuple of signals. If the global options allow it, passing a MoC string to this key will color the signal accordingly. 
 \item \texttt{v=[MoC]} draws a vector. If the global options allow it, passing a MoC string to this key will color the vector accordingly, suggesting that it contains signals of their respective MoC.
 \item \texttt{vn=[MoC]} draws an n-tuple of vectors. If the global options allow it, passing a MoC string to this key will color the vector accordingly, suggesting that it contains signals of their respective MoC.
-\item \texttt{f} draws an edge used for showing how functions and parameters are passed from higher order functions downwards into the hierarchy.  
+\item \texttt{f} draws an edge used for showing how arguments of a higher order function or a hierarchical block are further passed to its components.  
 \item \texttt{fn} similar to \texttt{f}, but for n-tuples of functions.  
 \item \texttt{srcport} draws a port symbol at the source of the path.
 \item \texttt{dstport} draws a port symbol at the destination of the path.
-\item \texttt{token=[token-string]} draws symbols for depicting the data structures carried by ForSyDe signals or vectors. The accepted tokens strings are \texttt{scalar|vector|function}. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar,  vector and function can be drawn with \texttt{token=scalar-vector-function}. To depict functions which take other data types as arguments, you can group some tokens between parentheses. E.g. a 2-tuple of a scalar and a function which takes a vector and a scalar as arguments can be drawn with \texttt{token=scalar-(vector-scalar)}.
+\item \texttt{token=[token-string]} draws symbols for depicting the data structures carried by \ForSyDe\ signals or vectors. The accepted tokens strings are \texttt{scalar|vector|function}. To draw tuple structures you have to separate token keywords by \texttt{-} (dash). E.g.: 3-tuple of scalar,  vector and function can be drawn with \texttt{token=scalar-vector-function}. To depict functions which take other data types as arguments, you can group some tokens between parentheses. E.g. a 2-tuple of a scalar and a function which takes a vector and a scalar as arguments can be drawn with \texttt{token=scalar-(vector-scalar)}.
 \item \texttt{token pos=[0.0 .. 1.0]} the position between the start node/anchor and the end node/anchor of the token symbols' center position. Default is \texttt{0.5}.
 \item \texttt{intersect=[path-name]} finds the first intersection with the path named \texttt{[path-name]}, and creates a coordinate from it, named by default \texttt{int} if no other name was given with the \texttt{as} key.
 \item \texttt{as=[coordinate-name]} names the intersection coordinate found with the \texttt{intersect}.
 \item \texttt{trans=\{source-path-style\}\{intersection-path-name\}\{destination-path-style\}} is a helper key which finds the intersection of the current path with \texttt{intersection-path-name}, splits the current path into two, decorated with \texttt{source-path-style} and  \texttt{destination-path-style} respectively.
-\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-\item \texttt{|-|=[0.0 .. 1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-\item \texttt{-|-=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-\item \texttt{-|-|=[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
-\item \texttt{-|-|-=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
-\item \texttt{|-|-|=[0.0 .. 1.0]:[0.0 .. 1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{-|-=[0.0..1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{|-|=[0.0..1.0]} will create a vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-=[0.0..1.0]} will create a horizontal-vertical-horizontal spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|=[0.0..1.0]} will create a horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by a number which determines the position of the 90 degree angle.
+\item \texttt{-|-|-=[0.0..1.0]:[0.0..1.0]} will create a horizontal-vertical-horizontal-vertical-horizontal spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
+\item \texttt{|-|-|=[0.0..1.0]:[0.0..1.0]} will create a vertical-horizontal-vertical-horizontal-vertical spline in the path. It may be accompanied by two numbers  separated by \texttt{:} which determine the position of the 90 degree angles.
 \item \texttt{deviate=} is a length representing the deviation from the straight path in case of complex splines (\texttt{-|-|},\texttt{-|-|-} and \texttt{|-|-|}).
 \end{optionslist}
 
@@ -372,7 +376,7 @@ Following is a list of miscellaneous functions and environments provided for use
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-utility-portinfo}
-\lstinputlisting[linerange={5-6}]{figs/example-utility-portinfo.tex}
+\lstinputlisting[linerange={5-6}]{figs_src/example-utility-portinfo.tex}
 \caption{An example of using the \texttt{\string\resetportinfo}, \texttt{\string\epinfo} and \texttt{\string\wpinfo} commands}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\resetportinfo\man\{node\}}
