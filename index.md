@@ -11,13 +11,61 @@ The ForSyDe-LaTeX style packages were developed as an effort to standardize symb
 
 # Getting Started
 
+The fastest way to get started is to make sure you have an installed version of [GNU Make](https://www.gnu.org/software/make/) build system and a `LaTeX` compiler, e.g. [Tex Live](https://www.tug.org/texlive/). To install the packages, download or clone the repository, and type in the command:
+
+```
+cd path/to/forsyde-latex
+make install
+```
+
+The installation script has been tested with Linux and OS X. In case the script fails, refer to the installation section in the [user manual](assets/pdf/refman.pdf). A quick way to check that the packages and the LaTeX toolchain are installed correctly is to compile the [user manual](assets/pdf/refman.pdf), with:
+
+```
+make doc
+```
+
+Drawing with ForSyDe-LaTeX is not much different than [drawing in TikZ](https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ). That is because it is actually build on top of the TikZ/PGF engine and simply offers styles or commands for instantiating ForSyDe primitives. Having this in mind, let us draw as a first example a system consisting in a farm of synchronous Moore processes.
+
+We start by creating a file called `test.tex` somewhere in a clean directory. The code for the picture we want to draw would look along the lines of:
+
+{% highlight latex %}
+\documentclass{standalone}
+\usepackage[tikz]{forsyde}
+
+\begin{document}
+\begin{tikzpicture}[constructors=shallow]
+\standard[process, moc=sy, f={$ns$;$od$;i}, type=moore] (p1) {P1};
+\cluster[farmstyle, f={$\langle 1,2,3,4 \rangle$}, type=farm] (f1) <(p1)> {Farm1};
+\path (p1) edge[trans={<-,s}{f1-west}{v,srcport}] ++(-2,0)
+      (p1) edge[trans={s,dstport}{f1-east}{v,->}] ++(2,0)
+      (f1-f.s1) edge[f,|-|,->] (p1-f.n3);
+\end{tikzpicture}
+\end{document}
+{% endhighlight %}
+
+Let us first compile the document, which generates the following picure:
+
+```
+pdflatex test.tex
+```
+
+<p align="center">
+<img width="250" src="assets/images/test.svg">
+</p>
+
+As seen in the previous code example, the TikZ graphic primitives are imported by passing the `tikz` option when including the package `forsyde`. For a list of all options, check the [usage](#usage) section below.
+
+The picture is drawn inside a `tikzpicture` environment. In the code above we pass the global option `constructors=shallow` in order to print the process constructor names using the [ForSyDe-Shallow](https://github.com/forsyde/forsyde-shallow) naming convention rather than the default [ForSyDe-Atom](https://github.com/forsyde/forsyde-atom). The Moore process constructor is drawn using the `\standard` node command, with the style `process`, and is named `(p1)`. The farm pattern is suggested as a cluster around the node `(p1)`, using the command `\cluser` with the style `farmstyle`. We are using the TikZ `\path` command to draw edge paths styled as signals `s` and vectors `v`. We are making use of the `trans` helper to depict the transition between the "outside" vector of signals and the signal fed to the Moore machine "inside" one worker thread.
+
+For extensive documentation on available packages, commands, styles and options, please refer to the [reference manual](assets/pdf/refman.pdf).
+
 # Documentation
 
-This document comes with a [reference manual](extras/refman.pdf) in `doc/refman.tex`. The Makefile provided should be able to compile the document unless the LaTeX toolchain is not properly set up or there is an unmet dependency.
+This project is shipped with a [reference manual](assets/pdf/refman.pdf) in the `doc/` folder. The `Makefile` provided should be able to compile the document unless the LaTeX toolchain is not properly set up or there is an unmet dependency.
 
 ## Installation
 
-This project comes with a [GNU Make](https://www.gnu.org/software/make/) instalation script which copies the library files and custom fonts in the default `LaTeX` search paths used by [Tex Live 2017](https://www.tug.org/texlive/). If you cannot use GNU Make or have another `LaTeX` compiler distribution, refer to the installation section in the [user manual](extras/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (usually `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`). 
+The easiest installation method is by using the [Make](https://www.gnu.org/software/make/) script which copies the library files and custom fonts in the default `LaTeX` search paths. If you cannot use GNU Make or have an unsupported `LaTeX` compiler distribution, refer to the installation section in the [user manual](extras/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (usually `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`). 
 
 Here is a list with all the provided `make` commands:
 
@@ -41,7 +89,7 @@ To import the libraries you need to write in the preamble of your document:
 \usepackage[options]{forsyde}
 ```
 
-where `options` is a list of packages to load:
+where `options` is a list of packages you want to load:
 
  * `tikz` : loads a collection of PGF and TikZ styles, graphical primitives and draw commands
  * `math` : loads a collection of math symbols and math environment commands
@@ -51,8 +99,10 @@ where `options` is a list of packages to load:
 
 # Examples
 
-In the [extras folder](extras/) you can find some pre-compiled example documents, including a version of the user manual.
+Here are listed a set of pre-compiled examples. Click on their picture to see their source code.
+
+
 
 # Contribution
 
-The package files are documented and contributions should be self-explanatory. Feel free to branch your own changes and/or initiate pull requests. All new feature must be documented in the reference manual.
+The package files are documented and contributions should be self-explanatory. Any changes should be performed on a personal fork and contributions should be documented and evaluated by initiating pull requests. All new feature must also be documented in the reference manual. Check the project's [Wiki page](https://github.com/forsyde/forsyde-shallow/wiki) for more information and specific instructions on how to contribute.
