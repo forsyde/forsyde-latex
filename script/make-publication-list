@@ -1,0 +1,135 @@
+#!/bin/bash
+# Script for generation of publication list for ForSyDe web page
+#
+# Author: George Ungureanu
+#
+# Date: 2018-02-04
+
+# Here you put tiles to categories
+title_analysis_and_dse="Design Space Exploration and Performance Analysis"
+title_modeling="System Modeling"
+title_simulation="System Simulation"
+title_adaptivity="Adaptive Systems and Run-Time Reconfiguration"
+title_design_flow="Design Flow and Methodology"
+title_synthesis="Hardware and Software Synthesis"
+title_refinement="Design Transformation and Design Refinement"
+title_verification="Design Validation and Verification"
+
+# DO NOT TOUCH (unless you know what you are doing)
+ROOTPATH="$( cd "$(dirname "$0")" ; pwd -P )/.."
+
+references=$ROOTPATH/assets/bib/references.bib 
+htmlpath=$ROOTPATH/pages/publications
+
+rm -f $htmlpath/*
+
+categories=$(grep 'categories' $references | sed 's/^[^{]*{\([^{}]*\)}.*/\1/g' | sed 's/, /,/g' |sed 's/ /_/g')
+ucategories=$(echo -e "${categories//,/\\n}" | sort -u)
+years=$(grep 'year' $references | sed 's/[^0-9]//g')
+uyears=$(echo -e "${years// /\\n}" | sort -ur)
+
+for i in $ucategories; do
+    echo $i
+done
+echo $uyears
+
+for category in $ucategories; do
+    orig_category=$(echo $category | sed 's/_/ /g')
+    curname=publications_$category
+    title_name=$(eval "echo \$title_$category")
+    echo "Found category: $category..."
+    bib2bib -c "categories : \"$orig_category\"" $references  -ob tmp.bib
+    bibtex2html -nodoc -nofooter --no-abstract --no-keywords -noheader \
+    		--note categories -s abbrv -d -r -o publications tmp.bib
+
+    echo "---
+layout: default
+permalink: ${curname}.html
+---
+
+<h1>Publications on $title_name</h1>
+" > $htmlpath/$curname.html
+    sed -i 's/<table>/<table class="bibtextable">/g' publications.html
+
+    tag_section=false
+    touch publications_tmp.html
+    sed -i -e '$a\' publications.html
+    while IFS= read -r line; do
+	current_line=$line
+	if [[ $line == '</font></blockquote>' ]]; then tag_section=false ; fi
+	if [ "$tag_section" = true ] ; then
+	    current_line=""
+	    while read category; do
+		category_link=$(echo $category | sed 's/ /_/g')
+	        current_line="$current_line<a href=\"publications_$category_link.html\">$category</a>, "
+	    done <<< "$(echo $line | sed -n 1'p' | tr ',' '\n')"
+	    current_line="${current_line::-2}"
+	fi
+	if [[ $line == '<blockquote><font size="-1">' ]]; then tag_section=true ; fi
+        echo $current_line >> publications_tmp.html
+    done < publications.html
+    mv publications_tmp.html publications.html
+
+    
+    cat publications.html >> $htmlpath/$curname.html
+
+    rm tmp.bib publications.html publications_bib.html
+done
+
+
+#########################################
+
+bibtex2html -nodoc -nofooter --no-abstract --no-keywords -noheader \
+    	    --note categories -s abbrv -d -r -o publications $references
+echo "---
+layout: none
+permalink: publications_bib.html
+---
+{% raw %} 
+" > $htmlpath/publications_bib.html
+sed -i '/^@comment/ d' publications_bib.html
+echo "{% endraw %}" >> publications_bib.html
+cat publications_bib.html >> $htmlpath/publications_bib.html
+rm publications.html publications_bib.html
+
+echo "---
+title: Publications
+layout: default
+permalink: publications.html
+top-navbar: true
+---
+
+<h1 id=\"ForSyDe Publications\">ForSyDe Publications</h1>
+" > $htmlpath/publications.html
+for theyear in $uyears
+do
+    bib2bib -c "year = $theyear" $references -ob ./tmp.bib
+    bibtex2html -nodoc -nofooter --no-abstract --no-keywords -noheader \
+    		--note categories -s abbrv -d -r -o publications tmp.bib
+    
+    echo -e "<h2 id=\"$theyear\"> $theyear </h2>\n$(cat publications.html)" > publications.html
+    sed -i 's/<table>/<table class="bibtextable">/g' publications.html
+    
+    tag_section=false
+    touch publications_tmp.html
+    sed -i -e '$a\' publications.html
+    while IFS= read -r line; do
+	current_line=$line
+	if [[ $line == '</font></blockquote>' ]]; then tag_section=false ; fi
+	if [ "$tag_section" = true ] ; then
+	    current_line=""
+	    while read category; do
+		category_link=$(echo $category | sed 's/ /_/g')
+	        current_line="$current_line<a href=\"publications_$category_link.html\">$category</a>, "
+	    done <<< "$(echo $line | sed -n 1'p' | tr ',' '\n')"
+	    current_line="${current_line::-2}"
+	fi
+	if [[ $line == '<blockquote><font size="-1">' ]]; then tag_section=true ; fi
+        echo $current_line >> publications_tmp.html
+    done < publications.html
+    mv publications_tmp.html publications.html
+
+    cat publications.html >> $htmlpath/publications.html
+    rm tmp.bib publications.html publications_bib.html
+done
+

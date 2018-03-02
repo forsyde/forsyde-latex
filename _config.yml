@@ -1,1 +1,13 @@
+name: The ForSyDe-LaTeX Utilities
+description: TikZ/PGF libraries for ForSyDe documents
 theme: jekyll-theme-slate
+
+show_downloads: true
+
+parent-url: https://forsyde.github.io
+
+## google analytics
+google_analytics: UA-113668562-1
+
+## paths to exclude from the site generation
+exclude: [docs]

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+ROOTPATH="$( cd "$(dirname "$0")" ; pwd -P )/.."
+
+rm -f $ROOTPATH/pages/tags/*
+
+tags=$(grep 'tags:' $ROOTPATH/_posts/*.md | cut -f2- -d: | sed 's/[,\[]//g' | sed 's/\]//g')
+
+unique=$(echo -e "${tags// /\\n}" | sort -u)
+
+for tag in $unique; do
+    echo $tag
+    echo "---
+title: News
+tagName: $tag
+search: exclude
+permalink: tag_$tag.html
+folder: tags
+layout: default
+hide: true
+---
+{% include taglogic.html %}
+" > $ROOTPATH/pages/tags/tag_$tag.html
+done

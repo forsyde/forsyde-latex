@@ -1,7 +1,0 @@
-font_identifier := "ForSyDe-Atom8";
-font_size 8pt#;
-
-u#:=22/45pt#;
-s#:=1/4pt#;
-
-input forsydeatom
