@@ -65,7 +65,7 @@ This project is shipped with a [reference manual](assets/pdf/refman.pdf) in the 
 
 ## Installation
 
-The easiest installation method is by using the [Make](https://www.gnu.org/software/make/) script which copies the library files and custom fonts in the default `LaTeX` search paths. If you cannot use GNU Make or have an unsupported `LaTeX` compiler distribution, refer to the installation section in the [user manual](extras/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (usually `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`). 
+The easiest installation method is by using the [Make](https://www.gnu.org/software/make/) script which copies the library files and custom fonts in the default `LaTeX` search paths. If you cannot use GNU Make or have an unsupported `LaTeX` compiler distribution, refer to the installation section in the [user manual](extras/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` and if it does not have write access, it will fall back to `TEXMFHOME`. 
 
 Here is a list with all the provided `make` commands:
 
