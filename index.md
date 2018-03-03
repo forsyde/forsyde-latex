@@ -109,7 +109,7 @@ Here are listed a set of pre-compiled examples. Click on any of them to see thei
  <li>
 	<a href="examples/{{examp.raw}}.html">
 		<p align="center">
-		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		<img class="examples" src="assets/svg/{{examp.raw}}.svg">
 		</p>
 		<p align="center">{{ examp.description }}</p>
 	</a>
@@ -127,7 +127,7 @@ Here are listed a set of pre-compiled examples. Click on any of them to see thei
  <li>
 	<a href="examples/{{examp.raw}}.html">
 		<p align="center">
-		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		<img class="examples" src="assets/svg/{{examp.raw}}.svg">
 		</p>
 		<p align="center">{{ examp.description }}</p>
 	</a>
@@ -144,7 +144,7 @@ Here are listed a set of pre-compiled examples. Click on any of them to see thei
  <li>
 	<a href="examples/{{examp.raw}}.html">
 		<p align="center">
-		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		<img class="examples" src="assets/svg/{{examp.raw}}.svg">
 		</p>
 		<p align="center">{{ examp.description }}</p>
 	</a>
@@ -162,7 +162,7 @@ Here are listed a set of pre-compiled examples. Click on any of them to see thei
  <li>
 	<a href="examples/{{examp.raw}}.html">
 		<p align="center">
-		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		<img class="examples" src="assets/svg/{{examp.raw}}.svg">
 		</p>
 		<p align="center">{{ examp.description }}</p>
 	</a>
