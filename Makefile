@@ -1,6 +1,7 @@
 METAFONT_SRC := fonts
 MANUAL_SRC   := doc
 SOURCE_SRC   := src
+MKDIR        := mkdir -p
 
 HOME_PATH  := $(shell kpsewhich -var-value TEXMFHOME)
 LOCAL_PATH := $(shell kpsewhich -var-value TEXMFLOCAL)
@@ -30,7 +31,11 @@ view :
 	$(MAKE) view -C doc
 
 install : $(METAFONTS) $(FOUNDRIES) $(SOURCES) $(PACKAGES)
-	@if [ -f $(MANUAL_SRC)/refman.pdf ]; then cp $(MANUAL_SRC)/refman.pdf $(MANUAL_PATH)/; fi
+	@$(MKDIR) $(MANUAL_PATH)
+	@if [ -f $(MANUAL_SRC)/refman.pdf ]; then \
+		echo "* copying manual"; \
+		cp $(MANUAL_SRC)/refman.pdf $(MANUAL_PATH)/; \
+	fi
 	@echo "Package ForSyDe-LaTex installed in$(TEXMF_PATH)"
 
 uninstall :
@@ -40,10 +45,12 @@ uninstall :
 
 define install-template
   $(METAFONTS) : $(1)/fonts/source/public/typeface/%.mf : fonts/%.mf
+	@$(MKDIR) $(METAFONT_PATH)
 	@echo "* installing $$(@F)"
 	@cp $$< $$@
 
   $(FOUNDRIES) : $(1)/fonts/tfm/foundry/typeface/%.tfm : fonts/%.mf
+	@$(MKDIR) $(FOUNDRY_PATH)
 	@echo "* generating fontmap for $$(@F)"
 	@if mf '\mode:=ljfour; nonstopmode; input '"$$<"'' ; then \
 		mv $$(@F) $$@; \
@@ -51,10 +58,12 @@ define install-template
 	@rm *log *gf
 
   $(SOURCES) : $(1)/tex/latex/forsyde/%.tex : src/%.tex
+	@$(MKDIR) $(SOURCE_PATH)
 	@echo "* installing $$(@F)"
 	@cp $$< $$@
 
   $(PACKAGES) : $(1)/tex/latex/forsyde/%.sty : src/%.sty
+	@$(MKDIR) $(SOURCE_PATH)
 	@echo "* installing $$(@F)"
 	@cp $$< $$@
 endef
