@@ -6,6 +6,10 @@ show_downloads: true
 
 parent-url: https://forsyde.github.io
 
+maintainer:
+  name: ugeorge
+  url: https://github.com/ugeorge
+
 ## google analytics
 google_analytics: UA-113668562-1
 
