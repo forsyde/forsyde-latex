@@ -1,7 +1,7 @@
 \begin{figure}[htb]\centering
 \includegraphics[width=\textwidth]{figs/example-forsyde-tikz}
 \end{figure}
-\lstinputlisting{figs_src/example-forsyde-tikz.tex}
+\lstinputlisting[firstline=4]{figs_src/example-forsyde-tikz.tex}
 
 \section{The \texttt{forsyde-tikz} package}
 
@@ -39,7 +39,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-basic}
-\lstinputlisting[linerange={5-5}]{figs_src/example-node-basic.tex}
+\lstinputlisting[linerange={8-8}]{figs_src/example-node-basic.tex}
 \caption{The \texttt{\char`\\basic} draw command. The red dots are custom anchors, accessed with \texttt{[name]-f.[anchor]}.}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\basic\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
@@ -58,7 +58,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-standard}
-\lstinputlisting[linerange={5-5}]{figs_src/example-node-standard.tex}
+\lstinputlisting[linerange={8-8}]{figs_src/example-node-standard.tex}
 \caption{The \texttt{\char`\\standard} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\standard\opt{[options]}\opt{(name)}\opt{<position>}\man{\{label\}};}
@@ -89,7 +89,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-interface}
-\lstinputlisting[linerange={5-5}]{figs_src/example-node-interface.tex}
+\lstinputlisting[linerange={8-8}]{figs_src/example-node-interface.tex}
 \caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\interface\opt{[options]}\opt{(name)}\opt{<position>}\man{\{domain~left\}}\man{\{domain~right\}};}
@@ -106,7 +106,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-trans}
-\lstinputlisting[linerange={5-5}]{figs_src/example-node-trans.tex}
+\lstinputlisting[linerange={8-8}]{figs_src/example-node-trans.tex}
 \caption{The \texttt{\char`\\trans} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]} and the port anchors are accessed with \texttt{[name].[anchor]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\trans\opt{[options]}\opt{(name)}\opt{<position>}\man{\{\}};}
@@ -135,7 +135,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-cluster}
-\lstinputlisting[linerange={5-7}]{figs_src/example-node-cluster.tex}
+\lstinputlisting[linerange={8-10}]{figs_src/example-node-cluster.tex}
 \caption{The \texttt{\char`\\cluster} draw command. The function anchors are accessed with \texttt{[name]-f.[anchor]}, the port anchors are accessed with \texttt{[name].[anchor]} and the cluster outer shape edges are named \texttt{[name]-[position]}}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\cluster\opt{[options]}\opt{(name)}\man{<list~of~clustered~nodes>}\man{\{label\}};}
@@ -179,7 +179,7 @@ The library also provide as set of helper styles for setting several options at 
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-node-drawconduit}
-\lstinputlisting[linerange={5-8}]{figs_src/example-node-drawconduit.tex}
+\lstinputlisting[linerange={8-11}]{figs_src/example-node-drawconduit.tex}
 \caption{The \texttt{\char`\\drawconduit} draw command.}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\drawconduit\opt[length]\man\{node~with~ports\}\{num.~ports~west\}\{num.~ports~east\};}
@@ -300,7 +300,7 @@ Data flow in \texttt{forsyde-tikz} is represented as (directed) edges between co
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-paths}
-\lstinputlisting[linerange={6-16}]{figs_src/example-paths.tex}
+\lstinputlisting[linerange={9-19}]{figs_src/example-paths.tex}
 \caption{Different paths created with the library provided styles}
 \end{figure}
 
@@ -376,7 +376,7 @@ Following is a list of miscellaneous functions and environments provided for use
 
 \begin{figure}[htb]\centering
 \includegraphics{figs/example-utility-portinfo}
-\lstinputlisting[linerange={5-6}]{figs_src/example-utility-portinfo.tex}
+\lstinputlisting[linerange={8-9}]{figs_src/example-utility-portinfo.tex}
 \caption{An example of using the \texttt{\string\resetportinfo}, \texttt{\string\epinfo} and \texttt{\string\wpinfo} commands}
 \end{figure}
 \hspace{1pt}\bookmark{\char`\\resetportinfo\man\{node\}}
