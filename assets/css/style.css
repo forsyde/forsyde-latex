@@ -1,16 +1,13 @@
+ul.examples {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+}
 
-#forkme_banner {
-    display: block;
-    position: absolute;
-    z-index: 10;
-    padding: 17px 50px 15px 10px;
-    color: #fff;
-    background: url("../images/blacktocat.png") #555555 no-repeat 95% 50%;
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    float: left;
-    margin-top: 10px;
-    border-radius: 4px;
-    top: unset;
-    right: unset;
+ul.examples li {
+    display:inline-block;
+}
+
+img.examples {
+    max-width:250px;
 }

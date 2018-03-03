@@ -99,9 +99,77 @@ where `options` is a list of packages you want to load:
 
 # Examples
 
-Here are listed a set of pre-compiled examples. Click on their picture to see their source code.
+Here are listed a set of pre-compiled examples. Click on any of them to see their source code.
+
+## TikZ process networks examples
+
+<ul class="examples">
+{% for examp in site.pages %}
+{% if examp.isExample and examp.categories contains "tikz" %}
+ <li>
+	<a href="examples/{{examp.raw}}.html">
+		<p align="center">
+		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		</p>
+		<p align="center">{{ examp.description }}</p>
+	</a>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+
+## Signal plotting examples
 
 
+<ul class="examples">
+{% for examp in site.pages %}
+{% if examp.isExample and examp.categories contains "plot" %}
+ <li>
+	<a href="examples/{{examp.raw}}.html">
+		<p align="center">
+		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		</p>
+		<p align="center">{{ examp.description }}</p>
+	</a>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+
+## Math examples
+
+<ul class="examples">
+{% for examp in site.pages %}
+{% if examp.isExample and examp.categories contains "math" %}
+ <li>
+	<a href="examples/{{examp.raw}}.html">
+		<p align="center">
+		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		</p>
+		<p align="center">{{ examp.description }}</p>
+	</a>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+
+## Miscellaneous examples
+
+
+<ul class="examples">
+{% for examp in site.pages %}
+{% if examp.isExample and examp.categories contains "misc" %}
+ <li>
+	<a href="examples/{{examp.raw}}.html">
+		<p align="center">
+		<img class="examples" src="../assets/svg/{{examp.raw}}.svg">
+		</p>
+		<p align="center">{{ examp.description }}</p>
+	</a>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
 
 # Contribution
 

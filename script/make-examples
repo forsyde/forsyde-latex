@@ -1,0 +1,67 @@
+#!/bin/bash
+
+## You need to install pdf2svg
+#
+# sudo apt install pdf2svg
+
+FORSYDE_LATEX=$1
+ROOTPATH="$( cd "$(dirname "$0")" ; pwd -P )/.."
+PDF_DIR=$ROOTPATH/assets/pdf
+SVG_DIR=$ROOTPATH/assets/svg
+RAW_DIR=$ROOTPATH/examples/raw
+PAGE_DIR=$ROOTPATH/examples
+
+make -C $FORSYDE_LATEX install
+make -C $FORSYDE_LATEX doc
+mkdir -p $RAW_DIR
+mkdir -p $PDF_DIR
+mkdir -p $SVG_DIR
+mkdir -p $PAGE_DIR
+
+cp -f $FORSYDE_LATEX/doc/refman.pdf $ROOTPATH/assets/pdf/
+cp -f $FORSYDE_LATEX/doc/figs_src/*.tex .
+cp -f $FORSYDE_LATEX/doc/figs_src/*.flx .
+cp -f $FORSYDE_LATEX/examples/*.tex . 
+
+for raw in ./*.tex; do
+    xbase=${raw##*/}
+    xpref=${xbase%.*}
+    title=$(grep '% Title    :' $raw | sed 's/^.*: //')
+    categories=$(grep '% Category :' $raw | sed 's/^.*: //')
+    pdflatex $raw
+    pdf2svg $xpref.pdf $xpref.svg
+    echo "---
+layout: default
+title: Examples
+description: $title
+isExample: true
+toc: false
+raw: $xpref
+categories: $categories
+---
+{% capture filePath %}raw/{{page.raw}}.tex{% endcapture %}
+
+# $title
+
+<p align=\"center\">
+<img src=\"../assets/svg/{{page.raw}}.svg\">
+</p>
+
+<p align=\"center\">
+<a href=\"{{filePath}}\">RAW</a>
+|
+<a href=\"../assets/pdf/{{page.raw}}.pdf\">PDF</a>
+</p>
+
+{% highlight latex %}
+{% include_relative {{ filePath }} %}
+{% endhighlight %}
+
+" > $PAGE_DIR/$xpref.md
+    sed -i 's/{%/{ %/g' $xpref.tex
+    mv $xpref.tex $RAW_DIR
+    mv $xpref.pdf $PDF_DIR
+    mv $xpref.svg $SVG_DIR
+done
+
+rm *.aux *.log *.flx

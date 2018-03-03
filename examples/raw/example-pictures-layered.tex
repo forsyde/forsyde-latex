@@ -1,0 +1,31 @@
+% Title    : The layered model of ForSyDe-Atom
+% Author   : George Ungureanu
+% Category : misc
+\documentclass{standalone}
+\usepackage[tikz]{forsyde}
+\usetikzlibrary{forsyde.pictures.layered}
+
+\begin{document}
+\begin{tikzpicture}
+  \forsydeAtomMakeLayers[]{ %
+    Function Layer:Function,%
+    Behavior Layer:Behavior,%
+    MoC Layer:Process,%
+    Skeleton Layer:Process Network}
+  \node[] (value) at (layer0-center){ %
+    \usebox{\forsydeAtomValue}};
+  \node[] (ext-value) at ($(layer1-center)!.5!(layer2-center)$) { %
+    \usebox{\forsydeAtomExtValue}};
+  \node[] (event) at ($(layer2-center)!.5!(layer3-center)$) { %
+    \usebox{\forsydeAtomTagExtValue}};
+  \forsydeAtomSignalArrow[width=4.2cm]{layer3-center}
+  \node[inner sep=0] (token) at (arrow-center) { %
+    \usebox{\forsydeAtomTagExtValue}};
+  \node[] at ($(token.east)!.5!(arrow-west)$) { %
+    \usebox{\forsydeAtomTagExtValue}};
+  \node[] at ($(token.west)!.5!(arrow-east)$) { %
+    \usebox{\forsydeAtomTagExtValue}};
+  \forsydeAtomSignalVector{layer4-rightpath}
+  \forsydeAtomHighlightLayer[green!30]{2}
+\end{tikzpicture}
+\end{document}

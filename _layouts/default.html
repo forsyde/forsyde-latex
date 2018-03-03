@@ -20,7 +20,7 @@
     <link href="{{site.parent-url}}/assets/css/docs.min.css" rel="stylesheet">
     <link href="{{site.parent-url}}/assets/css/fontawesome-all.css" rel="stylesheet">
     <link href="{{site.parent-url}}/assets/css/style.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{{ 'assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}"> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ 'assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>    
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -100,16 +100,10 @@
 	  <li>
 	    <a class="social fas fa-rss-square fa-1x" width="90" height="20" href="{{site.parent-url}}/feed.xml"></a>
           </li>
-          {% if site.github.is_project_page %}
-          <p class="copyright">{{ site.name | default: site.github.repository_name }} maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-          <li>
-            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user={{site.githubButton.user}}&amp;repo={{site.githubButton.repo}}&amp;type=watch&amp;count=true" width="90" height="20" title="Star on GitHub"></iframe>
-          </li>
-          <li>
-            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user={{site.githubButton.user}}&amp;repo={{site.githubButton.repo}}&amp;type=fork&amp;count=true" width="90" height="20" title="Fork on GitHub"></iframe>
-          </li>
-          {% endif %}
         </ul>
+        {% if site.github.is_project_page %}
+        <p class="copyright">The project '{{ site.github.repository_name }}' is maintained by <a href="{{ site.maintainer.url | default: site.github.owner_url }}">{{ site.maintainer.name | default: site.github.owner_name }}</a></p>
+        {% endif %}
         <p class="copyright">&#169;2018 The ForSyDe Group @ KTH, under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
         <p>Site published with <a href="https://pages.github.com">GitHub Pages</a>. See the <a href="{{site.parent-url}}/acknowledgements.html">acknowledgements page</a> for more.</p>
       </footer>
