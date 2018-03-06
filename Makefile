@@ -3,8 +3,25 @@ MANUAL_SRC   := doc
 SOURCE_SRC   := src
 MKDIR        := mkdir -p
 
-HOME_PATH  := $(shell kpsewhich -var-value TEXMFHOME)
-LOCAL_PATH := $(shell kpsewhich -var-value TEXMFLOCAL)
+##########################################
+
+# Check that given variables are set and all have non-empty values,
+# die with an error otherwise.
+# 1. Variable name(s) to test.
+# 2. (optional) Error message to print.
+check_defined = \
+    $(strip $(foreach 1,$1, \
+        $(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+    $(if $(value $1),, \
+      $(error $1$(if $2, ($2))))
+
+KPSEWHICH := $(shell which kpsewhich)
+TEXHASH   := $(shell which texhash || which mktexlsr )
+
+
+HOME_PATH  := $(shell $(KPSEWHICH) -var-value TEXMFHOME)
+LOCAL_PATH := $(shell $(KPSEWHICH) -var-value TEXMFLOCAL)
 TEXMF_PATH := $(if $(shell if [ -w $(LOCAL_PATH) ]; then echo "1"; fi), $(LOCAL_PATH), $(HOME_PATH))
 
 METAFONT_PATH := $(TEXMF_PATH)/fonts/source/public/typeface
@@ -30,12 +47,22 @@ superclean :
 view :
 	$(MAKE) view -C doc
 
-install : $(METAFONTS) $(FOUNDRIES) $(SOURCES) $(PACKAGES)
+pre-install : 
+	@:$(call check_defined, KPSEWHICH, Cannot find the program kpsewhich. Aborting... \
+		Please refer to the user manual for manual installation.)
+	@:$(call check_defined, TEXHASH, Cannot find the program kpsewhich. Aborting... \
+		Please refer to the user manual for manual installation.)
+
+post-install:
+	@$(TEXHASH)
+	@test -f $(shell $(KPSEWHICH) --all forsyde.sty) || echo \
+		"Installation did not succeed! Refer to the user manual for installing the package manually."
 	@$(MKDIR) $(MANUAL_PATH)
 	@if [ -f $(MANUAL_SRC)/refman.pdf ]; then \
-		echo "* copying manual"; \
 		cp $(MANUAL_SRC)/refman.pdf $(MANUAL_PATH)/; \
 	fi
+
+install : pre-install $(METAFONTS) $(FOUNDRIES) $(SOURCES) $(PACKAGES) post-install
 	@echo "Package ForSyDe-LaTex installed in$(TEXMF_PATH)"
 
 uninstall :
@@ -70,4 +97,4 @@ endef
 
 $(eval $(call install-template, $(TEXMF_PATH)))
 
-.PHONY: uninstall clean superclean
+.PHONY: uninstall clean superclean pre-install post-install
