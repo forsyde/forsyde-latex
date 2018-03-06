@@ -10,6 +10,10 @@ maintainer:
   name: ugeorge
   url: https://github.com/ugeorge
 
+github:
+  zip_url: https://github.com/forsyde/forsyde-latex/archive/master.zip
+  tar_url: https://github.com/forsyde/forsyde-latex/archive/master.tar.gz
+
 ## google analytics
 google_analytics: UA-113668562-1
 
