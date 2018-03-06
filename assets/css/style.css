@@ -4,10 +4,25 @@ ul.examples {
     column-count: 3;
 }
 
+@media only screen and (max-width: 993px) {
+    ul.examples {
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	column-count: 2;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    ul.examples {
+	-webkit-column-count: 1;
+	-moz-column-count: 1;
+	column-count: 1;
+    }
+}
+
 ul.examples li {
     display:inline-block;
 }
-
 img.examples {
-    max-width:250px;
+    max-width:100%;
 }
