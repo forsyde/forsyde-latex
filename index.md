@@ -50,7 +50,7 @@ pdflatex test.tex
 ```
 
 <p align="center">
-<img width="250" src="assets/images/test.svg">
+<img width="250" src="assets/svg/test.svg">
 </p>
 
 As seen in the previous code example, the TikZ graphic primitives are imported by passing the `tikz` option when including the package `forsyde`. For a list of all options, check the [usage](#usage) section below.
