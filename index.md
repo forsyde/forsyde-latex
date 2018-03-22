@@ -11,7 +11,7 @@ The ForSyDe-LaTeX style packages were developed as an effort to standardize symb
 
 # Getting Started
 
-The fastest way to get started is to make sure you have an installed version of [GNU Make](https://www.gnu.org/software/make/) build system and a `LaTeX` compiler, e.g. [Tex Live](https://www.tug.org/texlive/). To install the packages, download or clone the repository, and type in the command:
+The fastest way to get started is to make sure you have an installed version of [GNU Make](https://www.gnu.org/software/make/) build system and a `LaTeX` compiler, e.g. from the [Tex Live](https://www.tug.org/texlive/) suite. To install the packages, download or clone the repository, and type in the command:
 
 ```
 cd path/to/forsyde-latex
@@ -65,25 +65,27 @@ This project is shipped with a [reference manual](assets/pdf/refman.pdf) in the 
 
 ## Installation
 
-The easiest installation method is by using the [Make](https://www.gnu.org/software/make/) script which copies the library files and custom fonts in the default `LaTeX` search paths. If you cannot use GNU Make or have an unsupported `LaTeX` compiler distribution, refer to the installation section in the [user manual](assets/pdf/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` and if it does not have write access, it will fall back to `TEXMFHOME`. 
+This project comes with a [GNU Make](https://www.gnu.org/software/make/) instalation script which copies the library files and custom fonts in the default `LaTeX` search paths. Naturally, you need to install a LaTeX tool suite to be able to use ForSyDe-LaTeX, e.g. we recommend [Tex Live](https://www.tug.org/texlive/).
 
 Here is a list with all the provided `make` commands:
 
-
 ```
-make install          # installs packages and fonts under TEXMFHOME
-sudo make install     # installs packages and fonts under TEXMFLOCAL
+make install          # (default) installs packages and fonts under TEXMFHOME
 make uninstall        # uninstalls the packages and fonts from TEXMFHOME
+sudo make install     # installs packages and fonts under TEXMFLOCAL
 sudo make uninstall   # uninstalls the packages and fonts from TEXMFLOCAL
-make doc              # (default), compiles the reference manual
+make doc              # compiles the reference manual
 make clean            # cleans the intermediate files generated for the reference manual
 make superclean       # removes manual and generated files
 ```
 
+**OBS:** depending on your OS or your chosen installation method, you might need to run `sudo texhash` to rebuild the TeX path database.
+
+If you cannot use GNU Make or your `LaTeX` suite does not contain the tools necessary, refer to the installation section in the [user manual](https://forsyde.github.io/forsyde-latex/assets/pdf/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (on Ubuntu `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`).
+
 ## Usage
 
 To import the libraries you need to write in the preamble of your document:
-
 
 ```
 \usepackage[options]{forsyde}
