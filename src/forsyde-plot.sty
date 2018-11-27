@@ -81,6 +81,7 @@
   \else\def\deCoordinate{\deAt}
   \fi\fi
   \node[%
+<<<<<<< refs/remotes/origin/dev
   xshift=\xdeShift, yshift=\ydeShift,
   inner sep=1.5pt, anchor=\deAnchor,
   ] (sigdrawing) at (\deCoordinate) \bgroup
@@ -122,6 +123,72 @@
   \ifdrawoutputs
   \foreach \i in {1,...,\thesignum} {
     \path (sigplot.w\i) edge[s,-|-,<-] (\deAt.e\i);
+=======
+    xshift=\plotXShift, yshift=\plotYShift,
+    inner sep=1.5pt, anchor=\plotAnchor,
+  ] (sigdrawing) at (\plotAt) %
+  \bgroup
+    \begin{tikzpicture}[%
+      draw=black,xscale=\plotXScale, yscale=\plotYScale] %
+      \tikzstyle{time}=[coordinate]%
+    }{%
+      \ifgrid%
+      \pgfmathsetmacro\ymin{-\plotSep*\thesignum + 0.5}
+      \foreach \x [count=\i] in {0,\plotGridSize,...,\lastTag} {
+        \draw[black!60, dashed,line width=0.2pt]
+        (\x,0.5) -- (\x,\ymin);
+      }
+      \else\fi%
+      \iftimestamp%
+      \foreach \x [count=\i] in {0,\plotGridSize,...,\lastTag} {
+        \pgfmathsetmacro\timestamp{(\i-1)*\plotGridSize}
+        \node[anchor=south] at (\x,0.5) {%
+          \textbf{\scriptsize\timestamp}};
+      }
+      \else\fi%
+    \end{tikzpicture}%
+  \egroup;
+  \node[ports e\thesignum w\thesignum, inner sep=0pt,
+    fit=(sigdrawing)] (\plotName) {};
+  % \iftimestamp
+  % \node[anchor=south west, inner sep=0] at (\plotName .north west) {%
+  %   \begin{tikzpicture}[%
+  %     draw=black, %
+  %     xscale=\plotXScale, yscale=\plotYScale,
+  %     ] %
+  %     \foreach \x [count=\i] in {0,\plotGridSize,...,\lastTag} {
+  %       \pgfmathsetmacro\timestamp{(\i-1)*\plotGridSize}
+  %       \node[anchor=south] at (\x,0.5) {%
+  %         \textbf{\scriptsize\timestamp}};
+  %     }
+  %   \end{tikzpicture}
+  % };
+  % \else\fi
+  % \ifdrawinputs
+  % \foreach \i in {1,...,\thesignum} {
+  %   \path (sigplot.e\i) edge[s,-|-,->] (\plotAt.w\i);
+  % }
+  % \else\fi
+  % \ifdrawoutputs
+  % \foreach \i in {1,...,\thesignum} {
+  %   \path (sigplot.w\i) edge[s,-|-,<-] (\plotAt.e\i);
+  % }
+  % \else\fi
+}
+
+\usepackage{catchfile}
+
+\newif\iftruncatevalue
+\newif\iflastlabel
+\pgfkeys{/designalkeys/.is family, /designalkeys,
+  trunc/.is if=truncatevalue,
+  last label/.is if=lastlabel,
+  name/.estore in = \deName,
+  default/.style = {
+    trunc=false,
+    last label=true,
+    name=,
+>>>>>>> local
   }
   \else\fi
 }
