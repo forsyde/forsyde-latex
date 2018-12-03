@@ -3,17 +3,26 @@ The ForSyDe-LaTeX utilities
 
 This is the main repo for the ForSyDe-LaTeX style packages. This library was developed as an effort to standardize symbols and graphical primitives in documents related to the ForSyDe methodology, but also to provide tools and utilities for user convenience.
 
-Installation
-------------
+Installation & Usage
+--------------------
 
-This project comes with an instalation script which copies the library files and custom fonts in the default `LaTeX` search paths. The script has been tested with Ubuntu 16.04 and TexLive, but similar configurations should work. For other OS or `LaTeX` compiler distributions, refer to the installation section in the [user manual](extras/refman.pdf).
+This project comes with a [GNU Make](https://www.gnu.org/software/make/) instalation script which copies the library files and custom fonts in the default `LaTeX` search paths, We have developed with and recommend [Tex Live 2017](https://www.tug.org/texlive/).
 
-The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (usually `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`).
+Here is a list with all the provided `make` commands:
 
 ```
-./install.sh          # installs packages and fonts under TEXMFHOME
-sudo ./install.sh     # installs packages and fonts under TEXMFLOCAL
+make install          # (default) installs packages and fonts under TEXMFHOME
+sudo make install     # installs packages and fonts under TEXMFLOCAL
+make uninstall        # uninstalls the packages and fonts from TEXMFHOME
+sudo make uninstall   # uninstalls the packages and fonts from TEXMFLOCAL
+make doc              # compiles the reference manual
+make clean            # cleans the intermediate files generated for the reference manual
+make superclean       # removes manual and generated files
 ```
+
+*OBS:* depending on your OS or your chosen installation method, you might need to run `sudo texhash` to rebuild the TeX path database.
+
+If you cannot use GNU Make or your `LaTeX` suite does not contain the tools necessary, refer to the installation section in the [user manual](https://forsyde.github.io/forsyde-latex/assets/pdf/refman.pdf). The installation script will try to create a corresponding folder tree under `TEXMFLOCAL` (on Ubuntu `/usr/local/share/texmf`) and if it does not have write access, it will revert to `TEXMFHOME` (usually `$(HOME)/texmf`). 
 
 To import the libraries you need to write in the preamble of your document:
 
@@ -26,18 +35,18 @@ where `options` is a list of packages to load:
 
  * `tikz` : loads a collection of PGF and TikZ styles, graphical primitives and draw commands
  * `math` : loads a collection of math symbols and math environment commands
- * `plot` : (under construction)
+ * `plot` : loads a collection of alternative TikZ plotting commands, to be used with the dumped signal data.
  * `legacy` : API for previous versions of this project
 
 Manual
 ------
 
-This document comes with a [reference manual](extras/refman.pdf) in `doc/refman.tex`. The Makefile provided should be able to compile the document unless the LaTeX toolchain is not properly set up or there is an unmet dependency.
+This document comes with a [reference manual](https://forsyde.github.io/forsyde-latex/assets/pdf/refman.pdf) in `doc/refman.tex`. The Makefile provided should be able to compile the document unless the LaTeX toolchain is not properly set up or there is an unmet dependency.
 
-Pre-compiled examples
----------------------
+Examples
+--------
 
-In the [extras folder](extras/) you can find some pre-compiled example documents, including a version of the user manual.
+Code examples can be found in [`docs/figs_orig`](docs/figs_orig) and in [`examples`](examples), and are pre-compiled on the [web page](https://forsyde.github.io/forsyde-latex/#examples).
 
 Contribution
 ------------

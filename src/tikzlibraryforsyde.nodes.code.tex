@@ -1,8 +1,21 @@
-% Author: George Ungureanu <ugeorge@kth.se>
-% Date: 29.01.2017
+%% tikzlibraryforsyde.nodes.code.tex
+%% Copyright 2016-2018 George Ungureanu
 %
-% This file contains macros for drawing all nodes
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is George Ungureanu.
+%
+% This work consists of the files listed in LICENSE.
 
+% This file contains macros for drawing all nodes
 \usetikzlibrary{forsyde.utils}
 
 %%%%%%%% 
@@ -19,6 +32,8 @@
   /tikz/label style = \textbf,
   /tikz/function style/.store in = \funcStyle,
   /tikz/function style = \scriptsize,
+  /tikz/constructors/.store in = \constructorConvention,
+  /tikz/constructors =atom,
 }
 
 \pgfkeys{/forsyde keys/.is family, /forsyde keys,
@@ -89,13 +104,18 @@
 \addcase\getmoclabel{de}{DE}
 \addcase\getmoclabel{ct}{CT}
 \addcase\getmoclabel{sdf}{SDF}
+\addcase\getmoclabel{csdf}{CSDF}
+\addcase\getmoclabel{sadf}{SADF}
 
 \makeswitch[\defaultfillcolor]\getfieldcolor
 \addcase\getfieldcolor{sy}{sycolor}
 \addcase\getfieldcolor{de}{decolor}
 \addcase\getfieldcolor{ct}{ctcolor}
 \addcase\getfieldcolor{sdf}{sdfcolor}
+\addcase\getfieldcolor{csdf}{sdfcolor}
+\addcase\getfieldcolor{sadf}{sdfcolor}
 \addcase\getfieldcolor{blackbox}{blackboxcolor}
+
 
 \newcommand\getcolor[3]{%
   \iftoggle{#1}%
@@ -109,6 +129,14 @@
   \ifnum #1>1 \nodepart{fb} #3\else\fi%
   \ifnum #1>2 \nodepart{fc} #4\else\fi%
   \ifnum #1>3 \nodepart{fd} #5\else\fi%
+}
+
+\newcommand{\makeconstructorlabel}[2]{%
+  \IfStrEq{\constructorConvention}{atom}{%
+    \typeStyle{\ifnolabel\else\getmoclabel{#1}.\fi#2}%
+  }{%
+    \typeStyle{#2\ifnolabel\else\getmoclabel{#1}\fi}%
+  }
 }
 
 
@@ -166,7 +194,7 @@
       % the type (constructor) is positioned below the label
       \node[yshift=-\fsdInnerYSep,inner sep=2pt, anchor=north]
       (#2-t) at (#2-l.south){%
-        \typeStyle{\ifnolabel\else\getmoclabel{\fsdClass}.\fi\fsdType}
+        \makeconstructorlabel{\fsdClass}{\fsdType}
       };
       % The main shape is behind any other graphical element.
       \begin{pgfonlayer}{background}

@@ -1,3 +1,19 @@
+%% tikzlibraryforsyde.pictures.layered.code.tex
+%% Copyright 2016-2018 George Ungureanu
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is George Ungureanu.
+%
+% This work consists of the files listed in LICENSE.
 
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{foreground}
@@ -116,13 +132,13 @@
       (135:180:\currentradius) coordinate  (layer\currentLayer -left);
 }
 
-\newcommand\forsydeAtomHighlightLayer[1]{
-  \pgfmathtruncatemacro{\nextLayer}{#1 + 1}
-  \gettikzy{(layer#1-right)}{\firstlayerrad}
+\newcommand\forsydeAtomHighlightLayer[2][red]{
+  \pgfmathtruncatemacro{\nextLayer}{#2 + 1}
+  \gettikzy{(layer#2-right)}{\firstlayerrad}
   \gettikzy{(layer\nextLayer -right)}{\nextlayerrad}
-  \coordinate (layer1r) at (layer#1-right);
+  \coordinate (layer1r) at (layer#2-right);
   \begin{pgfonlayer}{background}
-    \fill[red]
+    \fill[#1]
     ([shift=(90:\firstlayerrad)]0,0) arc (85:180:\firstlayerrad)
     -- (layer\nextLayer -left) --  (layer\nextLayer -right) --
     (layer\nextLayer -left) arc (180:85:\nextlayerrad)
@@ -132,12 +148,22 @@
 
 \newsavebox{\forsydeAtomValue}
 \newsavebox{\forsydeAtomExtValue}
+\newsavebox{\forsydeAtomTagValue}
 \newsavebox{\forsydeAtomTagExtValue}
 
 \savebox{\forsydeAtomExtValue}{
   \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
     \node [el, draw, inner sep=2pt] (v) {$v$};
     \node [anchor=south, yshift=-1pt] at (v.north) {$\bot$};
+    \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
+    \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
+  \end{tikzpicture}
+}
+
+\savebox{\forsydeAtomTagValue}{
+  \begin{tikzpicture}[el/.style={shape=ellipse, draw, ultra thin},]
+    \node [el, draw, inner sep=2pt] (v) {$v$};
+    \node [anchor=south, yshift=-1pt] at (v.north) {$t$};
     \node [anchor=south, yshift=5pt,inner xsep=10pt] (e) at (v.north) {};
     \node [el, fit=(v)(e), inner sep=-2pt] (ve) {};   
   \end{tikzpicture}

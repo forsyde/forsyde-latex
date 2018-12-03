@@ -1,7 +1,10 @@
+% Title    : The 'standard' node
+% Author   : George Ungureanu
+% Category : tikz
 \documentclass{standalone}
 \usepackage{forsyde-tikz}
 \begin{document}
-\begin{tikzpicture}[]
+\begin{tikzpicture}[constructors=shallow]
   \standard[shape=leaf shape, hasmoc, moc=de, ni=8, no=10, type=mealy, nf=4, f1=$+1$, f3=$\sin$, inner ysep=15pt] (std) <0,0> {Proc};
   \foreach \i in {1,...,4} {
     \node[anch] (a) at (std-f.n\i) {}; \node[label, anchor=west, rotate=90] (l) at (a.east) {\texttt{std-f.n\i}};

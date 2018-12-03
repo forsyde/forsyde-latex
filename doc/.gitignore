@@ -2,8 +2,11 @@
 !figs
 figs/*
 !inputs
-!inputs/*
-!figs/*.tex
+!inputs/*.tex
+!figs_src
+figs_src/*
+!figs_src/*.tex
+!figs_src/*.flx
 !Makefile
 !.gitignore
 !*.tex

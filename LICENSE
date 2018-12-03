@@ -1,4 +1,4 @@
-%% tikzlibraryforsyde.utils.code.tex
+%% The ForSyDe-LaTeX Utilities
 %% Copyright 2016-2018 George Ungureanu
 %
 % This work may be distributed and/or modified under the
@@ -13,13 +13,16 @@
 % 
 % The Current Maintainer of this work is George Ungureanu.
 %
-% This work consists of the files listed in LICENSE.
+% This work consists of the files:
 
-\newcommand\addcase[3]{%
-  \expandafter\def\csname\string#1@case@#2\endcsname{#3}%
-}
-\newcommand\makeswitch[2][]{%
-  \newcommand#2[1]{%
-    \ifcsname\string#2@case@##1\endcsname\csname\string#2@case@##1\endcsname\else#1\fi%
-  }%
-}
+src/forsyde.sty
+src/forsyde-tikz.sty
+src/forsyde-math.sty
+src/forsyde-plot.sty
+src/forsyde-legacy.sty
+src/tikzlibraryforsyde.nodes.code.tex
+src/tikzlibraryforsyde.paths.code.tex
+src/tikzlibraryforsyde.shapes.code.tex
+src/tikzlibraryforsyde.utils.code.tex
+src/tikzlibraryforsyde.pictures.layered.code.tex
+src/tikzlibraryforsyde.pictures.logo.code.tex
