@@ -142,24 +142,31 @@
         (\x,0.5) -- (\x,\ymin);
       }
       \else\fi%
-    \end{tikzpicture}%
-  \egroup;
-  \node[ports e\thesignum w\thesignum, inner sep=0pt,
-    fit=(sigdrawing)] (\plotName) {};
-  \iftimestamp
-  \node[anchor=south west, inner sep=0] at (\plotName .north west) {%
-    \begin{tikzpicture}[%
-      draw=black, %
-      xscale=\plotXScale, yscale=\plotYScale,
-      ] %
+      \iftimestamp%
       \foreach \x [count=\i] in {0,\plotGridSize,...,\lastTag} {
         \pgfmathsetmacro\timestamp{(\i-1)*\plotGridSize}
         \node[anchor=south] at (\x,0.5) {%
           \textbf{\scriptsize\timestamp}};
       }
-    \end{tikzpicture}
-  };
-  \else\fi
+      \else\fi%
+    \end{tikzpicture}%
+  \egroup;
+  \node[ports e\thesignum w\thesignum, inner sep=0pt,
+    fit=(sigdrawing)] (\plotName) {};
+  % \iftimestamp
+  % \node[anchor=south west, inner sep=0] at (\plotName .north west) {%
+  %   \begin{tikzpicture}[%
+  %     draw=black, %
+  %     xscale=\plotXScale, yscale=\plotYScale,
+  %     ] %
+  %     \foreach \x [count=\i] in {0,\plotGridSize,...,\lastTag} {
+  %       \pgfmathsetmacro\timestamp{(\i-1)*\plotGridSize}
+  %       \node[anchor=south] at (\x,0.5) {%
+  %         \textbf{\scriptsize\timestamp}};
+  %     }
+  %   \end{tikzpicture}
+  % };
+  % \else\fi
   % \ifdrawinputs
   % \foreach \i in {1,...,\thesignum} {
   %   \path (sigplot.e\i) edge[s,-|-,->] (\plotAt.w\i);

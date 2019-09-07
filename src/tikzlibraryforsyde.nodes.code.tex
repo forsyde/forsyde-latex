@@ -94,11 +94,6 @@
 % GLOBAL DECLARATIONS %
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\pgfdeclarelayer{backbackground}
-\pgfdeclarelayer{background}
-\pgfdeclarelayer{foreground}
-\pgfsetlayers{backbackground,background,main,foreground}
-
 \makeswitch[]\getmoclabel
 \addcase\getmoclabel{sy}{SY}
 \addcase\getmoclabel{de}{DE}
@@ -256,7 +251,7 @@
   \getcolor{/tikz/alwaystrue}{#4}{\fillcolorl}
   \getcolor{/tikz/alwaystrue}{#5}{\fillcolorr}
   \node[%
-  ports e1w1,
+  ports e\fsdNPortLeft w\fsdNPortRight,
   anchor=\fsdAnchor,
   yshift=\fsdYShift,
   xshift=\fsdXShift,

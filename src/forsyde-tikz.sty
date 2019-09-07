@@ -34,6 +34,16 @@
 \ProvidesPackage{forsyde-tikz}
               [2018/03/01 v0.4.1 ForSyDe TikZ Library]
 
+%%%%%%%%%%%%%%
+% PGF LAYERS %
+%%%%%%%%%%%%%%
+
+\pgfdeclarelayer{backbackground}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{backbackground,background,main,foreground}
+
+              
 \usetikzlibrary{forsyde.shapes,forsyde.paths,forsyde.nodes}
 \pgfplotsset{compat=1.13}
 
