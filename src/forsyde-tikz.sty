@@ -25,7 +25,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{pgfplots}
 \RequirePackage{pgfkeys}
-\RequirePackage{xparse,l3regex}
+\IfFileExists{l3regex.sty}{\RequirePackage{xparse,l3regex}}{\RequirePackage{xparse}\RequirePackage{expl3}}
+% \RequirePackage{xparse,l3regex}
 \RequirePackage{calc}
 \RequirePackage{ezkeys}
 \RequirePackage{xstring}
