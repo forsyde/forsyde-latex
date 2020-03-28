@@ -245,11 +245,11 @@
 % An interface from one domain to another (e.g. a MoC interface).
 %
 % \interface[keys] [(name)] [<position>] {domain-left} {domain-right};
-\NewDocumentCommand\interface{O{} D(){} D<>{0,0} m m}{
+\NewDocumentCommand\interface{O{} O{} O{} D(){} D<>{0,0} m m}{
   \pgfkeys{/forsyde keys, default, #1}%
-  \coordinate (globalPos) at (#3);
-  \getcolor{/tikz/alwaystrue}{#4}{\fillcolorl}
-  \getcolor{/tikz/alwaystrue}{#5}{\fillcolorr}
+  \coordinate (globalPos) at (#5);
+  \getcolor{/tikz/alwaystrue}{#6}{\fillcolorl}
+  \getcolor{/tikz/alwaystrue}{#7}{\fillcolorr}
   \node[%
   ports e\fsdNPortLeft w\fsdNPortRight,
   anchor=\fsdAnchor,
@@ -257,14 +257,14 @@
   xshift=\fsdXShift,
   rotate=\fsdRotate,
   inner sep=0,
-  ] (#2) at ($(globalPos) + (\fsdAtInit)$) {% 
+  ] (#4) at ($(globalPos) + (\fsdAtInit)$) {% 
     \begin{tikzpicture}
-      \node[anchor=south east, inner sep=3pt] (#2-l) {%
-        \typeStyle{\ifnolabel\else\getmoclabel{#4}\fi}};
-      \node[anchor=north west, inner sep=3pt] (#2-r) at (#2-l.south east) {%
-        \typeStyle{\ifnolabel\else\getmoclabel{#5}\fi}};
-      \gettikzxy{(#2-l.north west)}{\xl}{\yl}
-      \gettikzxy{(#2-r.south east)}{\xr}{\yr}
+      \node[anchor=south east, inner sep=3pt] (#4-l) {%
+        \typeStyle{\IfNoValueTF {#2}{\ifnolabel\else\getmoclabel{#6}\fi}{#2}}};
+      \node[anchor=north west, inner sep=3pt] (#4-r) at (#4-l.south east) {%
+        \typeStyle{\IfNoValueTF {#2}{\ifnolabel\else\getmoclabel{#7}\fi}{#3}}};
+      \gettikzxy{(#4-l.north west)}{\xl}{\yl}
+      \gettikzxy{(#4-r.south east)}{\xr}{\yr}
       \begin{pgfonlayer}{background}
         \filldraw[fill=\fillcolorl] (\xl,\yl) -- (\xl,\yr) -- (\xr,\yl) -- cycle;
         \filldraw[fill=\fillcolorr] (\xr,\yl) -- (\xr,\yr) -- (\xl,\yr) -- cycle;
@@ -272,7 +272,7 @@
     \end{tikzpicture}
   };
   % dummy nodes for scaling bugs.
-  \node[] at (#2.south west) {}; \node[] at (#2.north east) {};
+  \node[] at (#4.south west) {}; \node[] at (#4.north east) {};
 }
 
 
