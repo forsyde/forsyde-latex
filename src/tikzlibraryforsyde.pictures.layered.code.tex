@@ -42,11 +42,15 @@
   /forsyde-atom layer keys/right indent/.store in = \layerRightIndent,
   /forsyde-atom layer keys/label shift/.store in  = \layerLabelShift,
   /forsyde-atom layer keys/layer radius/.store in = \layerRadius,
+  /forsyde-atom layer keys/layer name style/.store in = \layerNameStyle,
+  /forsyde-atom layer keys/layer abstraction style/.store in = \layerAbsStyle,
   /forsyde-atom layer keys/default/.style = {
     left indent=  3pt,
     right indent= 0pt,
     label shift= -4ex,
     layer radius= 2cm,
+    layer name style=\sffamily\LARGE,
+    layer abstraction style=\sffamily\it,
   },
   /forsyde-atom arrow keys/.is family, 
   /forsyde-atom arrow keys/width/.store in  = \layerArrowWidth,
@@ -116,14 +120,14 @@
       postaction={decorate, decoration={%
       text along path, reverse path, raise={\layerLabelShift},
       text align={align=right, right indent=\layerRightIndent},
-      text={|\sffamily\LARGE|#1}}}]
+      text={|\layerNameStyle|#1}}}]
   ([shift=(90:\currentradius)]0,0) coordinate (layer\currentLayer -right)
        arc (85:135:\currentradius) coordinate (layer\currentLayer -center);%
   \draw[name path=layer\currentLayer -leftpath,
       postaction={decorate, decoration={%
       text along path,
       text align={left,left indent=\layerLeftIndent}, reverse path, raise={1.5ex},
-      text={|\sffamily\it|#2}}}]
+      text={|\layerAbsStyle|#2}}}]
   (layer\currentLayer -center) arc
       (135:180:\currentradius) coordinate  (layer\currentLayer -left);
 }
