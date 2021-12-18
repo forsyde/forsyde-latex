@@ -81,6 +81,16 @@
   }
 }
 
+\newcommand{\Colors}{{%
+"E41A1C",%
+"377EB8",%
+"4DAF4A",%
+"984EA3",%
+"FF7F00",%
+"FFFF33",%
+"A65628",%
+"F781BF"
+}}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % SYNCHRONOUS SIGNALS %
@@ -182,9 +192,11 @@
 \usepackage{catchfile}
 
 \newif\iftruncatevalue
+\newif\ifreactorstyle
 \newif\iflastlabel
 \pgfkeys{/designalkeys/.is family, /designalkeys,
   trunc/.is if=truncatevalue,
+  instants/.is if=reactorstyle,
   last label/.is if=lastlabel,
   name/.estore in = \deName,
   default/.style = {
@@ -198,6 +210,8 @@
 \NewDocumentCommand{\signalDE}{s O{} m }{%
   \pgfkeys{/designalkeys, default, #2}%
   %%% prepare drawing of signal %%%
+  \pgfmathsetmacro{\thecurrentcolor}{\Colors[\value{signum}]}
+  \definecolor{currentcolor}{HTML}{\thecurrentcolor}
   \pgfmathsetmacro{\deYPos}{-\thesignum * \plotSep}
   \path (0,\deYPos) node[left] {\scriptsize\deName} node[time] (t_cur) {};
   %%% test if reading from file or string %%%
@@ -230,20 +244,40 @@
 \cs_generate_variant:Nn \desig_toklist:n { o }
 \ExplSyntaxOff
 
+\newif\iflastitem
 \newif\iffirstitem
 \firstitemtrue   
 
 \NewDocumentCommand{\deDrawEvents}{ > {\SplitArgument{1}{:}} m }{%
-  \iffirstitem\firstitemfalse\deFirstEvent #1
+  \iffirstitem\lastitemfalse\firstitemfalse\deFirstEvent #1
   \else\deEvent #1
   \fi
 } 
 
 \NewDocumentCommand{\deFirstEvent}{m m} {%
+  \ifreactorstyle
+  \iftruncatevalue\pgfmathtruncatemacro\valLabel{#1}\else\def\valLabel{#1}\fi
+  \node[cross out,draw,gray] (instant_point) at (#2,\deYPos) {};
+  \node[anchor=west] at (instant_point) {\scriptsize\valLabel};
+  \else
   \def\dePrevValue{#1}%
+  \fi
 }
 
 \NewDocumentCommand{\deEvent}{m m} {%
+  \ifreactorstyle %%%% DRAW INSTANT EVENTS ACCORDING TO REACTOR STYLE
+  \iftruncatevalue\pgfmathtruncatemacro\valLabel{#1}\else\def\valLabel{#1}\fi
+  \ifdim#2 pt<\lastTag pt
+    \node[cross out,draw,gray] (instant_point) at (#2,\deYPos) {};
+    \node[anchor=west] at (instant_point) {\scriptsize\valLabel};
+  \else%
+    \iflastitem\else
+    \draw[fill,opacity=.2,currentcolor]
+      ([yshift=-3pt]t_cur) rectangle ([yshift=3pt]\lastTag,\deYPos);
+    \lastitemtrue
+    \fi  
+  \fi
+  \else %%%% DRAW PERSISTENT EVENTS ACCORDING TO ORIGINAL DE STYLE
   \iftruncatevalue\pgfmathtruncatemacro\valLabel{\dePrevValue}
   \else\def\valLabel{\dePrevValue}\fi
   \ifdim#2 pt<\lastTag pt%
@@ -259,23 +293,12 @@
     \path (t_cur) -- node[anchor=\labelPos] {\scriptsize\valLabel}
       (\lastTag,\deYPos) node[time] (signal-\thesignum) {};
   \fi
+  \fi %%%% END CONDITIONAL DRAWING    
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONTINUOUS TIME SIGNALS %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\Colors}{{%
-"E41A1C",%
-"377EB8",%
-"4DAF4A",%
-"984EA3",%
-"FF7F00",%
-"FFFF33",%
-"A65628",%
-"F781BF"
-}}
 
 \def\ctPlotWidth{4}
 %% \inputDE[*][node keys] [<position>] {span};
